@@ -1,0 +1,110 @@
+ADD ITEM BAG NEW Nhị vĩ, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 09:54 SA
+
+ADD ITEM BAG NEW Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 09:54 SA
+
+ADD ITEM BAG NEW Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:04 SA
+
+ADD ITEM BAG NEW Cửu vĩ, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:05 SA
+
+ADD VÀNG +10416, tổng: 10416 lý do: Quy đổi từ VND, TIME: 18/03/2024 10:05 SA
+
+ADD ITEM BAG NEW Kiếm gỗ, SL: 1 lý do: New game, TIME: 18/03/2024 14:13 CH
+
+ADD BẠC KHÓA +100000000, tổng: 100000000 lý do: New game, TIME: 18/03/2024 14:13 CH
+
+ADD VÀNG KHÓA +10000, tổng: 10000 lý do: New game, TIME: 18/03/2024 14:13 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: New game, TIME: 18/03/2024 14:13 CH
+
+ADD ITEM BAG NEW Cải trang Bí Ngô, SL: 1 lý do: Mở từ rương cải trang, TIME: 18/03/2024 14:13 CH
+
+ADD ITEM BAG NEW Kiếm gỗ, SL: 0 lý do: Tháo từ BODY, TIME: 18/03/2024 14:14 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Cao), SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:15 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Trung), SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:15 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Sơ), SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:16 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Sơ), SL: 3 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:16 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Sơ), SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:23 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Sơ), SL: 5 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:23 CH
+
+ADD ITEM BAG NEW Sách kỹ năng (Cao), SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 14:24 CH
+
+ADD ITEM BAG NEW Vô hạn Di Chuyển phù, SL: 1 lý do: Mua từ shop, TIME: 18/03/2024 14:25 CH
+
+ADD VÀNG +2222, tổng: 2222 lý do: Quy đổi từ VND, TIME: 18/03/2024 14:47 CH
+
+ADD VÀNG +23894, tổng: 26116 lý do: Quy đổi từ VND, TIME: 18/03/2024 14:47 CH
+
+ADD VÀNG +261437, tổng: 287553 lý do: Quy đổi từ VND, TIME: 18/03/2024 14:47 CH
+
+ADD ITEM BAG NEW Cửu vĩ, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 10:10 SA
+
+ADD ITEM BAG NEW Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 10:10 SA
+
+ADD ITEM BAG XẾP CHỒNG NEW Nhân sâm (thường), SL: 1 lý do: Mua từ shop, TIME: 19/03/2024 10:11 SA
+
+ADD ITEM BAG NEW Mũ Thần Tài, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:42 CH
+
+ADD ITEM BAG NEW Mặt nạ Thổ Địa, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:43 CH
+
+ADD ITEM BAG NEW Bộ giáp sơn tinh, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:43 CH
+
+ADD ITEM BAG NEW Bộ giáp thủy tinh, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:43 CH
+
+ADD ITEM BAG NEW Mũ Sinh Nhật, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:43 CH
+
+ADD ITEM BAG NEW Nón lá Orochimaru, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:43 CH
+
+ADD ITEM BAG NEW Thú cưỡi tuần lộc, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Thú cưỡi phượng hoàng lửa, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Thời trang Mèo Hiệp Sĩ, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Mũ tai thỏ, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Đèn ông sao, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Mũ Halloween, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Chổi bay, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Áo choàng tết, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Thời trang Kha, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Thời trang Thánh Gióng, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Ngựa sắt, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:44 CH
+
+ADD ITEM BAG NEW Mặt nạ thỏ ngọc, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:45 CH
+
+ADD ITEM BAG NEW Mặt nạ thỏ tinh, SL: 1 lý do: Lệnh chat ADMIN, TIME: 19/03/2024 19:45 CH
+
+ADD ITEM BAG NEW Thú cưỡi tuần lộc, SL: 1 lý do: Tháo từ BODY, TIME: 19/03/2024 19:57 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Nhân sâm (thường), SL: 1 lý do: Mua từ shop, TIME: 19/03/2024 19:59 CH
+
+ADD ITEM BAG NEW Ngựa sắt, SL: 1 lý do: Nhận từ thư: Mã quà tặng: xz, TIME: 19/03/2024 20:25 CH
+
+ADD ITEM BAG NEW Cải trang Jiraiya, SL: 1 lý do: Nhận từ thư: Mã quà tặng: zz, TIME: 19/03/2024 20:34 CH
+
+ADD ITEM BAG NEW Thú cưỡi tuần lộc, SL: 1 lý do: Nhận từ thư: Mã quà tặng: xz, TIME: 19/03/2024 21:00 CH
+
+ADD ITEM BAG NEW Kiếm gỗ, SL: 1 lý do: New game, TIME: 02/04/2024 19:37 CH
+
+ADD BẠC KHÓA +100000000, tổng: 100000000 lý do: New game, TIME: 02/04/2024 19:37 CH
+
+ADD VÀNG KHÓA +10000, tổng: 10000 lý do: New game, TIME: 02/04/2024 19:37 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: New game, TIME: 02/04/2024 19:37 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Hỗ phách, SL: 9999 lý do: Lệnh chat ADMIN, TIME: 25/04/2024 08:46 SA
+
+ADD ITEM BAG NEW Cải trang Danzo, SL: 1 lý do: Tháo từ BODY, TIME: 25/04/2024 08:47 SA
+

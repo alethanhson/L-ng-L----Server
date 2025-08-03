@@ -1,0 +1,40 @@
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 12:41 CH
+
+ADD ITEM BAG NEW Cải trang Lục Đạo, SL: 0 lý do: Tháo từ BODY 2, TIME: 20/03/2024 12:54 CH
+
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:05 CH
+
+ADD ITEM BAG NEW Tấm bản đồ, SL: 1 lý do: Nhặt từ Map: 86, TIME: 20/03/2024 13:06 CH
+
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:08 CH
+
+ADD ITEM BAG NEW Quân Phối, SL: 1 lý do: Tháo từ BODY, TIME: 20/03/2024 13:08 CH
+
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:10 CH
+
+ADD ITEM BAG NEW Cải trang Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:10 CH
+
+ADD ITEM BAG NEW Ngựa sắt, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:10 CH
+
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:14 CH
+
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:15 CH
+
+ADD ITEM BAG NEW Ngựa sắt, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:16 CH
+
+ADD BẠC KHÓA +22, tổng: 20609892 lý do: Nhặt từ Map, TIME: 20/03/2024 13:20 CH
+
+ADD BẠC KHÓA +25, tổng: 20609917 lý do: Nhặt từ Map, TIME: 20/03/2024 13:20 CH
+
+ADD ITEM BAG NEW Tấm bản đồ, SL: 1 lý do: Nhặt từ Map: 73, TIME: 20/03/2024 13:20 CH
+
+ADD ITEM BAG NEW Tấm bản đồ, SL: 1 lý do: Nhặt từ Map: 73, TIME: 20/03/2024 13:20 CH
+
+ADD ITEM BAG NEW Tấm bản đồ, SL: 1 lý do: Nhặt từ Map: 73, TIME: 20/03/2024 13:20 CH
+
+ADD ITEM BAG NEW Tấm bản đồ, SL: 1 lý do: Nhặt từ Map: 73, TIME: 20/03/2024 13:20 CH
+
+ADD ITEM BAG NEW Cải trang Kakashi Lục Đạo, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:21 CH
+
+ADD ITEM BAG NEW Ngựa sắt, SL: 0 lý do: Tháo từ BODY, TIME: 20/03/2024 13:21 CH
+

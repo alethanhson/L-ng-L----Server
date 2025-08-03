@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch LangLa Server",
+            "request": "launch",
+            "mainClass": "com.langla.server.main.Main",
+            "projectName": "pkoolvn",
+            "classpath": [
+                "${workspaceFolder}/out",
+                "${workspaceFolder}/lib/*"
+            ],
+            "vmArgs": [
+                "-server",
+                "-Dfile.encoding=UTF-8",
+                "-Xms600M",
+                "-Xmx600M"
+            ]
+        }
+    ]
+} 

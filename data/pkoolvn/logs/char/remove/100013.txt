@@ -1,0 +1,12 @@
+MINE VÀNG KHÓA -1, tổng: 9999 lý do: Hồi sinh, TIME: 17/03/2024 15:37 CH
+
+REMOVE ITEM BAG Rương cải trang, SL: 100 lý do: Sử dụng, TIME: 17/03/2024 15:38 CH
+
+REMOVE ITEM BAG by index Kiếm gỗ, SL: 0 lý do: Mặc vào người, TIME: 17/03/2024 15:38 CH
+
+MINE VÀNG KHÓA -30, tổng: 9969 lý do: MUA SHOP, TIME: 17/03/2024 15:45 CH
+
+MINE VÀNG -10, tổng: 113626 lý do: MUA SHOP, TIME: 17/03/2024 15:50 CH
+
+MINE VÀNG KHÓA -15, tổng: 9954 lý do: MUA SHOP, TIME: 17/03/2024 15:55 CH
+

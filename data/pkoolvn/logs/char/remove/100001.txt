@@ -1,0 +1,80 @@
+REMOVE ITEM BAG by index Vô hạn Di Chuyển phù, SL: 1 lý do: HẾT HẠN SD, TIME: 17/03/2024 19:42 CH
+
+REMOVE ITEM BAG by index Nhị vĩ, SL: 0 lý do: Mặc vào người, TIME: 18/03/2024 09:54 SA
+
+REMOVE ITEM BAG Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Sử dụng, TIME: 18/03/2024 09:54 SA
+
+REMOVE ITEM BAG Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Sử dụng, TIME: 18/03/2024 10:05 SA
+
+MINE VÀNG -1500, tổng: 8916 lý do: Nâng cấp vĩ thú, TIME: 18/03/2024 10:05 SA
+
+REMOVE ITEM BAG Rương cải trang, SL: 100 lý do: Sử dụng, TIME: 18/03/2024 14:13 CH
+
+REMOVE ITEM BAG by index Cải trang Bí Ngô, SL: 0 lý do: Mặc vào người, TIME: 18/03/2024 14:13 CH
+
+REMOVE ITEM BAG by index Kiếm gỗ, SL: 0 lý do: Mặc vào người, TIME: 18/03/2024 14:13 CH
+
+REMOVE ITEM BODY by index Kiếm gỗ, SL: 0 lý do: Tháo từ BODY, TIME: 18/03/2024 14:14 CH
+
+REMOVE ITEM BAG by index Kiếm gỗ, SL: 0 lý do: Mặc vào người, TIME: 18/03/2024 14:14 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 1 lý do: Sử dụng, TIME: 18/03/2024 14:16 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 3 lý do: Sử dụng, TIME: 18/03/2024 14:16 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 2 lý do: Sử dụng, TIME: 18/03/2024 14:16 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 1 lý do: Sử dụng, TIME: 18/03/2024 14:16 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 5 lý do: Sử dụng, TIME: 18/03/2024 14:23 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 4 lý do: Sử dụng, TIME: 18/03/2024 14:23 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Sơ), SL: 3 lý do: Sử dụng, TIME: 18/03/2024 14:23 CH
+
+REMOVE ITEM BAG Sách kỹ năng (Cao), SL: 1 lý do: Sử dụng, TIME: 18/03/2024 14:24 CH
+
+MINE VÀNG KHÓA -30, tổng: 9970 lý do: MUA SHOP, TIME: 18/03/2024 14:25 CH
+
+MINE VÀNG -11111, tổng: 276442 lý do: Đặt cược bầu cua, TIME: 18/03/2024 14:47 CH
+
+MINE VÀNG -11111, tổng: 265331 lý do: Đặt cược bầu cua, TIME: 18/03/2024 14:50 CH
+
+MINE VÀNG -11111, tổng: 254220 lý do: Đặt cược bầu cua, TIME: 18/03/2024 14:51 CH
+
+MINE VÀNG -10000, tổng: 244220 lý do: Đặt cược bầu cua, TIME: 18/03/2024 14:52 CH
+
+MINE VÀNG KHÓA -1, tổng: 9969 lý do: Hồi sinh, TIME: 18/03/2024 20:50 CH
+
+MINE VÀNG KHÓA -1, tổng: 9968 lý do: Hồi sinh, TIME: 18/03/2024 21:26 CH
+
+REMOVE ITEM BAG by index Cửu vĩ, SL: 0 lý do: Mặc vào người, TIME: 19/03/2024 10:10 SA
+
+MINE VÀNG -8, tổng: 243212 lý do: MUA SHOP, TIME: 19/03/2024 10:11 SA
+
+REMOVE ITEM BAG Nhân sâm (thường), SL: 1 lý do: Sử dụng, TIME: 19/03/2024 10:11 SA
+
+REMOVE ITEM BAG Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Sử dụng, TIME: 19/03/2024 10:11 SA
+
+REMOVE ITEM BAG by index Mũ Thần Tài, SL: 0 lý do: Mặc vào người, TIME: 19/03/2024 19:43 CH
+
+REMOVE ITEM BODY by index Thú cưỡi tuần lộc, SL: 1 lý do: Tháo từ BODY, TIME: 19/03/2024 19:57 CH
+
+REMOVE ITEM BAG by index Thú cưỡi tuần lộc, SL: 0 lý do: Mặc vào người, TIME: 19/03/2024 19:57 CH
+
+MINE VÀNG -8, tổng: 243204 lý do: MUA SHOP, TIME: 19/03/2024 19:59 CH
+
+REMOVE ITEM BAG Nhân sâm (thường), SL: 1 lý do: Sử dụng, TIME: 19/03/2024 19:59 CH
+
+MINE VÀNG KHÓA -1, tổng: 9967 lý do: Hồi sinh, TIME: 20/03/2024 11:39 SA
+
+MINE VÀNG KHÓA -1, tổng: 9966 lý do: Hồi sinh, TIME: 20/03/2024 13:24 CH
+
+MINE VÀNG KHÓA -1, tổng: 9965 lý do: Hồi sinh, TIME: 20/03/2024 13:24 CH
+
+MINE VÀNG KHÓA -1, tổng: 9964 lý do: Hồi sinh, TIME: 20/03/2024 13:24 CH
+
+REMOVE ITEM BAG Hỗ phách, SL: 100 lý do: Khảm ngọc, TIME: 25/04/2024 08:46 SA
+
+REMOVE ITEM BODY by index Cải trang Danzo, SL: 1 lý do: Tháo từ BODY, TIME: 25/04/2024 08:47 SA
+

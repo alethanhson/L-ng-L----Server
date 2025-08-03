@@ -1,0 +1,46 @@
+[
+     {
+          "cx": 2079,
+          "cy": 669,
+          "exp": 0,
+          "hp": 99999999,
+          "id": 213,
+          "level": 10,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1985,
+          "cy": 550,
+          "exp": 0,
+          "hp": 99999999,
+          "id": 213,
+          "level": 10,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 2196,
+          "cy": 453,
+          "exp": 0,
+          "hp": 99999999,
+          "id": 213,
+          "level": 10,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1906,
+          "cy": 410,
+          "exp": 0,
+          "hp": 99999999,
+          "id": 213,
+          "level": 10,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     }
+]

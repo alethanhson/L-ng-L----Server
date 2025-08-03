@@ -1,0 +1,145 @@
+[
+     {
+          "cx": 830,
+          "cy": 233,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 864,
+          "cy": 232,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1224,
+          "cy": 122,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1302,
+          "cy": 121,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1260,
+          "cy": 121,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1148,
+          "cy": 95,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1044,
+          "cy": 94,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 1095,
+          "cy": 92,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 998,
+          "cy": 92,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 949,
+          "cy": 88,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 834,
+          "cy": 88,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 784,
+          "cy": 88,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": false,
+          "status": 0
+     },
+     {
+          "cx": 898,
+          "cy": 87,
+          "exp": 0,
+          "hp": 1,
+          "id": 148,
+          "level": 50,
+          "levelBoss": 0,
+          "paintMiniMap": true,
+          "status": 0
+     }
+]

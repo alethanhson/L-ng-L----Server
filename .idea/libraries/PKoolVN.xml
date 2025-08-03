@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="PKoolVN">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/PKoolVN.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,197 @@
+Timestamp: Sun Mar 17 14:07:10 ICT 2024
+Da say ra loi:
+HikariPool-1 - Connection is not available, request timed out after 30000ms.
+java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:162)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:100)
+	at com.langla.server.main.PKoolVN.getConnection(PKoolVNDB.java:51)
+	at com.langla.real.bangxephang.BangXepHang.updateSQL(BangXepHang.java:505)
+	at com.langla.real.bangxephang.BangXepHang.update(BangXepHang.java:424)
+	at com.langla.server.main.Main.lambda$BangXepHang$7(Main.java:205)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1117)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:355)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2461)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2498)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2283)
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:822)
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:404)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:317)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	... 1 more
+Caused by: java.net.UnknownHostException: vps.langlaplus.com
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1299)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1205)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1127)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:249)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:305)
+	... 23 more
+Timestamp: Sun Mar 17 14:07:40 ICT 2024
+Da say ra loi:
+HikariPool-1 - Connection is not available, request timed out after 30010ms.
+java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30010ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:162)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:100)
+	at com.langla.server.main.PKoolVN.getConnection(PKoolVNDB.java:51)
+	at com.langla.real.bangxephang.BangXepHang.updateSQL(BangXepHang.java:505)
+	at com.langla.real.bangxephang.BangXepHang.update(BangXepHang.java:441)
+	at com.langla.server.main.Main.lambda$BangXepHang$7(Main.java:205)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1117)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:355)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2461)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2498)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2283)
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:822)
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:404)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:317)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	... 1 more
+Caused by: java.net.UnknownHostException: vps.langlaplus.com
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:929)
+	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1343)
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1295)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1205)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1127)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:249)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:305)
+	... 23 more
+Timestamp: Sun Mar 17 14:08:10 ICT 2024
+Da say ra loi:
+HikariPool-1 - Connection is not available, request timed out after 30002ms.
+java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30002ms.
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:696)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:197)
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:162)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:100)
+	at com.langla.server.main.PKoolVN.getConnection(PKoolVNDB.java:51)
+	at com.langla.real.bangxephang.BangXepHang.updateSQL(BangXepHang.java:505)
+	at com.langla.real.bangxephang.BangXepHang.update(BangXepHang.java:458)
+	at com.langla.server.main.Main.lambda$BangXepHang$7(Main.java:205)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:1117)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:355)
+	at com.mysql.jdbc.ConnectionImpl.coreConnect(ConnectionImpl.java:2461)
+	at com.mysql.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:2498)
+	at com.mysql.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:2283)
+	at com.mysql.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:822)
+	at com.mysql.jdbc.JDBC4Connection.<init>(JDBC4Connection.java:47)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411)
+	at com.mysql.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:404)
+	at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:317)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:726)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	... 1 more
+Caused by: java.net.UnknownHostException: vps.langlaplus.com
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:929)
+	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1343)
+	at java.net.InetAddress.getAllByName0(InetAddress.java:1295)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1205)
+	at java.net.InetAddress.getAllByName(InetAddress.java:1127)
+	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:249)
+	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:305)
+	... 23 more
+Timestamp: Sun Mar 17 14:32:34 ICT 2024
+Da say ra loi:
+null
+java.lang.NullPointerException
+	at com.langla.real.player.Char.writeInfo(Char.java:385)
+	at com.langla.real.player.Session$Serivce.sendInfo(Session.java:2735)
+	at com.langla.real.player.Session$Serivce.access$000(Session.java:1863)
+	at com.langla.real.player.Session$1.readMessage123(Session.java:1565)
+	at com.langla.real.player.Session$1.readMessage(Session.java:298)
+	at com.langla.real.player.Session.lambda$new$1(Session.java:247)
+	at java.lang.Thread.run(Thread.java:750)
+Timestamp: Sun Mar 17 14:32:35 ICT 2024
+Da say ra loi:
+null
+java.lang.NullPointerException
+	at com.langla.real.player.Char.writeInfo(Char.java:385)
+	at com.langla.real.player.Session$Serivce.sendInfo(Session.java:2735)
+	at com.langla.real.player.Session$Serivce.access$000(Session.java:1863)
+	at com.langla.real.player.Session$1.readMessage123(Session.java:1565)
+	at com.langla.real.player.Session$1.readMessage(Session.java:298)
+	at com.langla.real.player.Session.lambda$new$1(Session.java:247)
+	at java.lang.Thread.run(Thread.java:750)
+Timestamp: Sun Mar 17 21:19:56 ICT 2024
+Da say ra loi:
+null
+java.lang.NullPointerException
+	at com.langla.real.player.Char.UpdateLogin(Char.java:3255)
+	at com.langla.real.player.Player.sendTabSelectChar(Player.java:185)
+	at com.langla.real.player.Session$1.readMessage123(Session.java:1373)
+	at com.langla.real.player.Session$1.readMessage(Session.java:302)
+	at com.langla.real.player.Session.lambda$new$1(Session.java:247)
+	at java.lang.Thread.run(Thread.java:750)

@@ -1,0 +1,26 @@
+ADD ITEM BAG NEW Kiếm gỗ, SL: 1 lý do: New game, TIME: 17/03/2024 12:08 CH
+
+ADD BẠC KHÓA +100000000, tổng: 100000000 lý do: New game, TIME: 17/03/2024 12:08 CH
+
+ADD VÀNG KHÓA +10000, tổng: 10000 lý do: New game, TIME: 17/03/2024 12:08 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: New game, TIME: 17/03/2024 12:08 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Bình HP cấp 1, SL: 50 lý do: Nhiệm vụ, TIME: 17/03/2024 12:12 CH
+
+ADD BẠC KHÓA +200, tổng: 100000200 lý do: Nhiệm vụ, TIME: 17/03/2024 12:12 CH
+
+ADD ITEM BAG NEW Vô hạn Di Chuyển phù, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 12:20 CH
+
+ADD VÀNG +113636, tổng: 113636 lý do: Quy đổi từ VND, TIME: 17/03/2024 12:21 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 3, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 12:21 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 3, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 12:21 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 3, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 12:21 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 3, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 12:24 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 3, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 12:28 CH
+

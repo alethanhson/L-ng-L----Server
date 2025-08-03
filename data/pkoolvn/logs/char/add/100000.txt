@@ -1,0 +1,116 @@
+ADD ITEM BAG NEW Gói ưu đãi Rank 10, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 13:50 CH
+
+ADD ITEM BAG NEW Danh hiệu Lục Đạo, SL: 1 lý do: Mở rank, TIME: 17/03/2024 13:50 CH
+
+ADD ITEM BAG NEW Cải trang Lục Đạo, SL: 1 lý do: Mở rank, TIME: 17/03/2024 13:50 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Bình MP cấp 60, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 13:50 CH
+
+ADD ITEM BAG NEW Sách huyết kế giới hạn, SL: 1 lý do: Thử vận may, TIME: 17/03/2024 13:55 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Chakra vĩ thú, SL: 5000 lý do: Thử vận may, TIME: 17/03/2024 13:56 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Lệnh bài Izanami (sơ cấp), SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 16:17 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Lệnh bài Izanami (trung cấp), SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 16:17 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Lệnh bài Izanami (trung cấp), SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 16:19 CH
+
+ADD ITEM BAG NEW Tấm bản đồ, SL: 1 lý do: Nhiệm vụ, TIME: 17/03/2024 16:26 CH
+
+ADD ITEM BAG NEW Lôi Thần Kiếm, SL: 1 lý do: Nhiệm vụ, TIME: 17/03/2024 16:26 CH
+
+ADD ITEM BAG NEW Vô hạn Di Chuyển phù, SL: 1 lý do: Nhiệm vụ, TIME: 17/03/2024 16:26 CH
+
+ADD BẠC KHÓA +50000, tổng: 12349380 lý do: Nhiệm vụ, TIME: 17/03/2024 16:26 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Sách kỹ năng chiến đấu, SL: 9999 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 20:47 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 20:50 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 20:51 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 20:52 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 20:53 CH
+
+ADD ITEM BAG NEW Cải trang Rock Lee, SL: 1 lý do: Mở từ rương cải trang, TIME: 17/03/2024 20:57 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 20:57 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:00 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:00 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:00 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:00 CH
+
+ADD ITEM BAG NEW Cải trang Haku, SL: 1 lý do: Mở từ rương cải trang, TIME: 17/03/2024 21:02 CH
+
+ADD ITEM BAG NEW Cải trang Kankuro, SL: 1 lý do: Mở từ rương cải trang, TIME: 17/03/2024 21:02 CH
+
+ADD ITEM BAG NEW Cải trang Kurenai, SL: 1 lý do: Mở từ rương cải trang, TIME: 17/03/2024 21:02 CH
+
+ADD ITEM BAG NEW Cải trang Dracula, SL: 1 lý do: Mở từ rương cải trang, TIME: 17/03/2024 21:02 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: Đền bù, TIME: 17/03/2024 21:15 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: Đền bù, TIME: 17/03/2024 21:16 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: Đền bù, TIME: 17/03/2024 21:23 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:30 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:32 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:32 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:32 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:33 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:33 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 0 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:33 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: Đền bù, TIME: 17/03/2024 21:39 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:46 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:48 CH
+
+ADD ITEM BAG NEW Túi mở rộng cấp 4, SL: 1 lý do: ITEM EXTEND to Bag, TIME: 17/03/2024 21:48 CH
+
+ADD ITEM BAG NEW Kỹ năng vĩ thú, SL: 1 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:49 CH
+
+ADD ITEM BAG XẾP CHỒNG NEW Lông vĩ thú, SL: 10000 lý do: Lệnh chat ADMIN, TIME: 17/03/2024 21:49 CH
+
+ADD ITEM BAG NEW Vô hạn Di Chuyển phù, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 21:49 CH
+
+ADD ITEM BAG NEW Nhất vĩ, SL: 1 lý do: Đổi từ NPC 0, TIME: 17/03/2024 21:50 CH
+
+ADD ITEM BAG NEW Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 09:53 SA
+
+ADD ITEM BAG NEW Nhất vĩ, SL: 0 lý do: Tháo từ BODY, TIME: 18/03/2024 10:06 SA
+
+ADD ITEM BAG NEW Cửu vĩ, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:06 SA
+
+ADD ITEM BAG NEW Kỹ năng vĩ thú đặc biệt, SL: 1 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:06 SA
+
+ADD ITEM BAG XẾP CHỒNG NEW Thuốc tăng lực cấp 3, SL: 999 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:15 SA
+
+ADD ITEM BAG XẾP CHỒNG NEW Thuốc tăng lực cấp 2, SL: 999 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:15 SA
+
+ADD ITEM BAG XẾP CHỒNG NEW Thuốc tăng lực cấp 1, SL: 999 lý do: Lệnh chat ADMIN, TIME: 18/03/2024 10:15 SA
+
+ADD ITEM BAG NEW Kiếm gỗ, SL: 1 lý do: New game, TIME: 18/03/2024 14:11 CH
+
+ADD BẠC KHÓA +100000000, tổng: 100000000 lý do: New game, TIME: 18/03/2024 14:11 CH
+
+ADD VÀNG KHÓA +10000, tổng: 10000 lý do: New game, TIME: 18/03/2024 14:11 CH
+
+ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: New game, TIME: 18/03/2024 14:11 CH
+
+ADD ITEM BAG NEW Cải trang Mèo Hiệp Sĩ, SL: 1 lý do: Mở từ rương cải trang, TIME: 18/03/2024 14:11 CH
+
