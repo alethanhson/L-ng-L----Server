@@ -1,8 +1,14 @@
+# Ignore environment file
 .env
+
+# Ignore build/output folders
 out/
-.idea/
-.vscode/
-.DS_Store
-/out/*
 ./out/
 out/*
+
+# Ignore IDE/editor configurations
+.idea/
+.vscode/
+
+# Ignore macOS file
+.DS_Store
