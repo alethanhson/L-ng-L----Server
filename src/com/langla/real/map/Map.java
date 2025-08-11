@@ -2235,6 +2235,12 @@ public class Map {
     }
 
     public static void createMap() {
+        // Thêm null check
+        if (DataCenter.gI() == null || DataCenter.gI().MapTemplate == null) {
+            System.err.println("DataCenter hoặc MapTemplate chưa được khởi tạo!");
+            return;
+        }
+        
         if (maps == null) {
             maps = new Map[DataCenter.gI().MapTemplate.length];
             for (int i = 0; i < maps.length; i++) {
@@ -2242,7 +2248,6 @@ public class Map {
 
                 if (!DataCenter.gI().MapTemplate[i].notBlock) {
                     map.createZone();
-
                     map.createWayPoint();
                 }
 

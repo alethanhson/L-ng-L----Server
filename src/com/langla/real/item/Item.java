@@ -386,8 +386,27 @@ public class Item implements Cloneable {
 
     public Item() {
         this.amount = 1;
+        System.out.println("[DEBUG] Item constructor called - id: " + this.id);
+        
+        // Check DataCenter status
+        if (DataCenter.gI() == null) {
+            System.out.println("[DEBUG] DataCenter.gI() is NULL");
+            return;
+        }
+        
+        if (DataCenter.gI().ItemTemplate == null) {
+            System.out.println("[DEBUG] ItemTemplate array is NULL");
+            return;
+        }
+        
+        System.out.println("[DEBUG] ItemTemplate array length: " + DataCenter.gI().ItemTemplate.length);
+        
+        // Thêm log trước khi gọi isTypeTrangBi
+        System.out.println("[DEBUG] About to call isTypeTrangBi()");
+        
         if (this.isTypeTrangBi() && this.getItemTemplate().type != 14) {
             he = (byte) Utlis.nextInt(1, 5);
+            System.out.println("[DEBUG] Set he value: " + he);
         }
     }
 
@@ -432,17 +451,72 @@ public class Item implements Cloneable {
     }
     @JsonIgnore
     public ItemTemplate getItemTemplate() {
-        return DataCenter.gI().ItemTemplate[id];
+        System.out.println("[DEBUG] getItemTemplate called - id: " + this.id);
+        
+        if (DataCenter.gI() == null) {
+            System.out.println("[DEBUG] DataCenter.gI() is NULL in getItemTemplate");
+            return null;
+        }
+        
+        if (DataCenter.gI().ItemTemplate == null) {
+            System.out.println("[DEBUG] ItemTemplate array is NULL in getItemTemplate");
+            return null;
+        }
+        
+        if (this.id < 0) {
+            System.out.println("[DEBUG] Item id is negative: " + this.id);
+            return null;
+        }
+        
+        if (this.id >= DataCenter.gI().ItemTemplate.length) {
+            System.out.println("[DEBUG] Item id out of bounds: " + this.id + " >= " + DataCenter.gI().ItemTemplate.length);
+            return null;
+        }
+        
+        ItemTemplate template = DataCenter.gI().ItemTemplate[id];
+        System.out.println("[DEBUG] ItemTemplate found: " + (template != null ? "YES" : "NO"));
+        return template;
     }
     @JsonIgnore
     public boolean isTypeTrangBi() {
-        for (int var1 = 0; var1 < DataCenter.gI().DataTypeItemBody.length; ++var1) {
-            if (DataCenter.gI().DataTypeItemBody[var1].type == this.getItemTemplate().type) {
-                return true;
+        System.out.println("[DEBUG] isTypeTrangBi called - id: " + this.id);
+        
+        // Thêm log ngay đầu để bắt lỗi
+        try {
+            if (DataCenter.gI() == null) {
+                System.out.println("[DEBUG] DataCenter.gI() is NULL in isTypeTrangBi");
+                return false;
             }
+            
+            if (DataCenter.gI().DataTypeItemBody == null) {
+                System.out.println("[DEBUG] DataTypeItemBody array is NULL in isTypeTrangBi");
+                return false;
+            }
+            
+            System.out.println("[DEBUG] DataTypeItemBody array length: " + DataCenter.gI().DataTypeItemBody.length);
+            
+            ItemTemplate template = getItemTemplate();
+            if (template == null) {
+                System.out.println("[DEBUG] ItemTemplate is NULL in isTypeTrangBi");
+                return false;
+            }
+            
+            System.out.println("[DEBUG] ItemTemplate type: " + template.type);
+            
+            for (int var1 = 0; var1 < DataCenter.gI().DataTypeItemBody.length; ++var1) {
+                if (DataCenter.gI().DataTypeItemBody[var1].type == template.type) {
+                    System.out.println("[DEBUG] Found matching type at index: " + var1);
+                    return true;
+                }
+            }
+            
+            System.out.println("[DEBUG] No matching type found");
+            return false;
+        } catch (Exception e) {
+            System.out.println("[DEBUG] Exception in isTypeTrangBi: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-
-        return false;
     }
     public int ngocUpgrade() {
         if(getItemTemplate().type == 2 || getItemTemplate().type == 7 || getItemTemplate().type == 8){
