@@ -15,10 +15,10 @@ public class PKoolVNDB {
     public static String DRIVER = "com.mysql.jdbc.Driver";
     public static String URL = "jdbc:mysql://%s:%s/%s?useUnicode=true&characterEncoding=utf8&useSSL=false";
     public static String DB_HOST = "127.0.0.1";
-    public static String DB_PORT = "3306";
+    public static String DB_PORT = "3307";
     public static String DB_NAME = "langla";
-    public static String DB_USER = "root";
-    public static String DB_PASSWORD = "88888888";
+    public static String DB_USER = "langla_user";
+    public static String DB_PASSWORD = "langla123";
     public static int MIN_CONN = 1;
     public static int MAX_CONN = 10;
     

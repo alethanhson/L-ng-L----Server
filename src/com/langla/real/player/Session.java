@@ -1322,11 +1322,11 @@ public class Session{
                                 }
                                 client.mChar.DangBanCho(msg.readShort(), msg.readByte(), msg.readInt());
                                 break;
-                            case 100: // treo chợ me
+                            case 100: // treo market me
                                 if(client.mChar == null) break;
                                 client.session.serivce.sendDataCho_Me(client);
                                 break;
-                            case 101: // send chợ
+                            case 101: // send market
                                 if(client.mChar == null) break;
                                 Item items = new Item(0, false);
                                 client.session.serivce.sendDataCho(msg.readByte(),msg.readByte(),msg.readShort());
@@ -3681,7 +3681,7 @@ public class Session{
                     ChoTemplate cho = DataCho.get(i);
                     if (cho.character_id == client.mChar.id && cho.isBuy == 0 && cho.character_name.equals(client.mChar.infoChar.name) && cho.time > System.currentTimeMillis() / 1000L) {
                         listItemCho.add(cho);
-                        msg.writeLong(cho.id); // id item chợ
+                        msg.writeLong(cho.id); // id item market
                         msg.writeInt(cho.bac); // giá bạc
                         msg.writeInt(cho.time); // time
                         cho.item.write(msg.writer);

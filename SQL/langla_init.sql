@@ -114,10 +114,10 @@ CREATE TABLE `character` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chợ`
+-- Cấu trúc bảng cho bảng `market`
 --
 
-CREATE TABLE `chợ` (
+CREATE TABLE `market` (
   `id` bigint(21) NOT NULL,
   `character_id` int(11) DEFAULT '0',
   `character_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4965,9 +4965,9 @@ ALTER TABLE `character`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `chợ`
+-- Chỉ mục cho bảng `market`
 --
-ALTER TABLE `chợ`
+ALTER TABLE `market`
   ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
@@ -5101,9 +5101,9 @@ ALTER TABLE `topup`
 ALTER TABLE `character`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
 --
--- AUTO_INCREMENT cho bảng `chợ`
+-- AUTO_INCREMENT cho bảng `market`
 --
-ALTER TABLE `chợ`
+ALTER TABLE `market`
   MODIFY `id` bigint(21) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT cho bảng `giatoc`

@@ -67,7 +67,7 @@ public class Cho {
 
 
     public static boolean delete(long id) {
-        String query = "DELETE FROM `chợ` WHERE id = ?";
+        String query = "DELETE FROM `market` WHERE id = ?";
         try (Connection con = PKoolVN.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
 
@@ -89,7 +89,7 @@ public class Cho {
 
 
     public static long insert(ChoTemplate cho) {
-        String query = "INSERT INTO `chợ` (character_id, character_name, isBuy, item, time, bac) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO `market` (character_id, character_name, isBuy, item, time, bac) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = PKoolVN.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -121,7 +121,7 @@ public class Cho {
 
 
     public static boolean update(long id) {
-        String query = "UPDATE `chợ` SET isBuy = ? WHERE id = ?";
+        String query = "UPDATE `market` SET isBuy = ? WHERE id = ?";
         try (Connection con = PKoolVN.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, 1);
@@ -140,7 +140,7 @@ public class Cho {
     }
 
     public static int checkIsBuy(long id) {
-        String query = "SELECT isBuy FROM `chợ` WHERE id = ?";
+        String query = "SELECT isBuy FROM `market` WHERE id = ?";
         try (Connection con = PKoolVN.getConnection();
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setLong(1, id);

@@ -9,10 +9,10 @@ services:
       MYSQL_USER: langla_user
       MYSQL_PASSWORD: langla123
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./SQL/langla (13).sql:/docker-entrypoint-initdb.d/init.sql
+      - ./SQL/langla_init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   mysql_data: 

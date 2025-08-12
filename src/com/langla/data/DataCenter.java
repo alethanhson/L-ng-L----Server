@@ -1167,8 +1167,8 @@ public class DataCenter {
         } catch (SQLException e) {
             Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
         }
-        //load chợ
-        query = "SELECT * FROM `chợ`";
+        //load market
+        query = "SELECT * FROM `market`";
         try (Connection con = PKoolVN.getConnection();
              PreparedStatement pstmt =  con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
