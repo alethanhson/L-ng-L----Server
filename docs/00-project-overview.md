@@ -230,6 +230,16 @@ com.langla/
 - [06-boss-combat-system.md](06-boss-combat-system.md) - Hệ thống Boss & Combat
 - [07-reward-welfare-system.md](07-reward-welfare-system.md) - Hệ thống Reward & Phúc Lợi
 - [08-ranking-event-system.md](08-ranking-event-system.md) - Hệ thống Bảng Xếp Hạng & Sự Kiện
+- [09-combat-damage-system.md](09-combat-damage-system.md) - Hệ thống Combat & Damage Calculation
+- [10-experience-leveling-system.md](10-experience-leveling-system.md) - Hệ thống EXP & Level
+- [11-equipment-upgrade-system.md](11-equipment-upgrade-system.md) - Hệ thống Nâng Cấp Trang Bị
+- [12-item-exp-system.md](12-item-exp-system.md) - Hệ thống EXP Vật Phẩm
+- [13-dungeon-special-maps-system.md](13-dungeon-special-maps-system.md) - Hệ thống Phụ Bản Đặc Biệt
+- [14-drop-loot-system.md](14-drop-loot-system.md) - Hệ thống Rớt Đồ (Loot/Drop)
+- [15-visual-display-system.md](15-visual-display-system.md) - Hệ thống Hiển Thị & Giao Diện
+- [16-database-connection-system.md](16-database-connection-system.md) - Hệ thống Database & Connection Pool
+- [17-message-protocol-system.md](17-message-protocol-system.md) - Hệ thống Message & Giao Thức Truyền Thông
+- [18-auto-system.md](18-auto-system.md) - Hệ thống Auto & Tự Động
 
 ### 2. Tài Liệu Kỹ Thuật
 - **API Documentation:** Tài liệu API
