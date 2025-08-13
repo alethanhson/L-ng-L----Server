@@ -37,6 +37,9 @@ public class PKoolVNDB {
     public static boolean addshop = false;
     public static boolean addshop_hokage = false;
     
+    // EXP configuration
+    public static int EXP_MULTIPLIER = 5; // Giá trị mặc định
+    
     // Additional fields
     public static String z = "";
     public static String buid = "";
@@ -72,6 +75,9 @@ public class PKoolVNDB {
             isDebug = Boolean.parseBoolean(properties.getProperty("pkoolvn.debug", String.valueOf(isDebug)));
             addshop = Boolean.parseBoolean(properties.getProperty("pkoolvn.tool-addshop", String.valueOf(addshop)));
             addshop_hokage = Boolean.parseBoolean(properties.getProperty("pkoolvn.tool-addshop-hokage", String.valueOf(addshop_hokage)));
+            
+            // Load EXP multiplier
+            EXP_MULTIPLIER = Integer.parseInt(properties.getProperty("pkoolvn.exp-multiplier", String.valueOf(EXP_MULTIPLIER)));
             
         } catch (IOException e) {
             System.err.println("Không thể đọc file cấu hình: " + e.getMessage());

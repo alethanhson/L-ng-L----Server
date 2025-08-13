@@ -39,16 +39,16 @@ import org.json.JSONArray;
 import static com.langla.lib.Binary.x;
 
 public class DataCenter {
-    
+
     static {
         DataCenter.bg = null;
         DataCenter.bh = new Object();
         DataCenter.be = new Vector();
 
         PKoolVNDB.loadProperties();
-        DataCenter.gI().readArrDataGame(true);
-        DataCenter.gI().Load_Data();
-
+        // Xóa 2 dòng này khỏi static block
+        // DataCenter.gI().readArrDataGame(true);
+        // DataCenter.gI().Load_Data();
     }
     public String ipServer;
     public int portServer;
@@ -103,12 +103,12 @@ public class DataCenter {
     public java.util.Map<Integer, List<ItemShop>> shopTemplates = new java.util.HashMap<>();
     public java.util.Map<Integer, String> shopNames = new java.util.HashMap<>();
     public java.util.Map<Integer, Integer> lockMap = new java.util.HashMap<>();
-    public Vector <ChoTemplate> DataCho = new Vector <ChoTemplate>();
-    public int[] arrVongQuayNap = new int[]{0, 80, 480, 880, 1880, 3280};
-    public List <PhucLoiTpl> DataPhucLoi = new ArrayList<>();
-    public List <LuckyTpl> DataLucky = new ArrayList<>();
+    public Vector<ChoTemplate> DataCho = new Vector<ChoTemplate>();
+    public int[] arrVongQuayNap = new int[] { 0, 80, 480, 880, 1880, 3280 };
+    public List<PhucLoiTpl> DataPhucLoi = new ArrayList<>();
+    public List<LuckyTpl> DataLucky = new ArrayList<>();
 
-    public List <Item> dataCaiTrang = new ArrayList<>();
+    public List<Item> dataCaiTrang = new ArrayList<>();
 
     public PhucLoiInfo phucLoiInfo = new PhucLoiInfo();
     public ItemOptionTemplate[] ItemOptionTemplate;
@@ -177,13 +177,15 @@ public class DataCenter {
     public ObjectMapper createObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false); // Không gặp lỗi khi serialize đối tượng trống
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false); // Không gặp lỗi khi serialize đối
+                                                                                 // tượng trống
 
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
+
     public DataCenter() {
-        this.ipServer = "http://localhost/";
+        this.ipServer = "http://localhost:8080/";
         this.portServer = 80;
         this.c = "";
         this.f = false;
@@ -203,21 +205,21 @@ public class DataCenter {
         this.am = new Hashtable();
         this.an = new Hashtable();
         this.dataTreoCho = new String[2][];
-        this.aU = "http://localhost/";
+        this.aU = "http://localhost:8080/";
         this.aV = this.aU + "checkpc.txt";
         this.aW = this.aU + "checkandroid.txt";
         this.aX = this.aU + "checkios.txt";
         this.aY = "";
         this.aZ = "";
     }
-    
+
     public static DataCenter gI() {
         if (DataCenter.bg == null) {
             DataCenter.bg = new DataCenter();
         }
         return DataCenter.bg;
     }
-    
+
     private void read1(Reader reader) throws java.io.IOException {
         byte[][] af = new byte[reader.readByte()][];
         for (int i = 0; i < af.length; ++i) {
@@ -230,7 +232,7 @@ public class DataCenter {
             this.af = af;
         }
     }
-    
+
     private void read2(Reader reader) throws java.io.IOException {
         LangLa_hj[] i = new LangLa_hj[reader.readShort()];
         for (int j = 0; j < i.length; ++j) {
@@ -257,7 +259,7 @@ public class DataCenter {
             this.I = i;
         }
     }
-    
+
     private void read3(Reader reader) throws java.io.IOException {
         Vector<Short> c = new Vector<Short>();
         LangLa_hn[] j = new LangLa_hn[reader.readShort()];
@@ -295,7 +297,7 @@ public class DataCenter {
             this.ah.addAll(c);
         }
     }
-    
+
     private void read4(Reader reader) throws java.io.IOException {
         short sl = reader.readShort();
         LangLa_jy[] l = new LangLa_jy[sl];
@@ -331,8 +333,9 @@ public class DataCenter {
             this.L = l;
         }
     }
+
     public LangLa_iw[] LangLa_iw;
-    
+
     private void read5(Reader reader) throws java.io.IOException {
         Hashtable<Short, LangLa_iw> k = new Hashtable<Short, LangLa_iw>();
         short short1 = reader.readShort();
@@ -380,7 +383,7 @@ public class DataCenter {
             this.K = k;
         }
     }
-    
+
     private void read6(Reader reader) throws java.io.IOException {
         short[][] dataWayPoint = new short[reader.readShort()][14];
         for (int index = 0; index < dataWayPoint.length; ++index) {
@@ -403,7 +406,7 @@ public class DataCenter {
             this.dataWayPoint = dataWayPoint;
         }
     }
-    
+
     private static Hashtable getHashtable1(Reader reader) throws java.io.IOException {
         Hashtable<Short, LangLa_et> hashtable = new Hashtable<Short, LangLa_et>();
         short short1 = reader.readShort();
@@ -413,7 +416,8 @@ public class DataCenter {
             DataHashtable1.data[n] = new DataHashtable1[short2];
             for (short n2 = 0; n2 < short2; ++n2) {
                 Short s = Short.valueOf(reader.readShort());
-                LangLa_et et = new LangLa_et(n, reader.readUnsignedByte(), reader.readUnsignedByte(), reader.readShort(), reader.readShort());
+                LangLa_et et = new LangLa_et(n, reader.readUnsignedByte(), reader.readUnsignedByte(),
+                        reader.readShort(), reader.readShort());
                 DataHashtable1.data[n][n2] = new DataHashtable1();
                 DataHashtable1.data[n][n2].id = s;
                 DataHashtable1.data[n][n2].et = et;
@@ -422,16 +426,16 @@ public class DataCenter {
         }
         return hashtable;
     }
-    
+
     public static class DataHashtable1 {
-        
+
         public static DataHashtable1[][] data;
         public static DataHashtable1[][] data2;
         public static DataHashtable1[][] data3;
         public short id;
         public LangLa_et et;
     }
-    
+
     private static Hashtable getHashtable2(Reader reader) throws java.io.IOException {
         Hashtable<Short, LangLa_et> hashtable = new Hashtable<Short, LangLa_et>();
         short short1 = reader.readShort();
@@ -446,24 +450,24 @@ public class DataCenter {
         }
         return hashtable;
     }
-    
+
     public static class DataHashtable2 {
-        
+
         public static DataHashtable2[] data;
         public static DataHashtable2[] data2;
         public static DataHashtable2[] data3;
         public short id;
         public LangLa_et et;
     }
-    
+
     private static void addVec(short n) {
         if (!DataCenter.be.contains(n)) {
             DataCenter.be.addElement(n);
         }
     }
-    
+
     public void readArrDataGame2(Message msg) {
-        
+
         Reader readerArrDataGame2 = msg.reader;
         try {
             Vector vec = new Vector();
@@ -508,28 +512,33 @@ public class DataCenter {
             this.read4(msg.reader);
             this.read5(msg.reader);
             this.read6(msg.reader);
-//            Binary.writeUTF("ItemOptionTemplate.txt", mArrays.toString(ItemOptionTemplate));
+            // Binary.writeUTF("ItemOptionTemplate.txt",
+            // mArrays.toString(ItemOptionTemplate));
         } catch (Exception e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         } finally {
             if (msg != null) {
                 msg.close();
             }
         }
     }
-    
+
     public void readArrDataGame(boolean b) {
         Reader readerArrDataGame = null;
         try {
+            System.out.println("[DEBUG] Bắt đầu đọc arr_data_game...");
+
             if ((readerArrDataGame = Binary.createReader("arr_data_game")) == null) {
-                return;
+                System.err.println("[ERROR] Không thể tạo Reader cho arr_data_game");
+                throw new RuntimeException("File arr_data_game.bin không tồn tại hoặc bị lỗi");
             }
+
             this.DataIconChar = new DataIconChar[readerArrDataGame.readByte()];
             for (int i = 0; i < this.DataIconChar.length; ++i) {
                 this.DataIconChar[i] = new DataIconChar(i);
                 this.DataIconChar[i].idIcon = readerArrDataGame.readShort();
             }
-            
+
             this.DataNameClass = new DataNameClass[readerArrDataGame.readByte()];
             for (int j = 0; j < this.DataNameClass.length; ++j) {
                 this.DataNameClass[j] = new DataNameClass(j);
@@ -588,7 +597,6 @@ public class DataCenter {
                     this.Task[a2].vStep.addElement(obj);
                 }
 
-
             }
             this.DataTaskDay = new DataTaskDay[readerArrDataGame.readUnsignedByte()];
             for (int n = 0; n < this.DataTaskDay.length; ++n) {
@@ -610,7 +618,7 @@ public class DataCenter {
                         o[n2].createBlock(new Reader(o[n2].arrMap));
                         o[n2].notBlock = false;
                     } catch (Exception ex) {
-                        Utlis.logError(Player.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                        Utlis.logError(Player.class, ex, "Da say ra loi:\n" + ex.getMessage());
                     }
                 }
                 String jsonNpc = Binary.readUTF("Npc\\" + n2 + ".json");
@@ -623,7 +631,6 @@ public class DataCenter {
                     JSONArray jsonArray = new JSONArray(jsonMob);
                     o[n2].loadMob(jsonArray);
                 }
-
 
             }
             this.MapTemplate = o;
@@ -651,7 +658,10 @@ public class DataCenter {
                 this.EffectTemplate = aa;
             }
 
+            // Khởi tạo ItemTemplate
             ItemTemplate[] v = new ItemTemplate[readerArrDataGame.readShort()];
+            System.out.println("[DEBUG] Đang đọc " + v.length + " ItemTemplate...");
+
             for (int n5 = 0; n5 < v.length; ++n5) {
                 v[n5] = new ItemTemplate(n5);
                 v[n5].name = Caption.check(readerArrDataGame.readUTF());
@@ -666,9 +676,12 @@ public class DataCenter {
                 v[n5].idMob = readerArrDataGame.readShort();
                 v[n5].idChar = readerArrDataGame.readShort();
             }
+
             if (this.ItemTemplate == null || this.ItemTemplate.length == 0) {
                 this.ItemTemplate = v;
+                System.out.println("[DEBUG] ItemTemplate đã được khởi tạo: " + this.ItemTemplate.length + " items");
             }
+
             this.MobTemplate = new MobTemplate[readerArrDataGame.readShort()];
             for (int n6 = 0; n6 < this.MobTemplate.length; ++n6) {
 
@@ -686,7 +699,6 @@ public class DataCenter {
                 String utf = this.MobTemplate[n6].utf = readerArrDataGame.readUTF();
                 String utf2 = this.MobTemplate[n6].utf2 = readerArrDataGame.readUTF();
 
-
                 String s = utf;
                 MobTemplate mobTemplate2 = mobTemplate;
                 String[] a3 = Utlis.split(s, ",");
@@ -700,7 +712,6 @@ public class DataCenter {
                     mobTemplate2.l[n8] = Integer.parseInt(a4[n8]);
                 }
             }
-
 
             this.NpcTemplate = new NpcTemplate[readerArrDataGame.readShort()];
             for (int n9 = 0; n9 < this.NpcTemplate.length; ++n9) {
@@ -769,7 +780,7 @@ public class DataCenter {
             DataHashtable1.data3 = DataHashtable1.data;
             this.am = getHashtable2(readerArrDataGame);
             DataHashtable2.data3 = DataHashtable2.data;
-            
+
             LangLa_gv[] e = new LangLa_gv[readerArrDataGame.readUnsignedByte()];
             for (int n13 = 0; n13 < e.length; ++n13) {
                 e[n13] = new LangLa_gv();
@@ -1091,21 +1102,32 @@ public class DataCenter {
             }
             this.typeArr = readerArrDataGame.readByte();
             byte[] data = Binary.read("arr_data_game2");
-            writerArrDataGame2 = new Writer();            
+            writerArrDataGame2 = new Writer();
             for (int i = 0; i < data.length; i++) {
                 writerArrDataGame2.writeByte(data[i]);
             }
             this.readArrDataGame2(new Message((byte) 0, data));
-//            for (int n11 = 0; n11 < this.Skill.length; n11 = (short) (n11 + 1)) {
-//                
-//                Skill[n11].getItemOption();
-//            }
+            // for (int n11 = 0; n11 < this.Skill.length; n11 = (short) (n11 + 1)) {
+            //
+            // Skill[n11].getItemOption();
+            // }
         } catch (Exception ex5) {
+            System.err.println("[ERROR] Lỗi khi đọc arr_data_game: " + ex5.getMessage());
             ex5.printStackTrace();
-            byte[] c;
-            if ((c = Binary.c(PKoolVNDB.URL_WEB+ "arr_data_game.bin")) != null) {
-                Binary.write("arr_data_game", c);
-                this.readArrDataGame(b);
+
+            // Thử tải từ web
+            try {
+                byte[] c = Binary.c(PKoolVNDB.URL_WEB + "/arr_data_game.bin");
+                if (c != null) {
+                    Binary.write("arr_data_game", c);
+                    System.out.println("[DEBUG] Thử đọc lại arr_data_game từ web...");
+                    this.readArrDataGame(b);
+                } else {
+                    throw new RuntimeException("Không thể tải file arr_data_game.bin từ web");
+                }
+            } catch (Exception e) {
+                System.err.println("[ERROR] Không thể khôi phục dữ liệu: " + e.getMessage());
+                throw new RuntimeException("Không thể load dữ liệu game", e);
             }
         } finally {
             if (readerArrDataGame != null) {
@@ -1114,6 +1136,7 @@ public class DataCenter {
             this.ba = true;
         }
     }
+
     public ChoTemplate findChoById(long id) {
         for (ChoTemplate cho : this.DataCho) {
             if (cho.id == id) {
@@ -1122,6 +1145,7 @@ public class DataCenter {
         }
         return null; // Trả về null nếu không tìm thấy id phù hợp trong danh sách
     }
+
     public boolean deleteChoById(long id) {
         for (Iterator<ChoTemplate> iterator = this.DataCho.iterator(); iterator.hasNext();) {
             ChoTemplate cho = iterator.next();
@@ -1133,18 +1157,19 @@ public class DataCenter {
         return false; // Trả về false nếu không tìm thấy id phù hợp trong danh sách
     }
 
-    public void Load_Data(){
-        //Load Shop
+    public void Load_Data() {
+        // Load Shop
         String query = "SELECT * FROM `shop`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 int id_shop = red.getInt("id_shop");
                 String shopName = red.getString("Tên_Shop"); // Giả sử cột tên cửa hàng là "shop_name"
                 shopNames.put(id_shop, shopName);
                 ObjectMapper mapper = DataCenter.gI().mapper;
-                List<ItemShop> itemList = mapper.readValue(red.getString("list_item"), TypeFactory.defaultInstance().constructCollectionType(List.class, ItemShop.class));
+                List<ItemShop> itemList = mapper.readValue(red.getString("list_item"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, ItemShop.class));
 
                 for (ItemShop item : itemList) {
                     item.id_buy = DataCache.idbuyshop++; // Thiết lập id_buy
@@ -1152,12 +1177,12 @@ public class DataCenter {
                 shopTemplates.computeIfAbsent(id_shop, k -> new ArrayList<>()).addAll(itemList);
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        //Load Lock Map
+        // Load Lock Map
         query = "SELECT * FROM `map_lock`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 int id = red.getInt("id");
@@ -1165,12 +1190,12 @@ public class DataCenter {
                 lockMap.put(id, lv);
             }
         } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        //load market
+        // load market
         query = "SELECT * FROM `market`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 ObjectMapper mapper = DataCenter.gI().mapper;
@@ -1185,12 +1210,12 @@ public class DataCenter {
                 this.DataCho.add(cho);
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        //Load Boss
+        // Load Boss
         query = "SELECT * FROM `boss`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 BossTpl newboss = new BossTpl();
@@ -1205,42 +1230,44 @@ public class DataCenter {
                 newboss.exp = red.getInt("exp");
                 newboss.min_spam = red.getInt("minute_respam");
                 newboss.hou_spam = red.getInt("hour_respam");
-                newboss.timeDelay = System.currentTimeMillis()+Utlis.nextInt(10000,60000);
+                newboss.timeDelay = System.currentTimeMillis() + Utlis.nextInt(10000, 60000);
                 BossRunTime.gI().listBoss.add(newboss);
             }
         } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        //load phúc lợi
+        // load phúc lợi
         query = "SELECT * FROM `phuc_loi`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 ObjectMapper mapper = DataCenter.gI().mapper;
 
-                this.DataPhucLoi = mapper.readValue(red.getString("str"), TypeFactory.defaultInstance().constructCollectionType(List.class, PhucLoiTpl.class));
+                this.DataPhucLoi = mapper.readValue(red.getString("str"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, PhucLoiTpl.class));
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        //load lucky
+        // load lucky
         query = "SELECT * FROM `lucky`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 ObjectMapper mapper = DataCenter.gI().mapper;
 
-                this.DataLucky = mapper.readValue(red.getString("str"), TypeFactory.defaultInstance().constructCollectionType(List.class, LuckyTpl.class));
+                this.DataLucky = mapper.readValue(red.getString("str"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, LuckyTpl.class));
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        //load gia tộc
+        // load gia tộc
         query = "SELECT * FROM `giatoc`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             Family.gI().listFamily.clear();
             while (red.next()) {
@@ -1252,78 +1279,84 @@ public class DataCenter {
 
                 familyTemplate.info = mapper.readValue(red.getString("info"), FamilyInfo.class);
 
+                familyTemplate.litsItem = mapper.readValue(red.getString("item"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, Item.class));
 
-                familyTemplate.litsItem = mapper.readValue(red.getString("item"),  TypeFactory.defaultInstance().constructCollectionType(List.class, Item.class));
+                familyTemplate.listMember = mapper.readValue(red.getString("member"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, Family_Member.class));
 
+                familyTemplate.listSkill = mapper.readValue(red.getString("skill"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, SkillClan.class));
 
-                familyTemplate.listMember = mapper.readValue(red.getString("member"),  TypeFactory.defaultInstance().constructCollectionType(List.class, Family_Member.class));
-
-
-                familyTemplate.listSkill = mapper.readValue(red.getString("skill"),TypeFactory.defaultInstance().constructCollectionType(List.class, SkillClan.class));
-
-
-                familyTemplate.dataLog = mapper.readValue(red.getString("log"),  TypeFactory.defaultInstance().constructCollectionType(List.class, FamilyLog.class));
+                familyTemplate.dataLog = mapper.readValue(red.getString("log"),
+                        TypeFactory.defaultInstance().constructCollectionType(List.class, FamilyLog.class));
 
                 Family.gI().listFamily.add(familyTemplate);
 
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-//        Gson gsons = new Gson();
-//        String itemListJsons = gsons.toJson(this.DataPhucLoi);
-//        // Phân tách các JSON bằng dấu xuống dòng
-//        itemListJsons = itemListJsons.replace("},", "},\n\n\n");
-//        System.out.println(itemListJsons);
+        // Gson gsons = new Gson();
+        // String itemListJsons = gsons.toJson(this.DataPhucLoi);
+        // // Phân tách các JSON bằng dấu xuống dòng
+        // itemListJsons = itemListJsons.replace("},", "},\n\n\n");
+        // System.out.println(itemListJsons);
         query = "SELECT * FROM `phucloi_info`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 int id = red.getInt("id");
                 long value = red.getLong("value");
-                if(id == 0){
+                if (id == 0) {
                     phucLoiInfo.TongRank = (int) value;
-                } else if(id == 1){
+                } else if (id == 1) {
                     phucLoiInfo.RankCaoNhat = (int) value;
-                } else if(id == 2){
+                } else if (id == 2) {
                     phucLoiInfo.TongDauTu = (int) value;
-                }else if(id == 3){
+                } else if (id == 3) {
                     phucLoiInfo.TongSoLanMuaTheThang = (int) value;
-                } else if(id == 4){
+                } else if (id == 4) {
                     phucLoiInfo.ThoiGianX2Online = value;
                 }
             }
         } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
 
         query = "SELECT * FROM `bangxephang`";
         try (Connection con = PKoolVN.getConnection();
-             PreparedStatement pstmt =  con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 int id = red.getInt("id");
                 ObjectMapper mapper = DataCenter.gI().mapper;
 
-                if(id == 1){
-                    BangXepHang.gI().listCaoThu = mapper.readValue(red.getString("list"),  TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
-                } else  if(id == 2){
-                    BangXepHang.gI().listCuaCai = mapper.readValue(red.getString("list"),  TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
-                } else  if(id == 3){
-                    BangXepHang.gI().listTaiPhu = mapper.readValue(red.getString("list"),  TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
-                } else  if(id == 7){
-                    BangXepHang.gI().listCuongHoa = mapper.readValue(red.getString("list"),  TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
-                } else  if(id == 8){
-                    BangXepHang.gI().listNapNhieu = mapper.readValue(red.getString("list"),  TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
+                if (id == 1) {
+                    BangXepHang.gI().listCaoThu = mapper.readValue(red.getString("list"),
+                            TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
+                } else if (id == 2) {
+                    BangXepHang.gI().listCuaCai = mapper.readValue(red.getString("list"),
+                            TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
+                } else if (id == 3) {
+                    BangXepHang.gI().listTaiPhu = mapper.readValue(red.getString("list"),
+                            TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
+                } else if (id == 7) {
+                    BangXepHang.gI().listCuongHoa = mapper.readValue(red.getString("list"),
+                            TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
+                } else if (id == 8) {
+                    BangXepHang.gI().listNapNhieu = mapper.readValue(red.getString("list"),
+                            TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
                 }
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
 
         UTPKoolVN.Print("Import Database Successfully.!");
     }
+
     public void updateShopToData(int idshop) {
         // Kết nối đến cơ sở dữ liệu
         try (Connection con = PKoolVN.getConnection()) {
@@ -1339,11 +1372,11 @@ public class DataCenter {
                     pstmt.setInt(2, idshop);
                     pstmt.executeUpdate();
                 } catch (SQLException e) {
-                    Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+                    Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
                 }
             }
         } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
     }
 
@@ -1356,14 +1389,15 @@ public class DataCenter {
                 pstmt.setInt(2, id);
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+                Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
             }
         } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
     }
+
     public int getVongQuayNap(int diem, int tile) {
-        for(int var1 = this.arrVongQuayNap.length - 1; var1 >= 0; --var1) {
+        for (int var1 = this.arrVongQuayNap.length - 1; var1 >= 0; --var1) {
             if (diem >= this.arrVongQuayNap[var1]) {
                 return var1 - tile;
             }
@@ -1373,7 +1407,7 @@ public class DataCenter {
     }
 
     public int getTile(int diem) {
-        for(int var1 = this.arrVongQuayNap.length - 1; var1 >= 0; --var1) {
+        for (int var1 = this.arrVongQuayNap.length - 1; var1 >= 0; --var1) {
             if (diem >= this.arrVongQuayNap[var1]) {
                 return var1;
             }
@@ -1381,8 +1415,9 @@ public class DataCenter {
 
         return 0;
     }
+
     public int getDiem(int diem) {
-        for(int var1 = this.arrVongQuayNap.length - 1; var1 >= 0; --var1) {
+        for (int var1 = this.arrVongQuayNap.length - 1; var1 >= 0; --var1) {
             if (diem >= this.arrVongQuayNap[var1]) {
                 return this.arrVongQuayNap[var1];
             }
@@ -1390,41 +1425,43 @@ public class DataCenter {
 
         return 0;
     }
-    public PhucLoiTpl getPhucLoi_Tpl (short idRequest){
-        for (int i = 0; i < DataCenter.gI().DataPhucLoi.size(); i++){
-            PhucLoiTpl phucLoi =  DataCenter.gI().DataPhucLoi.get(i);
-            if(phucLoi.idRequest == idRequest){
+
+    public PhucLoiTpl getPhucLoi_Tpl(short idRequest) {
+        for (int i = 0; i < DataCenter.gI().DataPhucLoi.size(); i++) {
+            PhucLoiTpl phucLoi = DataCenter.gI().DataPhucLoi.get(i);
+            if (phucLoi.idRequest == idRequest) {
                 return phucLoi;
             }
         }
         return null;
     }
 
-    public SkillClan getSkillClan (byte id){
-        for (int i = 0; i < DataCenter.gI().SkillClan.length; i++){
-            SkillClan skillClan =  DataCenter.gI().SkillClan[id];
-            if(skillClan != null){
+    public SkillClan getSkillClan(byte id) {
+        for (int i = 0; i < DataCenter.gI().SkillClan.length; i++) {
+            SkillClan skillClan = DataCenter.gI().SkillClan[id];
+            if (skillClan != null) {
                 return skillClan;
             }
         }
         return null;
     }
 
-    public SkillClan getSkillViThu (byte id){
-        for (int i = 0; i < DataCenter.gI().vSkillViThu.size(); i++){
+    public SkillClan getSkillViThu(byte id) {
+        for (int i = 0; i < DataCenter.gI().vSkillViThu.size(); i++) {
             SkillClan skillClan = (SkillClan) DataCenter.gI().vSkillViThu.get(i);
-            if(skillClan != null && skillClan.id == id){
+            if (skillClan != null && skillClan.id == id) {
                 return skillClan;
             }
         }
         return null;
     }
-    public int getLockMap (int id){
+
+    public int getLockMap(int id) {
         return lockMap.getOrDefault(id, -1);
     }
 
-    public int getValueCheTao (int id){
-        switch (id){
+    public int getValueCheTao(int id) {
+        switch (id) {
             case 0:
                 return 1;
             case 1:
@@ -1443,8 +1480,8 @@ public class DataCenter {
         return -1;
     }
 
-    public int getHoatLucCheTao (int id){
-        switch (id){
+    public int getHoatLucCheTao(int id) {
+        switch (id) {
             case 0:
                 return 5;
             case 1:
@@ -1467,8 +1504,8 @@ public class DataCenter {
         return -1;
     }
 
-    public int getItemAddCheTao (int id){
-        switch (id){
+    public int getItemAddCheTao(int id) {
+        switch (id) {
             case 0:
                 return 176;
             case 1:
@@ -1490,15 +1527,16 @@ public class DataCenter {
         }
         return -1;
     }
+
     public static class DataImgEntity {
-        
+
         private short s2;
         private short s3;
         private byte[][] array;
         private LangLa_hz[] array2;
-        
+
     }
-    
+
     private static int[] readArrayInt(Reader reader) throws java.io.IOException {
         int[] array = new int[reader.readInt()];
         for (int i = 0; i < array.length; ++i) {
@@ -1506,14 +1544,16 @@ public class DataCenter {
         }
         return array;
     }
+
     private static int[] readArrayInt2(Reader reader) throws java.io.IOException {
         int[] array = new int[reader.readInt()];
         for (int i = 0; i < array.length; ++i) {
             array[i] = reader.readInt();
-//           UPKoolVN.Print(""+array[i]);
+            // UPKoolVN.Print(""+array[i]);
         }
         return array;
     }
+
     private static long[] readArrayLong(Reader reader) throws java.io.IOException {
         long[] array = new long[reader.readInt()];
         for (int i = 0; i < array.length; ++i) {
@@ -1521,7 +1561,7 @@ public class DataCenter {
         }
         return array;
     }
-    
+
     private static String[] readArrayString(Reader reader) throws java.io.IOException {
         String[] array = new String[reader.readInt()];
         for (int i = 0; i < array.length; ++i) {
@@ -1529,6 +1569,7 @@ public class DataCenter {
         }
         return array;
     }
+
     private static String[] readArrayString2(Reader reader) throws java.io.IOException {
         String[] array = new String[reader.readInt()];
         for (int i = 0; i < array.length; ++i) {
@@ -1536,6 +1577,7 @@ public class DataCenter {
         }
         return array;
     }
+
     public static Vector h() {
         Vector<short[]> vector = new Vector<short[]>();
         for (int i = 0; i < gI().dataWayPoint.length; ++i) {
@@ -1543,35 +1585,35 @@ public class DataCenter {
         }
         return vector;
     }
-    
+
     public Skill getSkillWithIdAndLevel(int id, int level) {
         for (int i = 0; i < this.Skill.length; i++) {
             if (this.Skill[i].idTemplate == id && this.Skill[i].level == level) {
                 return this.Skill[i].cloneSkill();
             }
-            
+
         }
         return null;
     }
-    
+
     public static int GetLevelFormExp(long var1) {
-        
+
         int var3;
         for (var3 = 0; var3 < DataCenter.gI().exps.length && var1 >= DataCenter.gI().exps[var3]; ++var3) {
             var1 -= DataCenter.gI().exps[var3];
         }
-        
+
         return var3;
     }
-    
+
     public static long GetExpFormLevel(int lv) {
-        
+
         long l = 0;
         int var3;
         for (var3 = 0; var3 < DataCenter.gI().exps.length && var3 < lv; ++var3) {
             l += DataCenter.gI().exps[var3];
         }
-        
+
         return l;
     }
 

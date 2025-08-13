@@ -1,6 +1,7 @@
 package com.langla.server.main;
 
 import com.PKoolVNDB;
+import com.langla.data.DataCenter;
 import com.langla.lib.Binary;
 import com.langla.lib.Utlis;
 import com.langla.real.bangxephang.BangXepHang;
@@ -37,17 +38,43 @@ public class Main {
     public static void main(String[] args) {
         printBanner();
         System.out.println("SERVER IP => "+PKoolVNDB.getIp());
-//       DataCenter.gI().readArrDataGame(true);
-        Map.createMap();
+        
+        try {
+            // Bước 1: Khởi tạo DataCenter
+            DataCenter dataCenter = DataCenter.gI();
+            System.out.println("!-PKoolVN =>>>| DataCenter initialized successfully!");
+            
+            // Bước 2: Load dữ liệu game
+            dataCenter.readArrDataGame(true);
+            System.out.println("!-PKoolVN =>>>| Game data loaded successfully!");
+            
+            // Bước 3: Kiểm tra ItemTemplate đã được load
+            if (dataCenter.ItemTemplate == null || dataCenter.ItemTemplate.length == 0) {
+                throw new RuntimeException("ItemTemplate không được load thành công!");
+            }
+            System.out.println("!-PKoolVN =>>>| ItemTemplate loaded: " + dataCenter.ItemTemplate.length + " items");
+            
+            dataCenter.Load_Data();
+            System.out.println("!-PKoolVN =>>>| All data loaded successfully!");
+            
+            // Bước 4: Tạo Map sau khi có đủ dữ liệu
+            Map.createMap();
+            System.out.println("!-PKoolVN =>>>| Map created successfully!");
+            
+        } catch (Exception e) {
+            System.err.println("!-PKoolVN =>>>| ERROR during initialization: " + e.getMessage());
+            e.printStackTrace();
+            return; // Dừng server nếu có lỗi
+        }
+        
+        // Tiếp tục khởi động các module khác
         openServerSocket();
         activeCommandLine();
         returnCho();
         BangXepHang();
-
         BauCua.gI().Start();
-//        BossRunTime.gI().StartBossRunTime();
-        if(!PKoolVNDB.isDebug)
-        {
+        
+        if(!PKoolVNDB.isDebug) {
             SwingUtilities.invokeLater(Main::createAndShowGUI);
             AutoBaoTri();
         }

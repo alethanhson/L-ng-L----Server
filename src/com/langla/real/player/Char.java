@@ -1911,7 +1911,8 @@ public class Char extends Entity {
 
     public void addExp(long exp) {
         if(infoChar.isKhoaCap) return;
-        exp *= 5; // open phải sửa x5 exp
+        // Sử dụng biến cấu hình thay vì hardcode
+        exp *= PKoolVNDB.EXP_MULTIPLIER;
         int level = this.level();
         this.infoChar.exp += exp;
         int levelNew = this.level();

@@ -18,7 +18,6 @@ import com.langla.server.lib.Message;
 import java.io.IOException;
 import java.util.*;
 
-
 public class Map {
 
     public static Map[] maps;
@@ -50,32 +49,34 @@ public class Map {
                 zone.createNpc();
                 zone.createMob();
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
             zone.createThread();
             listZone.add(zone);
         }
     }
-    public synchronized short createZoneCustom(int GroupId, int FamilyId, int timeClose, long timeStartHoatDong, boolean isHoatDongTime, boolean isTimeHoatDong, int levelMob, int xExp, int xHp, boolean isHoiSinhMob) {
+
+    public synchronized short createZoneCustom(int GroupId, int FamilyId, int timeClose, long timeStartHoatDong,
+            boolean isHoatDongTime, boolean isTimeHoatDong, int levelMob, int xExp, int xHp, boolean isHoiSinhMob) {
         try {
             short id = DataCache.getIDZoneCustom();
             Zone zone = new Zone(this, id);
             zone.infoMap.time = timeClose;
-            if(zone.map.mapID == 46 || zone.map.mapID == 47){
+            if (zone.map.mapID == 46 || zone.map.mapID == 47) {
                 zone.infoMap.timeClose = 7200000;
             } else {
                 zone.infoMap.timeClose = timeClose;
             }
             zone.FamilyId = FamilyId;
-            zone.GroupId= GroupId;
+            zone.GroupId = GroupId;
             zone.type = 1;
             zone.map.levelMap = levelMob;
             zone.infoMap.timeStartHoatDong = timeStartHoatDong;
             zone.infoMap.isHoatDongTime = isHoatDongTime;
             zone.infoMap.isTimeHoatDong = isTimeHoatDong;
             zone.createNpc();
-            if(zone.map.mapID == 46 || zone.map.mapID == 47){
-//                zone.setMobFamilyGate(levelMob);
+            if (zone.map.mapID == 46 || zone.map.mapID == 47) {
+                // zone.setMobFamilyGate(levelMob);
             } else {
                 zone.setMobCusTom(levelMob, xExp, xHp, isHoiSinhMob);
             }
@@ -83,38 +84,49 @@ public class Map {
             listZoneCusTom.add(zone);
             return id;
         } catch (Exception ex) {
-            Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
             return -1;
         }
     }
+
     public Zone FindMapCustom(int idZone) {
         try {
-            for (Zone zone: listZoneCusTom){
-                if(zone.zoneID == idZone){
+            for (Zone zone : listZoneCusTom) {
+                if (zone.zoneID == idZone) {
                     return zone;
                 }
             }
         } catch (Exception ex) {
-            Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
         return null;
     }
+
     public synchronized void removeZoneCustom(Zone zone) {
         try {
             listZoneCusTom.remove(zone);
         } catch (Exception ex) {
-            Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
     }
+
     private void createWayPoint() {
         for (int index = 0; index < DataCenter.gI().dataWayPoint.length; ++index) {
             WayPoint waypoint = null;
             if (DataCenter.gI().dataWayPoint[index][0] == this.mapID) {
-                (waypoint = new WayPoint(0, 0)).create(DataCenter.gI().dataWayPoint[index][0], DataCenter.gI().dataWayPoint[index][5], DataCenter.gI().dataWayPoint[index][1], DataCenter.gI().dataWayPoint[index][2], DataCenter.gI().dataWayPoint[index][3], DataCenter.gI().dataWayPoint[index][4], DataCenter.gI().dataWayPoint[index][10], DataCenter.gI().dataWayPoint[index][11]);
+                (waypoint = new WayPoint(0, 0)).create(DataCenter.gI().dataWayPoint[index][0],
+                        DataCenter.gI().dataWayPoint[index][5], DataCenter.gI().dataWayPoint[index][1],
+                        DataCenter.gI().dataWayPoint[index][2], DataCenter.gI().dataWayPoint[index][3],
+                        DataCenter.gI().dataWayPoint[index][4], DataCenter.gI().dataWayPoint[index][10],
+                        DataCenter.gI().dataWayPoint[index][11]);
                 waypoint.isNext = true;
                 this.listWayPoint.add(waypoint);
             } else if (DataCenter.gI().dataWayPoint[index][5] == this.mapID) {
-                (waypoint = new WayPoint(0, 0)).create(DataCenter.gI().dataWayPoint[index][5], DataCenter.gI().dataWayPoint[index][0], DataCenter.gI().dataWayPoint[index][6], DataCenter.gI().dataWayPoint[index][7], DataCenter.gI().dataWayPoint[index][8], DataCenter.gI().dataWayPoint[index][9], DataCenter.gI().dataWayPoint[index][12], DataCenter.gI().dataWayPoint[index][13]);
+                (waypoint = new WayPoint(0, 0)).create(DataCenter.gI().dataWayPoint[index][5],
+                        DataCenter.gI().dataWayPoint[index][0], DataCenter.gI().dataWayPoint[index][6],
+                        DataCenter.gI().dataWayPoint[index][7], DataCenter.gI().dataWayPoint[index][8],
+                        DataCenter.gI().dataWayPoint[index][9], DataCenter.gI().dataWayPoint[index][12],
+                        DataCenter.gI().dataWayPoint[index][13]);
                 waypoint.isNext = false;
                 this.listWayPoint.add(waypoint);
             }
@@ -152,8 +164,8 @@ public class Map {
     }
 
     public boolean addChar(Client client) {
-        if(DataCache.idMapCustom.contains(this.mapID)){
-            if(addCharInMapCustom(client, client.mChar.infoChar.idZoneCustom)){
+        if (DataCache.idMapCustom.contains(this.mapID)) {
+            if (addCharInMapCustom(client, client.mChar.infoChar.idZoneCustom)) {
                 return true;
             } else {
                 client.mChar.veMapMacDinh();
@@ -161,14 +173,14 @@ public class Map {
             }
         }
 
-        if(this.mapID != client.mChar.infoChar.mapDefault && client.mChar.infoChar.isDie) {
+        if (this.mapID != client.mChar.infoChar.mapDefault && client.mChar.infoChar.isDie) {
             client.session.serivce.ShowMessGold("Bạn đã bị trọng thương không thể thực hiện");
             return false;
         }
         int lvmap = DataCenter.gI().getLockMap(this.mapID);
-        if(lvmap > 0){
-            if(client.mChar.level() < lvmap){
-                client.session.serivce.ShowMessGold("Cần đạt cấp "+lvmap+" mới có thể tới khu vực này.");
+        if (lvmap > 0) {
+            if (client.mChar.level() < lvmap) {
+                client.session.serivce.ShowMessGold("Cần đạt cấp " + lvmap + " mới có thể tới khu vực này.");
                 return false;
             }
         }
@@ -185,14 +197,16 @@ public class Map {
         client.session.serivce.ShowMessGold("Khu vực đã đầy.");
         return false;
     }
+
     public boolean addCharInMapCustom(Client client, short idZoneCustom) {
         for (Zone z : listZoneCusTom) {
             if (z.zoneID == idZoneCustom) {
                 boolean ok = z.addChar(client);
                 if (ok) {
                     client.mChar.infoChar.idZoneCustom = idZoneCustom;
-                    if(client.mChar.zone.map.mapID == 89){
-                        client.session.serivce.ShowMessWhite("Vòng lặp ảo tưởng thứ "+client.mChar.zone.infoMap.vongLap);
+                    if (client.mChar.zone.map.mapID == 89) {
+                        client.session.serivce
+                                .ShowMessWhite("Vòng lặp ảo tưởng thứ " + client.mChar.zone.infoMap.vongLap);
                     }
                     return true;
                 }
@@ -201,6 +215,7 @@ public class Map {
         client.mChar.infoChar.idZoneCustom = -1;
         return false;
     }
+
     public void nextMap(Client client) {
         try {
             boolean b = false;
@@ -209,16 +224,16 @@ public class Map {
             if (waypoint_next != null) {
                 WayPoint waypoint = getWayPoint_WhenInMap(waypoint_next.mapNext);
                 if (waypoint != null) {
-                    if(waypoint_next.mapNext == 46 || waypoint_next.mapNext == 47){
-                        if(!client.mChar.zone.infoMap.isSpamwMobAi){
+                    if (waypoint_next.mapNext == 46 || waypoint_next.mapNext == 47) {
+                        if (!client.mChar.zone.infoMap.isSpamwMobAi) {
                             client.session.serivce.ShowMessGold("Chưa thể qua map");
                             client.mChar.backXY();
                             client.session.serivce.setXYChar();
                             return;
                         }
-                        for (int i = 0; i < client.mChar.zone.vecMob.size(); i++){
+                        for (int i = 0; i < client.mChar.zone.vecMob.size(); i++) {
                             Mob mob = client.mChar.zone.vecMob.get(i);
-                            if(!mob.isDie){
+                            if (!mob.isDie) {
                                 client.session.serivce.ShowMessGold("Cần hạ hết quái và boss mới có thể chuyển map");
                                 client.mChar.backXY();
                                 client.session.serivce.setXYChar();
@@ -226,12 +241,12 @@ public class Map {
                             }
                         }
                         FamilyTemplate giaToc = Family.gI().getGiaToc(client.mChar);
-                        if(giaToc != null) {
+                        if (giaToc != null) {
                             int idMapNext = waypoint_next.mapNext;
                             short idZone = giaToc.MapAi.getOrDefault(idMapNext, (short) 0);
 
                             b = Map.maps[waypoint_next.mapNext].addCharInMapCustom(client, idZone);
-                        }  else {
+                        } else {
                             client.session.serivce.ShowMessGold("Bạn chưa có gia tộc [3]");
                         }
                     } else {
@@ -244,7 +259,7 @@ public class Map {
                 client.session.serivce.setXYChar();
             }
         } catch (Exception ex) {
-            Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
@@ -271,9 +286,10 @@ public class Map {
             this.zoneID = zone;
         }
 
-        public ArrayList<Char> getVecChar(){
+        public ArrayList<Char> getVecChar() {
             return this.vecChar;
         }
+
         private void createNpc() {
             vecNpc.clear();
             for (int i = 0; i < map.getMapTemplate().listNpc.size(); i++) {
@@ -282,7 +298,7 @@ public class Map {
                     Npc npc2 = npc1.cloneNpc();
                     vecNpc.add(npc2);
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
                 }
             }
         }
@@ -298,11 +314,12 @@ public class Map {
                     mob2.reSpawn();
                     vecMob.add(mob2);
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
                 }
             }
         }
-        private void setMobFamilyGate(int level){
+
+        private void setMobFamilyGate(int level) {
             vecMob.clear();
             infoMap.isSpamwMobAi = true;
             infoMap.time = 1;
@@ -310,7 +327,7 @@ public class Map {
             infoMap.timeStartHoatDong = System.currentTimeMillis();
             updateTimeHoatDongZone(infoMap.timeStartHoatDong, infoMap.time, infoMap.isHoatDongTime);
             ShowMessWhite("Bắt đầu vượt ải gia tộc");
-            if(map.mapID == 46){
+            if (map.mapID == 46) {
                 int hpMob = 18000;
                 int l = 60;
 
@@ -321,7 +338,7 @@ public class Map {
                     mob.he = 2;
                     mob.cx = (short) (460 + l);
                     mob.cy = 363;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -341,7 +358,7 @@ public class Map {
                     mob.he = 3;
                     mob.cx = (short) (1560 + l);
                     mob.cy = 363;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -362,7 +379,7 @@ public class Map {
                     mob.he = 1;
                     mob.cx = (short) (660 + l);
                     mob.cy = 800;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -382,7 +399,7 @@ public class Map {
                     mob.he = 4;
                     mob.cx = (short) (1660 + l);
                     mob.cy = 800;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -403,7 +420,7 @@ public class Map {
                     mob.he = 5;
                     mob.cx = (short) (3500 + l);
                     mob.cy = 800;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -415,7 +432,7 @@ public class Map {
                     addMobToZone(mob);
                     l += 60;
                 }
-            } else if(map.mapID == 47){
+            } else if (map.mapID == 47) {
                 int hpMob = 18000;
                 int l = 60;
 
@@ -425,7 +442,7 @@ public class Map {
                     mob.level = level;
                     mob.cx = (short) (200 + l);
                     mob.cy = 302;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -446,7 +463,7 @@ public class Map {
                     mob.level = level;
                     mob.cx = (short) (200 + l);
                     mob.cy = 600;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -467,7 +484,7 @@ public class Map {
                     mob.level = level;
                     mob.cx = (short) (200 + l);
                     mob.cy = 873;
-                    mob.timeRemove = 7200000+System.currentTimeMillis();
+                    mob.timeRemove = 7200000 + System.currentTimeMillis();
                     mob.hpGoc = mob.hp = mob.hpFull = level * hpMob;
                     mob.expGoc = mob.hpGoc / 8;
                     mob.paintMiniMap = false;
@@ -482,17 +499,19 @@ public class Map {
             }
 
         }
+
         private void setMobCusTom(int level, int xExp, int xHp, boolean isHoiSinhMob) {
             for (int i = 0; i < map.getMapTemplate().listMob.size(); i++) {
                 try {
                     Mob mob1 = map.getMapTemplate().listMob.get(i);
                     mob1.level = level;
-                    mob1.expGoc = level*xExp;
-                    mob1.hpGoc = level*xHp;
+                    mob1.expGoc = level * xExp;
+                    mob1.hpGoc = level * xHp;
                     mob1.isHoiSinhMob = isHoiSinhMob;
-                    if(DataCache.idBoss.contains(mob1.id)) mob1.isBoss = true;
+                    if (DataCache.idBoss.contains(mob1.id))
+                        mob1.isBoss = true;
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
                 }
             }
             vecMob.clear();
@@ -505,10 +524,11 @@ public class Map {
                     mob2.reSpawnMobHoatDong(1, true);
                     vecMob.add(mob2);
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi:\n" + ex.getMessage());
                 }
             }
         }
+
         public void updateTimeHoatDongZone(long timeStartHoatDong, int timeHoatDong, boolean isHoatDongTime) {
             try {
                 Message msg = Message.c((byte) -80);
@@ -520,6 +540,7 @@ public class Map {
                 Utlis.logError(Session.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
         }
+
         public void clearItemMap() {
             try {
                 Message msg = Message.c((byte) -119);
@@ -529,6 +550,7 @@ public class Map {
                 Utlis.logError(Session.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
         }
+
         public void write(Client client, Writer writer) throws IOException {
             writer.writeShort(zoneID);
             writer.writeShort(map.mapID);
@@ -546,6 +568,7 @@ public class Map {
             writer.writeBoolean(infoMap.isHoatDongTime);
             writer.writeBoolean(infoMap.isTimeHoatDong);
         }
+
         public void ShowMessGold(String text) {
             try {
                 Message msg = new Message((byte) -106);
@@ -556,6 +579,7 @@ public class Map {
             }
 
         }
+
         public void ShowMessWhite(String text) {
             try {
                 Message msg = new Message((byte) -107);
@@ -567,9 +591,12 @@ public class Map {
             }
 
         }
+
         public static final int MAX_CHAR_INZONE = 15;
+
         public boolean addChar(Client client) {
-            if (vecChar.size() > MAX_CHAR_INZONE && type != 1) return false;
+            if (vecChar.size() > MAX_CHAR_INZONE && type != 1)
+                return false;
             if (client.mChar.zone != null) {
                 client.mChar.zone.removeChar(client);
                 if (client.mChar.zone.map.mapID != this.map.mapID) {
@@ -597,10 +624,11 @@ public class Map {
                 int cy = client.mChar.cy;
                 client.mChar.setXY(cx, cy);
             }
-            if(map.mapID == 89){ // cấm thuật
+            if (map.mapID == 89) { // cấm thuật
                 client.mChar.setXY(150, 428);
             }
-            if(!vecChar.contains(client.mChar)) vecChar.add(client.mChar);
+            if (!vecChar.contains(client.mChar))
+                vecChar.add(client.mChar);
             client.mChar.zone = this;
             client.mChar.zone.addToAllChar(client);
             client.mChar.infoChar.mapId = map.mapID;
@@ -612,6 +640,7 @@ public class Map {
             client.mChar.zone.writeGiaToc(client);
             return true;
         }
+
         public void createThread() {
             if (thread == null || !thread.isAlive()) {
                 try {
@@ -621,32 +650,35 @@ public class Map {
                             while (true) {
                                 long l = System.currentTimeMillis();
                                 try {
-                                    if (infoMap.timeClose != -1 && (infoMap.timeClose+infoMap.timeStartHoatDong) < l) {
-                                        if(infoMap.isNextMapCamThuat){
+                                    if (infoMap.timeClose != -1
+                                            && (infoMap.timeClose + infoMap.timeStartHoatDong) < l) {
+                                        if (infoMap.isNextMapCamThuat) {
                                             updateZone();
                                         } else {
                                             for (int i = vecChar.size() - 1; i >= 0; i--) {
                                                 Char c = vecChar.get(i);
                                                 if (c.client != null) {
                                                     c.veMapMacDinh();
-                                                    c.client.session.serivce.NhacNhoMessage("Đã hết thời gian bạn được đưa về làng.");
+                                                    c.client.session.serivce
+                                                            .NhacNhoMessage("Đã hết thời gian bạn được đưa về làng.");
                                                 }
                                             }
 
-                                            if(GroupId != -1) updateInfoGroup();
-                                            if(FamilyId != -1) updateInfoFamily();
+                                            if (GroupId != -1)
+                                                updateInfoGroup();
+                                            if (FamilyId != -1)
+                                                updateInfoFamily();
                                             Zone.this.map.removeZoneCustom(Zone.this);
                                             Zone.this.thread.interrupt();
                                             return;
                                         }
                                     }
                                     //
-                                    if((map.mapID == 46 || map.mapID == 47) && !infoMap.isSpamwMobAi){
-                                        if (infoMap.time != -1 && (infoMap.time+infoMap.timeStartHoatDong) < l ) {
+                                    if ((map.mapID == 46 || map.mapID == 47) && !infoMap.isSpamwMobAi) {
+                                        if (infoMap.time != -1 && (infoMap.time + infoMap.timeStartHoatDong) < l) {
                                             setMobFamilyGate(map.levelMap);
                                         }
                                     }
-
 
                                     if (vecChar.size() > 0) {
                                         for (int i = vecChar.size() - 1; i >= 0; i--) {
@@ -657,7 +689,8 @@ public class Map {
                                         }
                                         for (int i = vecItemMap.size() - 1; i >= 0; i--) {
                                             ItemMap mItemMap = vecItemMap.get(i);
-                                            if (mItemMap != null) mItemMap.update(Zone.this);
+                                            if (mItemMap != null)
+                                                mItemMap.update(Zone.this);
                                         }
                                         for (int i = vecMob.size() - 1; i >= 0; i--) {
                                             Mob mob = vecMob.get(i);
@@ -672,7 +705,8 @@ public class Map {
                                                 continue;
                                             }
                                             if (mob.isReSpawn && mob.isHoiSinhMob) {
-                                                if (mob.timeRemove == 0 && !mob.isBoss && System.currentTimeMillis() - mob.timeDie >= 2500L) {
+                                                if (mob.timeRemove == 0 && !mob.isBoss
+                                                        && System.currentTimeMillis() - mob.timeDie >= 2500L) {
                                                     mob.reSpawn();
                                                     reSpawnMobToAllChar(mob);
                                                 }
@@ -682,8 +716,10 @@ public class Map {
                                                         Char c = vecChar.get(k);
                                                         if (c.client != null) {
                                                             if (!c.infoChar.isDie) {
-                                                                if (mob.getRe(c) < 50 + mob.getMobTemplate().speedMove) {
-                                                                    if (System.currentTimeMillis() - mob.delayAttack >= 5000) {
+                                                                if (mob.getRe(c) < 50
+                                                                        + mob.getMobTemplate().speedMove) {
+                                                                    if (System.currentTimeMillis()
+                                                                            - mob.delayAttack >= 5000) {
                                                                         Zone.this.mobAttackChar(mob, c.client);
                                                                         mob.delayAttack = System.currentTimeMillis();
                                                                     }
@@ -698,7 +734,7 @@ public class Map {
                                     }
 
                                 } catch (Exception ex) {
-                                    Utlis.logError(Map.class, ex , "Da say ra loi UPDATE :\n" + ex.getMessage());
+                                    Utlis.logError(Map.class, ex, "Da say ra loi UPDATE :\n" + ex.getMessage());
                                 } finally {
                                     long sleep = (100 - (System.currentTimeMillis() - l));
                                     if (sleep < 1) {
@@ -712,12 +748,13 @@ public class Map {
                     });
                     thread.start();
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi UPDATE:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi UPDATE:\n" + ex.getMessage());
                 }
             }
         }
-        private void updateZone(){
-            if(map.mapID == 89){
+
+        private void updateZone() {
+            if (map.mapID == 89) {
                 infoMap.time = infoMap.timeClose = 300000;
                 infoMap.timeStartHoatDong = System.currentTimeMillis();
                 infoMap.isNextMapCamThuat = false;
@@ -735,41 +772,44 @@ public class Map {
                     int cy = 428;
                     c.setXY(cx, cy);
                     c.client.session.serivce.setXYAllZone(c.client);
-                    c.client.session.serivce.ShowMessWhite("Vòng lặp ảo tưởng thứ "+infoMap.vongLap);
+                    c.client.session.serivce.ShowMessWhite("Vòng lặp ảo tưởng thứ " + infoMap.vongLap);
                 }
 
             }
         }
 
-        private void updateInfoGroup(){
+        private void updateInfoGroup() {
             GroupTemplate group = Group.gI().getGroup(GroupId);
-            if(group != null && (group.idZoneCamThuat == zoneID || group.idZoneLuyenTap == zoneID)) {
-                if(map.mapID == 84){
+            if (group != null && (group.idZoneCamThuat == zoneID || group.idZoneLuyenTap == zoneID)) {
+                if (map.mapID == 84) {
                     group.idZoneLuyenTap = 0;
-                } else if(map.mapID == 89){
+                } else if (map.mapID == 89) {
                     group.idZoneCamThuat = 0;
                 }
             }
         }
-        private void updateInfoFamily(){
+
+        private void updateInfoFamily() {
             FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-            if(giaToc != null) {
+            if (giaToc != null) {
                 giaToc.MapAi.clear();
             }
         }
-        public void sendEffAttackChar (int idChar, int idPlayer){
+
+        public void sendEffAttackChar(int idChar, int idPlayer) {
             try {
                 Message msg = new Message((byte) -44);
                 msg.writeInt(idChar);
                 msg.writeInt(idPlayer);
                 SendZoneMessage(msg);
-            }catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+            } catch (Exception ex) {
+                Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
             }
         }
-        public void sendPhanThanAttack (boolean isAttackChar, int idChar, int idEntry){
+
+        public void sendPhanThanAttack(boolean isAttackChar, int idChar, int idEntry) {
             try {
-                if(isAttackChar){
+                if (isAttackChar) {
                     Message msg = new Message((byte) 84);
                     msg.writeInt(idChar);
                     msg.writeInt(idEntry);
@@ -780,21 +820,23 @@ public class Map {
                     msg.writeShort(idEntry);
                     SendZoneMessage(msg);
                 }
-            }catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+            } catch (Exception ex) {
+                Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
             }
         }
-        public void sendEffAttackMob (int idChar, short idEntryMob){
+
+        public void sendEffAttackMob(int idChar, short idEntryMob) {
             try {
                 Message msg = new Message((byte) -43);
                 msg.writeInt(idChar);
                 msg.writeShort(idEntryMob);
                 SendZoneMessage(msg);
-            }catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+            } catch (Exception ex) {
+                Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
             }
         }
-        public void addEffMob (Effect effect, short idEntryMob){
+
+        public void addEffMob(Effect effect, short idEntryMob) {
             try {
                 Message msg = new Message((byte) 15);
                 msg.writeShort(idEntryMob);
@@ -803,10 +845,11 @@ public class Map {
                 msg.writeLong(effect.timeStart);
                 msg.writeInt((int) effect.maintain);
                 SendZoneMessage(msg);
-            }catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+            } catch (Exception ex) {
+                Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
             }
         }
+
         public void addMobToZone(Mob mob) {
             try {
                 Message msg = new Message((byte) 1);
@@ -816,6 +859,7 @@ public class Map {
                 Utlis.logError(TaskHandler.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
         }
+
         public void updateHpMob(Mob mob) {
             try {
                 Message msg = new Message((byte) -36);
@@ -826,16 +870,18 @@ public class Map {
                 Utlis.logError(TaskHandler.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
         }
-        public void removeEffMob (Effect effect, short idEntryMob){
+
+        public void removeEffMob(Effect effect, short idEntryMob) {
             try {
                 Message msg = new Message((byte) 16);
                 msg.writeShort(idEntryMob);
                 msg.writeShort(effect.id);
                 SendZoneMessage(msg);
-            }catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+            } catch (Exception ex) {
+                Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
             }
         }
+
         private void writeVecItemMap(Writer writer) throws IOException {
             synchronized (vecItemMap) {
                 writer.writeShort(vecItemMap.size());
@@ -847,27 +893,29 @@ public class Map {
 
         private void writeVecChar(Client client, Writer writer) throws IOException {
             ArrayList<Char> copyOfVecChar = getVecChar();
-            writer.writeByte(copyOfVecChar.size()-1);
+            writer.writeByte(copyOfVecChar.size() - 1);
             for (Char c : copyOfVecChar) {
                 if (vecChar.contains(c) && c != null && client != null && c != client.mChar) {
                     writer.writeInt(c.id);
                     c.write(writer);
-                    if(c.infoChar.familyName.length() > 0){
+                    if (c.infoChar.familyName.length() > 0) {
                         client.session.serivce.sendInfoGiaTocToMe(c);
                     }
                 }
             }
         }
+
         private void writeGiaToc(Client client) {
             ArrayList<Char> copyOfVecChar = getVecChar();
             for (Char c : copyOfVecChar) {
                 if (vecChar.contains(c) && c != null && client != null && c != client.mChar) {
-                    if(c.infoChar.familyName.length() > 0){
+                    if (c.infoChar.familyName.length() > 0) {
                         client.session.serivce.sendInfoGiaTocToMe(c);
                     }
                 }
             }
         }
+
         private void writeVecMob(Writer writer) throws IOException {
             writer.writeShort(vecMob.size());
             for (int i = 0; i < vecMob.size(); i++) {
@@ -887,7 +935,7 @@ public class Map {
         }
 
         public void removeChar(Client client) {
-            if (client != null && client.mChar != null ) {
+            if (client != null && client.mChar != null) {
                 try {
                     boolean c = vecChar.remove(client.mChar);
                     if (c) {
@@ -903,7 +951,8 @@ public class Map {
 
         public void removeToAllChar(Client client) {
             try {
-                if(client == null) return;
+                if (client == null)
+                    return;
                 Writer writer = new Writer();
                 writer.writeInt(client.mChar.id);
                 for (int i = vecChar.size() - 1; i >= 0; i--) {
@@ -912,18 +961,19 @@ public class Map {
                         try {
                             c.client.session.serivce.removeCharIntoMap(writer);
                         } catch (Exception ex) {
-                            Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+                            Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
                         }
                     }
                 }
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi removeToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi removeToAllChar:\n" + ex.getMessage());
             }
         }
 
         public void addToAllChar(Client client) {
             try {
-                if(client == null) return;
+                if (client == null)
+                    return;
                 Writer writer = new Writer();
                 writer.writeInt(client.mChar.id);
                 client.mChar.write(writer);
@@ -936,13 +986,13 @@ public class Map {
                         try {
                             c.client.session.serivce.addCharIntoMap(writer);
                         } catch (Exception ex) {
-                            Utlis.logError(Map.class, ex , "Da say ra loi addToAllChar:\n" + ex.getMessage());
+                            Utlis.logError(Map.class, ex, "Da say ra loi addToAllChar:\n" + ex.getMessage());
                         }
                     }
                 }
 
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi addToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi addToAllChar:\n" + ex.getMessage());
             }
         }
 
@@ -958,22 +1008,22 @@ public class Map {
                         try {
                             c.client.session.serivce.updateXYChar(writer, when_move);
                         } catch (Exception ex) {
-                            Utlis.logError(Map.class, ex , "Da say ra loi updateXYChar:\n" + ex.getMessage());
+                            Utlis.logError(Map.class, ex, "Da say ra loi updateXYChar:\n" + ex.getMessage());
                         }
                     }
                 }
 
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi updateXYChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi updateXYChar:\n" + ex.getMessage());
             }
         }
 
         public void SendZoneMessage(Message msg) {
             try {
                 vecChar.forEach(c -> c.client.session.sendMessage(msg));
-//                msg.close();
+                // msg.close();
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi SendZoneMessage:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi SendZoneMessage:\n" + ex.getMessage());
             }
         }
 
@@ -984,20 +1034,23 @@ public class Map {
                 msg.writeBoolean(false);
                 SendZoneMessage(msg);
             } catch (Exception ex) {
-                Utlis.logError(Char.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                Utlis.logError(Char.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
         }
-        public boolean isPk(Char c, Char p){
+
+        public boolean isPk(Char c, Char p) {
             return (c.info.typePK == 0 && c.info.idCharPk != -1)
                     || (c.info.typePK == 0 && c.info.isCuuSat
-                    || (p.info.typePK == 3)
-                    || (c.info.typePK == 3)
-                    || (c.info.typePK == p.info.typePK && c.info.typePK != 0));
+                            || (p.info.typePK == 3)
+                            || (c.info.typePK == 3)
+                            || (c.info.typePK == p.info.typePK && c.info.typePK != 0));
         }
+
         public void attackPlayer(Client client, int idSkill, int idplayer) {
             try {
                 Skill skill = client.mChar.getSkillWithIdTemplate(idSkill);
-                if (skill == null || skill.level == 0 || skill.mpUse > client.mChar.infoChar.mp || skill.levelNeed > client.mChar.level()
+                if (skill == null || skill.level == 0 || skill.mpUse > client.mChar.infoChar.mp
+                        || skill.levelNeed > client.mChar.level()
                         || System.currentTimeMillis() - skill.time < skill.coolDown || client.mChar.info.isBiChoang) {
                     return;
                 }
@@ -1005,31 +1058,31 @@ public class Map {
                 client.mChar.MineMp(skill.mpUse);
                 client.mChar.msgUpdateMp();
 
-
                 Char player = findCharInMap(idplayer);
 
-                if (client.mChar.infoChar.isDie || player == null || player.infoChar.hp <= 0 || player.infoChar.isDie || !isPk(client.mChar, player)) return;
+                if (client.mChar.infoChar.isDie || player == null || player.infoChar.hp <= 0 || player.infoChar.isDie
+                        || !isPk(client.mChar, player))
+                    return;
 
-                if (Utlis.getRange(player.cx, client.mChar.cx) <= skill.rangeNgang && Utlis.getRange(player.cy, client.mChar.cy) <= skill.rangeDoc) {
-
+                if (Utlis.getRange(player.cx, client.mChar.cx) <= skill.rangeNgang
+                        && Utlis.getRange(player.cy, client.mChar.cy) <= skill.rangeDoc) {
 
                     int dameCoBan = client.mChar.getDame();
 
                     int dame = HandleUseSkill.getDameTuongKhac(client.mChar, player, dameCoBan);
 
-                    dame = skill.getDamePlayer(client,player, dame);
+                    dame = skill.getDamePlayer(client, player, dame);
 
                     dame /= 10;
 
                     dame = Utlis.nextInt(dame * 90 / 100, dame);
 
-
                     //
 
                     int chiMang = client.mChar.getChiMang() - player.getGiamTruChiMang();
 
-
-                    if(chiMang < 0) chiMang = 0;
+                    if (chiMang < 0)
+                        chiMang = 0;
 
                     chiMang = chiMang / 100;
 
@@ -1041,7 +1094,7 @@ public class Map {
                     if (chi_mang) {
                         int num = 80;
                         num += client.mChar.getTangTanCongChiMang();
-                        if(num > giamCM){
+                        if (num > giamCM) {
                             num -= giamCM;
                         } else {
                             num = 0;
@@ -1050,69 +1103,74 @@ public class Map {
                     }
 
                     /// eff hỗ trợ
-                    for (int i = 0; i < client.mChar.listEffect.size(); i ++){
+                    for (int i = 0; i < client.mChar.listEffect.size(); i++) {
                         Effect effect = client.mChar.listEffect.get(i);
-                        if(effect.id == 57){
+                        if (effect.id == 57) {
                             int value = effect.value / 2;
                             int dame2 = Utlis.nextInt(value * 90 / 100, value);
                             sendEffAttackChar(client.mChar.id, (short) player.id);
                             client.mChar.setAttackPlayer(player, dame2, false);
-                        } else if(effect.id == 58 && Utlis.nextInt(500) < effect.value){
+                        } else if (effect.id == 58 && Utlis.nextInt(500) < effect.value) {
                             int time = Math.min(effect.value * 100, 10000);
-                            Effect newEff = new Effect(38,effect.value, System.currentTimeMillis(), time);
+                            Effect newEff = new Effect(38, effect.value, System.currentTimeMillis(), time);
                             player.addEffect(newEff);
-                        } else if(effect.id == 68){
+                        } else if (effect.id == 68) {
                             int dameCong = (dame * effect.value) / 150;
                             dame += dameCong;
-                        } else if(effect.id == 63){
-                            if(player.infoChar.hp > effect.value){
+                        } else if (effect.id == 63) {
+                            if (player.infoChar.hp > effect.value) {
                                 client.mChar.PlusHp(effect.value);
                                 client.mChar.msgUpdateHp();
                                 client.mChar.setAttackPlayer(player, effect.value, false);
                             }
-                        } else if(effect.id == 72 && Utlis.nextInt(100) < 50){
+                        } else if (effect.id == 72 && Utlis.nextInt(100) < 50) {
                             client.mChar.setAttackPlayer(player, dame, chi_mang);
-                        } else if(effect.id == 53){
+                        } else if (effect.id == 53) {
                             long timeStart = System.currentTimeMillis() - effect.timeStart;
-                            if(timeStart < (effect.maintain-500)){
+                            if (timeStart < (effect.maintain - 500)) {
                                 effect.maintain = 500;
                                 effect.timeStart = System.currentTimeMillis();
                             }
                         }
                     }
 
-
                     int maxTarget = skill.maxTarget;
-                    if(dame > 0) HandleUseSkill.attackEffChar(client, player, skill);
+                    if (dame > 0)
+                        HandleUseSkill.attackEffChar(client, player, skill);
                     sendAttackPlayerToAllChar(client, player, idSkill);
 
-                    client.mChar.setAttackPlayer(player, dame,  chi_mang); // send attack
-                    if(client.mChar.getSatThuongChuyenHp() > 0) {
+                    client.mChar.setAttackPlayer(player, dame, chi_mang); // send attack
+                    if (client.mChar.getSatThuongChuyenHp() > 0) {
                         int hpPlus = dame * client.mChar.getSatThuongChuyenHp() / 100;
                         client.mChar.PlusHp(hpPlus);
                         client.mChar.msgUpdateHp();
                     }
-                    if(dame > 0) client.mChar.effAttackPlayer(player, skill);
+                    if (dame > 0)
+                        client.mChar.effAttackPlayer(player, skill);
 
-
-                    if(client.mChar.infoChar.isPhanThan){
+                    if (client.mChar.infoChar.isPhanThan) {
                         sendPhanThanAttack(true, client.mChar.id, player.id);
                         int xdame = DataCache.dataDamePhanThan[client.mChar.infoChar.levelPhanThan];
                         int damePT = dame * xdame / 100;
                         client.mChar.setAttackPlayer(player, damePT, chi_mang);
                     }
 
-                    if(dame <= 0) sendNeSatThuong(player.id);
-                    if(client.mChar.info.isCuuSat || client.mChar.info.idCharPk != -1) return; // đang tỷ võ hoặc cừu sát bỏ qua không đánh lane
+                    if (dame <= 0)
+                        sendNeSatThuong(player.id);
+                    if (client.mChar.info.isCuuSat || client.mChar.info.idCharPk != -1)
+                        return; // đang tỷ võ hoặc cừu sát bỏ qua không đánh lane
 
                     ArrayList<Char> list = new ArrayList<Char>();
                     for (int i = 0; i < maxTarget - 1; i++) {
                         Char player2 = null;
                         for (int j = 0; j < vecChar.size(); j++) {
                             Char cplayer = vecChar.get(j);
-                            if (cplayer.id != player.id && cplayer.id != client.mChar.id && cplayer.infoChar.hp > 0 && !cplayer.infoChar.isDie) {
+                            if (cplayer.id != player.id && cplayer.id != client.mChar.id && cplayer.infoChar.hp > 0
+                                    && !cplayer.infoChar.isDie) {
                                 if (Utlis.getRange(player.infoChar.cx, cplayer.infoChar.cx) <= skill.rangeNgang
-                                        && Math.abs(player.infoChar.cy - cplayer.infoChar.cy) < skill.rangeDoc && Utlis.checkDirection(client.mChar.cx, player.cx) == Utlis.checkDirection(client.mChar.cx, cplayer.cx) ) {
+                                        && Math.abs(player.infoChar.cy - cplayer.infoChar.cy) < skill.rangeDoc
+                                        && Utlis.checkDirection(client.mChar.cx, player.cx) == Utlis
+                                                .checkDirection(client.mChar.cx, cplayer.cx)) {
                                     if (!list.contains(cplayer)) {
                                         player2 = cplayer;
                                         break;
@@ -1127,18 +1185,18 @@ public class Map {
 
                             dame = HandleUseSkill.getDameTuongKhac(client.mChar, player2, dameCoBan);
 
-                            dame = skill.getDamePlayer(client,player, dame);
+                            dame = skill.getDamePlayer(client, player, dame);
 
                             dame /= 15; // đánh lane giảm /15
 
                             dame = Utlis.nextInt(dame * 90 / 100, dame);
 
-
                             //
 
                             chiMang = client.mChar.getChiMang() - player.getGiamTruChiMang();
 
-                            if(chiMang < 0) chiMang = 0;
+                            if (chiMang < 0)
+                                chiMang = 0;
 
                             chiMang = chiMang / 100;
 
@@ -1148,7 +1206,7 @@ public class Map {
                                 int num = 80;
                                 num += client.mChar.getTangTanCongChiMang();
 
-                                if(num > giamCM){
+                                if (num > giamCM) {
                                     num -= giamCM;
                                 } else {
                                     num = 0;
@@ -1160,7 +1218,8 @@ public class Map {
                             //
 
                             client.mChar.setAttackPlayer(player2, dame, chi_mang);
-                            if(dame <= 0) sendNeSatThuong(player.id);
+                            if (dame <= 0)
+                                sendNeSatThuong(player.id);
                         }
                     }
                 }
@@ -1173,8 +1232,10 @@ public class Map {
         public void attackMob(Client client, int idSkill, int idMob) {
             try {
                 Skill skill = client.mChar.getSkillWithIdTemplate(idSkill);
-                if (client.mChar.infoChar.isDie || skill == null || skill.level == 0 || skill.mpUse > client.mChar.infoChar.mp
-                        || skill.levelNeed > client.mChar.level() || System.currentTimeMillis() - skill.time < skill.coolDown || client.mChar.info.isBiChoang) {
+                if (client.mChar.infoChar.isDie || skill == null || skill.level == 0
+                        || skill.mpUse > client.mChar.infoChar.mp
+                        || skill.levelNeed > client.mChar.level()
+                        || System.currentTimeMillis() - skill.time < skill.coolDown || client.mChar.info.isBiChoang) {
                     return;
                 }
                 skill.time = System.currentTimeMillis();
@@ -1190,9 +1251,9 @@ public class Map {
 
                     int dameCoBan = client.mChar.getDame() + client.mChar.getDameMob(mob);
 
-                    int dame = (dameCoBan + skill.getDameMob(client,mob));
+                    int dame = (dameCoBan + skill.getDameMob(client, mob));
 
-                    UTPKoolVN.Debug("Attack Mob dame: "+dame);
+                    UTPKoolVN.Debug("Attack Mob dame: " + dame);
 
                     dame = Utlis.nextInt(dame * 90 / 100, dame);
 
@@ -1205,30 +1266,30 @@ public class Map {
                     int maxTarget = skill.maxTarget;
 
                     /// eff hỗ trợ
-                    for (int i = 0; i < client.mChar.listEffect.size(); i ++){
+                    for (int i = 0; i < client.mChar.listEffect.size(); i++) {
                         Effect effect = client.mChar.listEffect.get(i);
-                        if(effect.id == 57){
+                        if (effect.id == 57) {
                             sendEffAttackMob(client.mChar.id, (short) mob.idEntity);
                             client.mChar.setAttackMob(mob, effect.value, false);
-                        } else if(effect.id == 58 && Utlis.nextInt(500) < effect.value){
+                        } else if (effect.id == 58 && Utlis.nextInt(500) < effect.value) {
                             int time = Math.min(effect.value * 100, 10000);
-                            Effect newEff = new Effect(38,effect.value, System.currentTimeMillis(), time);
+                            Effect newEff = new Effect(38, effect.value, System.currentTimeMillis(), time);
                             mob.addEff(newEff);
                             addEffMob(newEff, (short) mob.idEntity);
-                        } else if(effect.id == 68){
+                        } else if (effect.id == 68) {
                             int dameCong = (dame * effect.value) / 120;
                             dame += dameCong;
-                        } else if(effect.id == 63){
-                            if(mob.hp > effect.value){
+                        } else if (effect.id == 63) {
+                            if (mob.hp > effect.value) {
                                 client.mChar.PlusHp(effect.value);
                                 client.mChar.msgUpdateHp();
                                 client.mChar.setAttackMob(mob, effect.value, false);
                             }
-                        } else if(effect.id == 72 && Utlis.nextInt(100) < 50){
+                        } else if (effect.id == 72 && Utlis.nextInt(100) < 50) {
                             client.mChar.setAttackMob(mob, dame, chi_mang);
-                        } else if(effect.id == 53){
+                        } else if (effect.id == 53) {
                             long timeStart = System.currentTimeMillis() - effect.timeStart;
-                            if(timeStart < (effect.maintain-500)){
+                            if (timeStart < (effect.maintain - 500)) {
                                 effect.maintain = 500;
                                 effect.timeStart = System.currentTimeMillis();
                             }
@@ -1240,7 +1301,7 @@ public class Map {
 
                     client.mChar.effAttackMob(mob, skill);
 
-                    if(client.mChar.infoChar.isPhanThan){
+                    if (client.mChar.infoChar.isPhanThan) {
                         sendPhanThanAttack(false, client.mChar.id, mob.idEntity);
                         int xdame = DataCache.dataDamePhanThan[client.mChar.infoChar.levelPhanThan];
                         int damePT = dame * xdame / 100;
@@ -1253,7 +1314,9 @@ public class Map {
                             Mob cmob = vecMob.get(j);
                             if (cmob.idEntity != mob.idEntity && cmob.hp > 0 && cmob.getMobTemplate().type != 10) {
                                 if (Utlis.getRange(cmob.cx, cmob.cx) <= skill.rangeNgang
-                                        && Math.abs(mob.cy - cmob.cy) < skill.rangeDoc && Utlis.checkDirection(client.mChar.cx, mob.cx) == Utlis.checkDirection(client.mChar.cx, cmob.cx) ) {
+                                        && Math.abs(mob.cy - cmob.cy) < skill.rangeDoc
+                                        && Utlis.checkDirection(client.mChar.cx, mob.cx) == Utlis
+                                                .checkDirection(client.mChar.cx, cmob.cx)) {
                                     if (!list.contains(cmob)) {
                                         mob2 = cmob;
                                         break;
@@ -1263,7 +1326,7 @@ public class Map {
                         }
                         if (mob2 != null) {
                             list.add(mob2);
-                            dame = (dameCoBan + skill.getDameMob(client,mob));
+                            dame = (dameCoBan + skill.getDameMob(client, mob));
                             dame = Utlis.nextInt(dame * 90 / 100, dame);
                             chi_mang = Utlis.randomBoolean(100, client.mChar.getChiMang() / 100);
                             if (chi_mang) {
@@ -1271,7 +1334,7 @@ public class Map {
                                 num += client.mChar.getTangTanCongChiMang();
                                 dame = dame + (dame * num / 100);
                             }
-                            client.mChar.setAttackMob(mob2, dame,  chi_mang);
+                            client.mChar.setAttackMob(mob2, dame, chi_mang);
                         }
                     }
                 }
@@ -1305,7 +1368,6 @@ public class Map {
             return null;
         }
 
-
         public Mob findMobInMap(int idMob) {
             for (int i = 0; i < vecMob.size(); i++) {
                 Mob mob = vecMob.get(i);
@@ -1326,6 +1388,7 @@ public class Map {
             }
             return null;
         }
+
         public Char findCharInMap(String name) {
             for (Char c : vecChar) {
                 if (c != null && c.infoChar.name.equals(name)) {
@@ -1334,6 +1397,7 @@ public class Map {
             }
             return null;
         }
+
         public Char findCharInMap(int id) {
             for (Char c : vecChar) {
                 if (c != null && c.id == id) {
@@ -1342,18 +1406,19 @@ public class Map {
             }
             return null;
         }
-        public void setDameMob(Client client,Zone zone, Mob mob, int dame, boolean chi_mang) {
+
+        public void setDameMob(Client client, Zone zone, Mob mob, int dame, boolean chi_mang) {
             try {
                 mob.hp -= dame;
                 mob.setHp();
                 if (mob.hp <= 0) {
                     mob.hp = 0;
                     TaskHandler.gI().checkDoneKillMob(client.mChar, mob);
-                    setMobDie(client,zone, mob);
-                    if(mob.timeRemove > 0) {
-                        for (int i = 0; i < zone.vecMob.size(); i++){
+                    setMobDie(client, zone, mob);
+                    if (mob.timeRemove > 0) {
+                        for (int i = 0; i < zone.vecMob.size(); i++) {
                             Mob m = zone.vecMob.get(i);
-                            if(m.idEntity == mob.idEntity){
+                            if (m.idEntity == mob.idEntity) {
                                 zone.vecMob.remove(m);
                                 break;
                             }
@@ -1367,26 +1432,27 @@ public class Map {
                 ArrayList<Char> copyOfVecChar = getVecChar();
                 for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                     Char c = copyOfVecChar.get(i);
-                    if(c.client != null) {
+                    if (c.client != null) {
                         c.client.session.serivce.sendHpMob(writer);
                     }
                 }
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi setDameMob:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi setDameMob:\n" + ex.getMessage());
             }
         }
-        public void setDameMobDuoc(Client client,Zone zone, Mob mob, int dame, boolean chi_mang) {
+
+        public void setDameMobDuoc(Client client, Zone zone, Mob mob, int dame, boolean chi_mang) {
             try {
                 mob.hp -= dame;
                 mob.setHp();
                 if (mob.hp <= 0) {
                     mob.hp = 0;
                     TaskHandler.gI().checkDoneKillMob2(client.mChar, mob);
-                    setMobDie(client,zone, mob);
-                    if(mob.timeRemove > 0) {
-                        for (int i = 0; i < zone.vecMob.size(); i++){
+                    setMobDie(client, zone, mob);
+                    if (mob.timeRemove > 0) {
+                        for (int i = 0; i < zone.vecMob.size(); i++) {
                             Mob m = zone.vecMob.get(i);
-                            if(m.idEntity == mob.idEntity){
+                            if (m.idEntity == mob.idEntity) {
                                 zone.vecMob.remove(m);
                                 break;
                             }
@@ -1400,14 +1466,15 @@ public class Map {
                 ArrayList<Char> copyOfVecChar = getVecChar();
                 for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                     Char c = copyOfVecChar.get(i);
-                    if(c.client != null) {
+                    if (c.client != null) {
                         c.client.session.serivce.sendHpMob(writer);
                     }
                 }
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi setDameMob:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi setDameMob:\n" + ex.getMessage());
             }
         }
+
         public void reSpawnMobToAllChar(Mob mob) {
             try {
                 Writer writer = new Writer();
@@ -1423,23 +1490,25 @@ public class Map {
                 ArrayList<Char> copyOfVecChar = getVecChar();
                 for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                     Char c = copyOfVecChar.get(i);
-                    if(c != null && c.client != null && c.client.session != null) {
+                    if (c != null && c.client != null && c.client.session != null) {
                         c.client.session.serivce.sendMobReSpawn(writer);
                     }
                 }
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi reSpawnMobToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi reSpawnMobToAllChar:\n" + ex.getMessage());
             }
         }
+
         public void removeMobToAllChar(short idEntry) {
             try {
                 Message msg = new Message((byte) 0);
                 msg.writeShort(idEntry);
                 SendZoneMessage(msg);
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi reSpawnMobToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi reSpawnMobToAllChar:\n" + ex.getMessage());
             }
         }
+
         private void sendAttackMobToAllChar(Client client, Mob mob, int idSkill) {
             try {
                 Writer writer = new Writer();
@@ -1450,14 +1519,15 @@ public class Map {
                 ArrayList<Char> copyOfVecChar = getVecChar();
                 for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                     Char c = copyOfVecChar.get(i);
-                    if(c.client != null) {
+                    if (c.client != null) {
                         c.client.session.serivce.sendAttackMob(writer);
                     }
                 }
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi sendAttackMobToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi sendAttackMobToAllChar:\n" + ex.getMessage());
             }
         }
+
         private void sendAttackPlayerToAllChar(Client client, Char player, int idSkill) {
             try {
                 Writer writer = new Writer();
@@ -1468,12 +1538,12 @@ public class Map {
                 ArrayList<Char> copyOfVecChar = getVecChar();
                 for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                     Char c = copyOfVecChar.get(i);
-                    if(c.client != null && c.client != client) {
+                    if (c.client != null && c.client != client) {
                         c.client.session.serivce.sendAttackPlayer(writer);
                     }
                 }
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi sendAttackMobToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi sendAttackMobToAllChar:\n" + ex.getMessage());
             }
         }
 
@@ -1483,9 +1553,10 @@ public class Map {
                 msg.writeInt(idEntry);
                 SendZoneMessage(msg);
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi reSpawnMobToAllChar:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi reSpawnMobToAllChar:\n" + ex.getMessage());
             }
         }
+
         public void openTabZone(Client client) {
             try {
                 Writer writer = new Writer();
@@ -1508,7 +1579,7 @@ public class Map {
                 }
                 client.session.serivce.sendOpenTabZone(writer);
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi openTabZone:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi openTabZone:\n" + ex.getMessage());
             }
         }
 
@@ -1517,7 +1588,7 @@ public class Map {
                 client.session.serivce.setXYChar();
                 return;
             }
-            if(client.mChar.infoChar.isDie){
+            if (client.mChar.infoChar.isDie) {
                 client.session.serivce.ShowMessGold("Bạn đã bị trọng thương không thể thực hiện");
                 client.session.serivce.setXYChar();
                 return;
@@ -1535,21 +1606,21 @@ public class Map {
         }
 
         /*
-         public void ao(Message var1) {
-        try {
-            Mob var2 = this.r(var1.reader.dis.readShort());
-            ItemMap var3;
-            (var3 = new ItemMap()).idChar = var1.reader.dis.readInt();
-            var3.idEntity = var1.reader.dis.readShort();
-            var3.cx = var3.k = var1.reader.dis.readShort();
-            var3.cy = var3.l = var1.reader.dis.readShort();
-            var3.item = new Item();
-            var3.item.read(var1);
-            var2.G.addElement(var3);
-        } catch (Exception var5) {
-            Utlis.println(var5);
-        }
-    }
+         * public void ao(Message var1) {
+         * try {
+         * Mob var2 = this.r(var1.reader.dis.readShort());
+         * ItemMap var3;
+         * (var3 = new ItemMap()).idChar = var1.reader.dis.readInt();
+         * var3.idEntity = var1.reader.dis.readShort();
+         * var3.cx = var3.k = var1.reader.dis.readShort();
+         * var3.cy = var3.l = var1.reader.dis.readShort();
+         * var3.item = new Item();
+         * var3.item.read(var1);
+         * var2.G.addElement(var3);
+         * } catch (Exception var5) {
+         * Utlis.println(var5);
+         * }
+         * }
          */
         private ArrayList<Mob> getAliveMobs(ArrayList<Mob> mobs) {
             ArrayList<Mob> aliveMobs = new ArrayList<>();
@@ -1560,53 +1631,62 @@ public class Map {
             }
             return aliveMobs;
         }
+
         private void setMobDie(Client client, Zone zone, Mob mob) {
             long expp = mob.exp;
-            if(client.mChar.getPlusExp() > 0) expp += expp*client.mChar.getPlusExp()/100; // tăng exp khi có eff
-            if(client.mChar.infoChar.groupId != -1){
+            if (client.mChar.getPlusExp() > 0)
+                expp += expp * client.mChar.getPlusExp() / 100; // tăng exp khi có eff
+            if (client.mChar.infoChar.groupId != -1) {
                 long expTuSkillBuff = 0;
                 ArrayList<Char> copyOfVecChar = getVecChar();
                 for (Char aChar : copyOfVecChar) {
                     try {
-                        if (aChar != null && aChar.id != client.mChar.id && aChar.infoChar.groupId == client.mChar.infoChar.groupId) {
+                        if (aChar != null && aChar.id != client.mChar.id
+                                && aChar.infoChar.groupId == client.mChar.infoChar.groupId) {
                             aChar.client.mChar.addExp((long) (mob.exp * 0.30));
-                            if(Math.abs(aChar.cx - client.mChar.cx) < 300 && Math.abs(aChar.cy - client.mChar.cy) < 300) expTuSkillBuff += aChar.client.mChar.getChiSoFormSkill(104);
+                            if (Math.abs(aChar.cx - client.mChar.cx) < 300
+                                    && Math.abs(aChar.cy - client.mChar.cy) < 300)
+                                expTuSkillBuff += aChar.client.mChar.getChiSoFormSkill(104);
                         }
                     } catch (Exception ex) {
                         Utlis.logError(Map.class, ex, "Da say ra loi setMobDie:\n" + ex.getMessage());
                     }
                 }
-                if(expTuSkillBuff > 0) expp += expp*expTuSkillBuff/100;
+                if (expTuSkillBuff > 0)
+                    expp += expp * expTuSkillBuff / 100;
 
             }
             client.mChar.addExp(expp);
-            if(mob.getMobTemplate().type == 10 || mob.getMobTemplate().type == 8) return;
+            if (mob.getMobTemplate().type == 10 || mob.getMobTemplate().type == 8)
+                return;
             dropItem(client, mob);
             handleMapCustom(client, zone, mob);
             handleItemBody(client, mob);
 
-            //nếu là boss thì xóa khỏi Zone và cập nhật vào bossruntime
-            if(mob.isBoss){
+            // nếu là boss thì xóa khỏi Zone và cập nhật vào bossruntime
+            if (mob.isBoss) {
                 BossTpl updatedBoss = BossRunTime.gI().getBoss(mob.id);
-                if(updatedBoss != null){
+                if (updatedBoss != null) {
                     updatedBoss.isDie = true;
-                    updatedBoss.timeDelay = System.currentTimeMillis()+(updatedBoss.min_spam*60000L);
+                    updatedBoss.timeDelay = System.currentTimeMillis() + (updatedBoss.min_spam * 60000L);
                     BossRunTime.gI().setBoss(updatedBoss);
                 }
-//                removeMobToAllChar((short) mob.idEntity);
+                // removeMobToAllChar((short) mob.idEntity);
                 zone.vecMob.remove(mob);
             }
         }
-        public void handleItemBody(Client client, Mob mob){
+
+        public void handleItemBody(Client client, Mob mob) {
             // tu luyện bí kíp
-            if(mob.levelBoss == 1 || mob.levelBoss == 2){
-                if(client.mChar.arrItemBody[11] != null) {
-                    if(client.mChar.arrItemBody[11].getChiSo(1, client, 128) <  client.mChar.arrItemBody[11].getChiSo(2, client, 128)){
+            if (mob.levelBoss == 1 || mob.levelBoss == 2) {
+                if (client.mChar.arrItemBody[11] != null) {
+                    if (client.mChar.arrItemBody[11].getChiSo(1, client, 128) < client.mChar.arrItemBody[11].getChiSo(2,
+                            client, 128)) {
                         int plus = 1;
                         int valueEff = client.mChar.getValueEff(47);
-                        if(valueEff == 200){
+                        if (valueEff == 200) {
                             plus = 2;
-                        }  else if(valueEff == 300){
+                        } else if (valueEff == 300) {
                             plus = 3;
                         }
                         client.mChar.arrItemBody[11].plusOption(128, 1, plus);
@@ -1615,45 +1695,46 @@ public class Map {
                 }
             }
 
-            //tang exxp phan than
+            // tang exxp phan than
 
-            if(client.mChar.infoChar.isPhanThan){
-                if(client.mChar.infoChar.levelPhanThan < client.mChar.infoChar.MaxLevelPhanThan){
+            if (client.mChar.infoChar.isPhanThan) {
+                if (client.mChar.infoChar.levelPhanThan < client.mChar.infoChar.MaxLevelPhanThan) {
                     int exp_plus = 1;
-                    if(mob.levelBoss == 1) {
+                    if (mob.levelBoss == 1) {
                         exp_plus = 5;
-                    } else if(mob.levelBoss == 2){
+                    } else if (mob.levelBoss == 2) {
                         exp_plus = 10;
-                    } else if(mob.isBoss){
+                    } else if (mob.isBoss) {
                         exp_plus = 100;
                     }
                     client.mChar.infoChar.expPhanThan += exp_plus;
                     int expMax = 5000000;
-                    expMax = expMax * (client.mChar.infoChar.levelPhanThan+1);
-                    if(client.mChar.infoChar.expPhanThan >= expMax){
+                    expMax = expMax * (client.mChar.infoChar.levelPhanThan + 1);
+                    if (client.mChar.infoChar.expPhanThan >= expMax) {
                         client.mChar.infoChar.levelPhanThan++;
                     }
                 }
             }
         }
-        public void handleMapCustom(Client client, Zone zone, Mob mob){
-            //check các map hoạt động
-            if(zone.map.mapID == 89){
+
+        public void handleMapCustom(Client client, Zone zone, Mob mob) {
+            // check các map hoạt động
+            if (zone.map.mapID == 89) {
                 ArrayList<Mob> aliveMobs = getAliveMobs(zone.vecMob);
-                if(aliveMobs.isEmpty()){
-                    if(!zone.infoMap.isBossCamThuat){
+                if (aliveMobs.isEmpty()) {
+                    if (!zone.infoMap.isBossCamThuat) {
                         // tạo boss cấm thuật
                         Mob mob2 = new Mob();
                         mob2.createNewEffectList();
                         mob2.idEntity = DataCache.getIDMob();
                         mob2.id = 238;
-                        mob2.hpGoc = mob.hpFull*100;
-                        mob2.exp = mob.exp*100;
-                        mob2.expGoc = mob.expGoc*100;
-                        mob2.level =  mob.level;
+                        mob2.hpGoc = mob.hpFull * 100;
+                        mob2.exp = mob.exp * 100;
+                        mob2.expGoc = mob.expGoc * 100;
+                        mob2.level = mob.level;
                         mob2.paintMiniMap = false;
                         mob2.isBoss = true;
-                        mob2.timeRemove = 300000+System.currentTimeMillis();
+                        mob2.timeRemove = 300000 + System.currentTimeMillis();
                         mob2.setXY((short) 1050, (short) 137);
                         mob2.reSpawn();
                         zone.vecMob.add(mob2);
@@ -1662,7 +1743,7 @@ public class Map {
                         zone.infoMap.isBossCamThuat = true;
                     } else {
                         // logic sử lý done cấm thuật
-                        if(zone.infoMap.vongLap < 15){
+                        if (zone.infoMap.vongLap < 15) {
                             zone.infoMap.vongLap += 1;
                             zone.infoMap.time = zone.infoMap.timeClose = 11000;
                             zone.infoMap.timeStartHoatDong = System.currentTimeMillis();
@@ -1676,31 +1757,32 @@ public class Map {
                         }
                     }
                 }
-            } else if(zone.map.mapID == 46){
+            } else if (zone.map.mapID == 46) {
                 ArrayList<Mob> aliveMobs = getAliveMobs(zone.vecMob);
-                if(aliveMobs.isEmpty()){
-                   for (Char c: zone.vecChar){
-                       c.client.session.serivce.ShowMessWhite("Bạn nhận được 1 điểm chuyên cần 2 điểm cống hiến gia tộc");
-                       c.infoChar.chuyenCan += 1;
-                       c.infoChar.chuyenCanTuan += 1;
-                       FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-                       if(giaToc != null) {
-                           Family_Member getMem = Family.gI().getMe(c, giaToc);
-                           if (getMem != null ) {
-                               getMem.congHien += 2;
-                               getMem.congHienTuan += 2;
-                               giaToc.info.congHienTuan += 2;
-                               giaToc.info.PlusExp(20);
-                           }
-                       }
+                if (aliveMobs.isEmpty()) {
+                    for (Char c : zone.vecChar) {
+                        c.client.session.serivce
+                                .ShowMessWhite("Bạn nhận được 1 điểm chuyên cần 2 điểm cống hiến gia tộc");
+                        c.infoChar.chuyenCan += 1;
+                        c.infoChar.chuyenCanTuan += 1;
+                        FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
+                        if (giaToc != null) {
+                            Family_Member getMem = Family.gI().getMe(c, giaToc);
+                            if (getMem != null) {
+                                getMem.congHien += 2;
+                                getMem.congHienTuan += 2;
+                                giaToc.info.congHienTuan += 2;
+                                giaToc.info.PlusExp(20);
+                            }
+                        }
 
-                   }
+                    }
                 }
 
-            } else if(zone.map.mapID == 47){
+            } else if (zone.map.mapID == 47) {
                 ArrayList<Mob> aliveMobs = getAliveMobs(zone.vecMob);
-                if(aliveMobs.isEmpty()){
-                    if(!zone.infoMap.isBossAi){
+                if (aliveMobs.isEmpty()) {
+                    if (!zone.infoMap.isBossAi) {
                         zone.infoMap.isBossAi = true;
                         int l = 60;
                         for (int i = 0; i < 10; i++) { // bi dược
@@ -1742,15 +1824,16 @@ public class Map {
                         vecMob.add(mob2);
                         addMobToZone(mob2);
                     }
-                }  else if(mob.id == 112){
-                    for (Char c: zone.vecChar){
-                        c.client.session.serivce.ShowMessWhite("Bạn nhận được 1 điểm chuyên cần 2 điểm cống hiến gia tộc");
+                } else if (mob.id == 112) {
+                    for (Char c : zone.vecChar) {
+                        c.client.session.serivce
+                                .ShowMessWhite("Bạn nhận được 1 điểm chuyên cần 2 điểm cống hiến gia tộc");
                         c.infoChar.chuyenCan += 1;
                         c.infoChar.chuyenCanTuan += 1;
                         FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-                        if(giaToc != null) {
+                        if (giaToc != null) {
                             Family_Member getMem = Family.gI().getMe(c, giaToc);
-                            if (getMem != null ) {
+                            if (getMem != null) {
                                 getMem.congHien += 2;
                                 getMem.congHienTuan += 2;
                                 giaToc.info.congHienTuan += 2;
@@ -1761,7 +1844,7 @@ public class Map {
                     }
                     // logic sử lý done ải
                     FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-                    if(giaToc != null) {
+                    if (giaToc != null) {
                         Zone zone46 = Map.maps[46].FindMapCustom(giaToc.MapAi.get(46));
                         zone46.infoMap.time = zone.infoMap.timeClose = 60000;
                         zone46.infoMap.timeStartHoatDong = System.currentTimeMillis();
@@ -1773,25 +1856,27 @@ public class Map {
 
             }
         }
-        public void dropItem(Client client, Mob mob){
+
+        public void dropItem(Client client, Mob mob) {
             // drop item , rơi item, dớt item quái, item rớt
 
-            if(mob.isBoss){ // item boss
+            if (mob.isBoss) { // item boss
                 // rớt bạc
-//                for (int i = 0; i < mob.level/5; i++){
-//                    int x = Utlis.nextInt(50);
-//                    int bac = Utlis.nextInt(1000,10000);
-//                    Item item = new Item(191, false, bac);
-//                    ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + (i % 2 == 0 ? x : -x), mob.cy);
-//                    itemMap.idEntity = DataCache.getIDItemMap();
-//                    itemMap.idChar = client.mChar.id;
-//                    createItemMap(itemMap, mob);
-//                }
-                int leg = Utlis.nextInt(1, mob.level/2); // open phải sửa /7
+                // for (int i = 0; i < mob.level/5; i++){
+                // int x = Utlis.nextInt(50);
+                // int bac = Utlis.nextInt(1000,10000);
+                // Item item = new Item(191, false, bac);
+                // ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + (i % 2 == 0 ? x : -x),
+                // mob.cy);
+                // itemMap.idEntity = DataCache.getIDItemMap();
+                // itemMap.idChar = client.mChar.id;
+                // createItemMap(itemMap, mob);
+                // }
+                int leg = Utlis.nextInt(1, mob.level / 2); // open phải sửa /7
                 // rớt đá Khảm
-                for (int i = 0; i < leg; i++){
+                for (int i = 0; i < leg; i++) {
                     int x = Utlis.nextInt(50);
-                    List<Integer> listItem = Arrays.asList(406,407,408,409,410,411,412,413,826,827);
+                    List<Integer> listItem = Arrays.asList(406, 407, 408, 409, 410, 411, 412, 413, 826, 827);
                     Item item = new Item(UTPKoolVN.getRandomList(listItem));
                     ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + (i % 2 == 0 ? x : -x), mob.cy);
                     itemMap.idEntity = DataCache.getIDItemMap();
@@ -1799,9 +1884,9 @@ public class Map {
                     createItemMap(itemMap, mob);
                 }
 
-                leg = Utlis.nextInt(1, mob.level/2); // open phải sửa /9
+                leg = Utlis.nextInt(1, mob.level / 2); // open phải sửa /9
                 // rớt lệnh bài điểm hokage
-                for (int i = 0; i < leg; i++){
+                for (int i = 0; i < leg; i++) {
                     int x = Utlis.nextInt(50);
                     List<Integer> listItem = Arrays.asList(174, 175, 179, 216, 217, 218, 248, 278, 302, 315);
                     Item item = new Item(UTPKoolVN.getRandomList(listItem));
@@ -1812,15 +1897,15 @@ public class Map {
                 }
 
                 // rớt đồ hokage
-                if(Utlis.nextInt(100) < 30){ // open phải sửa < 3
+                if (Utlis.nextInt(100) < 30) { // open phải sửa < 3
                     List<Integer> listItem = Arrays.asList(54, 59, 64, 69, 74, 79, 84, 89, 94, 99, 104, 109, 114, 119);
-                    if(mob.level >= 50){
+                    if (mob.level >= 50) {
                         listItem = Arrays.asList(58, 63, 68, 73, 78, 83, 88, 93, 98, 103, 108, 113, 118, 123);
-                    } else if(mob.level >= 40){
+                    } else if (mob.level >= 40) {
                         listItem = Arrays.asList(57, 62, 67, 72, 77, 82, 87, 92, 97, 102, 107, 112, 117, 122);
-                    } else if(mob.level >= 30){
+                    } else if (mob.level >= 30) {
                         listItem = Arrays.asList(56, 61, 66, 71, 76, 81, 86, 91, 96, 101, 106, 111, 116, 121);
-                    } else if(mob.level >= 20){
+                    } else if (mob.level >= 20) {
                         listItem = Arrays.asList(55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120);
                     }
                     int x = Utlis.nextInt(-50, 50);
@@ -1838,17 +1923,17 @@ public class Map {
                     createItemMap(itemMap, mob);
                 }
 
-
             } else { // item quái
 
-                if (Math.abs(client.mChar.level() - mob.level) > 10) return;
+                if (Math.abs(client.mChar.level() - mob.level) > 10)
+                    return;
                 int x = Utlis.nextInt(-50, 50);
                 int idItem = 0;
 
                 ItemMap itemMap;
                 Item item = null;
                 int tile = Utlis.nextInt(100);
-                if(client.mChar.zone.map.mapID == 89){ // cấm thuật, vòng lặp ảo tưởng
+                if (client.mChar.zone.map.mapID == 89) { // cấm thuật, vòng lặp ảo tưởng
                     List<Integer> listItem = Arrays.asList(354, 562, 564, 566); // đá chế tạo
                     item = new Item(UTPKoolVN.getRandomList(listItem));
                     itemMap = ItemMap.createItemMap(item, mob.cx, mob.cy);
@@ -1856,34 +1941,34 @@ public class Map {
                     itemMap.idChar = client.mChar.id;
                     createItemMap(itemMap, mob);
                 } else {
-                    if(tile < 10){
-                        if(mob.level >= 50){ // rớt đá
+                    if (tile < 10) {
+                        if (mob.level >= 50) { // rớt đá
                             idItem = 4;
-                        } else if(mob.level >= 40){
+                        } else if (mob.level >= 40) {
                             idItem = 3;
-                        } else if(mob.level >= 30){
+                        } else if (mob.level >= 30) {
                             idItem = 2;
-                        } else if(mob.level >= 20){
+                        } else if (mob.level >= 20) {
                             idItem = 1;
                         }
                         item = new Item(idItem);
-                    } else if(tile < 50){
-                        int backhoa =  Utlis.nextInt(1,11);
-                        if(mob.level >= 50){ // rớt bạc khóa
-                            backhoa = Utlis.nextInt(15,25);
-                        } else if(mob.level >= 40){
-                            backhoa = Utlis.nextInt(10,20);
-                        } else if(mob.level >= 30){
-                            backhoa = Utlis.nextInt(5,18);
-                        } else if(mob.level >= 20){
-                            backhoa =  Utlis.nextInt(1,16);
+                    } else if (tile < 50) {
+                        int backhoa = Utlis.nextInt(1, 11);
+                        if (mob.level >= 50) { // rớt bạc khóa
+                            backhoa = Utlis.nextInt(15, 25);
+                        } else if (mob.level >= 40) {
+                            backhoa = Utlis.nextInt(10, 20);
+                        } else if (mob.level >= 30) {
+                            backhoa = Utlis.nextInt(5, 18);
+                        } else if (mob.level >= 20) {
+                            backhoa = Utlis.nextInt(1, 16);
                         }
                         item = new Item(163, true, backhoa);
                     }
                 }
 
-
-                if(item == null) return;
+                if (item == null)
+                    return;
                 itemMap = ItemMap.createItemMap(item, mob.cx + x, mob.cy);
                 itemMap.idEntity = DataCache.getIDItemMap();
                 itemMap.idChar = client.mChar.id;
@@ -1891,6 +1976,7 @@ public class Map {
                 createItemMap(itemMap, mob);
             }
         }
+
         public void sendItemDropFormMob(Writer writer) {
             try {
                 SendZoneMessage(new Message((byte) 60, writer));
@@ -1898,7 +1984,8 @@ public class Map {
                 Utlis.logError(Session.class, ex, "Da say ra loi:\n" + ex.getMessage());
             }
         }
-        public void createItemMap(ItemMap itemMap, Mob mob){
+
+        public void createItemMap(ItemMap itemMap, Mob mob) {
             try {
                 this.vecItemMap.add(itemMap);
                 Writer writer = new Writer();
@@ -1906,9 +1993,10 @@ public class Map {
                 itemMap.write(writer, -1, -1, this);
                 sendItemDropFormMob(writer);
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi createItemMap:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi createItemMap:\n" + ex.getMessage());
             }
         }
+
         public synchronized void pickUpItem(Client client, short idEntity) {
             ItemMap itemMap = this.findItemMapInMap(idEntity);
             if (itemMap == null) {
@@ -1928,14 +2016,14 @@ public class Map {
                 synchronized (vecItemMap) {
                     this.vecItemMap.remove(itemMap);
                 }
-                if(itemMap.item.getItemTemplate().id == 163){
+                if (itemMap.item.getItemTemplate().id == 163) {
                     client.mChar.addBacKhoa(itemMap.item.getAmount(), true, true, "Nhặt từ Map");
-                } else if(itemMap.item.getItemTemplate().id == 191){
+                } else if (itemMap.item.getItemTemplate().id == 191) {
                     client.mChar.addBac(itemMap.item.getAmount(), true, true, "Nhặt từ Map");
                 } else {
-                    client.mChar.addItem(itemMap.item, "Nhặt từ Map: "+map.mapID);
+                    client.mChar.addItem(itemMap.item, "Nhặt từ Map: " + map.mapID);
                 }
-                if(itemMap.isSystem){
+                if (itemMap.isSystem) {
                     client.mChar.infoChar.cuaCai++;
                     client.mChar.infoChar.cuaCaiTuan++;
                 }
@@ -1948,11 +2036,11 @@ public class Map {
                     for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                         try {
                             Char c = copyOfVecChar.get(i);
-                            if(vecChar.contains(c) && c.client != null){
+                            if (vecChar.contains(c) && c.client != null) {
                                 c.client.session.serivce.pickUpItem(writer);
                             }
                         } catch (Exception ex) {
-                            Utlis.logError(Map.class, ex , "Da say ra loi pickUpItem:\n" + ex.getMessage());
+                            Utlis.logError(Map.class, ex, "Da say ra loi pickUpItem:\n" + ex.getMessage());
                         }
                     }
                     return;
@@ -1969,11 +2057,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.addExp(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi addExpToAllChar:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi addExpToAllChar:\n" + ex.getMessage());
                 }
             }
         }
@@ -1983,11 +2071,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.vutItem(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi vutItemToAllChar:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi vutItemToAllChar:\n" + ex.getMessage());
                 }
             }
         }
@@ -1997,20 +2085,21 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.removeItemMap(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi removeItemMap:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi removeItemMap:\n" + ex.getMessage());
                 }
             }
         }
 
         public void mobAttackChar(Mob mob, Client client) {
             try {
-                if(client.mChar.infoChar.isDie) return;
+                if (client.mChar.infoChar.isDie)
+                    return;
                 int dame = mob.getDameTheoHe(client.mChar);
-                int neTranh = client.mChar.getNeTranh()/100;
+                int neTranh = client.mChar.getNeTranh() / 100;
                 boolean ne_Tranh = Utlis.randomBoolean(100, neTranh);
                 if (ne_Tranh) {
                     sendNeSatThuong(client.mChar.id);
@@ -2018,7 +2107,7 @@ public class Map {
                 }
                 client.mChar.MineHp(dame);
 
-                if(client.mChar.getPhanDon() > 0){ // phản đòn
+                if (client.mChar.getPhanDon() > 0) { // phản đòn
                     int damePhan = dame * client.mChar.getPhanDon() / 100;
                     client.mChar.setAttackMob(mob, damePhan, false);
                 }
@@ -2029,11 +2118,11 @@ public class Map {
                 for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                     try {
                         Char c = copyOfVecChar.get(i);
-                        if(vecChar.contains(c) && c.client != null){
+                        if (vecChar.contains(c) && c.client != null) {
                             c.client.session.serivce.mobAttackChar(writer);
                         }
                     } catch (Exception ex) {
-                        Utlis.logError(Map.class, ex , "Da say ra loi mobAttackChar:\n" + ex.getMessage());
+                        Utlis.logError(Map.class, ex, "Da say ra loi mobAttackChar:\n" + ex.getMessage());
                     }
                 }
                 client.mChar.msgUpdateHpMpWhenAttack(false, "");
@@ -2046,11 +2135,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.updateHpMpWhenAttack(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateHpMpWhenAttack:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateHpMpWhenAttack:\n" + ex.getMessage());
                 }
             }
         }
@@ -2060,11 +2149,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.reSpawn(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi reSpawn:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi reSpawn:\n" + ex.getMessage());
                 }
             }
         }
@@ -2074,11 +2163,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.setXYChar(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi setXYChar:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi setXYChar:\n" + ex.getMessage());
                 }
             }
         }
@@ -2088,11 +2177,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.addEffect(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi addEffect:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi addEffect:\n" + ex.getMessage());
                 }
             }
         }
@@ -2102,11 +2191,11 @@ public class Map {
             for (int i = copyOfVecChar.size() - 1; i >= 0; i--) {
                 try {
                     Char c = copyOfVecChar.get(i);
-                    if(vecChar.contains(c) && c.client != null){
+                    if (vecChar.contains(c) && c.client != null) {
                         c.client.session.serivce.removeEffect(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi removeEffect:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi removeEffect:\n" + ex.getMessage());
                 }
             }
         }
@@ -2120,7 +2209,7 @@ public class Map {
                         c.client.session.serivce.updateHp_Orther(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateHp_Orther:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateHp_Orther:\n" + ex.getMessage());
                 }
             }
         }
@@ -2134,7 +2223,7 @@ public class Map {
                         c.client.session.serivce.updateHpFull_Orther(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateHpFull_Orther:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateHpFull_Orther:\n" + ex.getMessage());
                 }
             }
         }
@@ -2148,7 +2237,7 @@ public class Map {
                         c.client.session.serivce.updateMp_Orther(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateMp_Orther:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateMp_Orther:\n" + ex.getMessage());
                 }
             }
         }
@@ -2162,7 +2251,7 @@ public class Map {
                         c.client.session.serivce.updateMpFull_Orther(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateMpFull_Orther:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateMpFull_Orther:\n" + ex.getMessage());
                 }
             }
         }
@@ -2176,7 +2265,7 @@ public class Map {
                         c.client.session.serivce.updateItemBody_Orther(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateItemBody_Orther:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateItemBody_Orther:\n" + ex.getMessage());
                 }
             }
         }
@@ -2186,7 +2275,7 @@ public class Map {
                 return;
             }
             Npc npc = vecNpc.get(idNpc);
-            if(npc.id == 21){
+            if (npc.id == 21) {
                 client.mChar.zone.selectNpc(client, 11, 0, -1);
                 return;
             }
@@ -2203,14 +2292,14 @@ public class Map {
                 writer.writeShort(idNpc);
                 writer.writeUTF(str);
                 client.session.serivce.openNpc(writer);
-                UTPKoolVN.Debug("OPEN NPC ID: "+npc.id);
+                UTPKoolVN.Debug("OPEN NPC ID: " + npc.id);
             } catch (Exception ex) {
-                Utlis.logError(Map.class, ex , "Da say ra loi openNpc:\n" + ex.getMessage());
+                Utlis.logError(Map.class, ex, "Da say ra loi openNpc:\n" + ex.getMessage());
             }
         }
 
         public void selectNpc(Client client, int idNpc, int index1, int index2) {
-            UTPKoolVN.Debug("npc: "+idNpc+", index 1: "+index1+", index2, "+index2);
+            UTPKoolVN.Debug("npc: " + idNpc + ", index 1: " + index1 + ", index2, " + index2);
             if (idNpc < 0 || idNpc > this.vecNpc.size()) {
                 return;
             }
@@ -2227,7 +2316,7 @@ public class Map {
                         c.client.session.serivce.updateStatusChar(writer);
                     }
                 } catch (Exception ex) {
-                    Utlis.logError(Map.class, ex , "Da say ra loi updateStatusChar:\n" + ex.getMessage());
+                    Utlis.logError(Map.class, ex, "Da say ra loi updateStatusChar:\n" + ex.getMessage());
                 }
             }
         }
@@ -2240,7 +2329,7 @@ public class Map {
             System.err.println("DataCenter hoặc MapTemplate chưa được khởi tạo!");
             return;
         }
-        
+
         if (maps == null) {
             maps = new Map[DataCenter.gI().MapTemplate.length];
             for (int i = 0; i < maps.length; i++) {
