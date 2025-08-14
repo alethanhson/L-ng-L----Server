@@ -12,9 +12,9 @@ public class Friend {
     public int id;
     public String name;
     public int stt;
-    public Friend()
-    {
+
+    public Friend() {
 
     }
-    
+
 }

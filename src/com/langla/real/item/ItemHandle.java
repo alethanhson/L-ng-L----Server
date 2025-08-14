@@ -177,12 +177,9 @@ public class ItemHandle {
                         }
                         break;
                     case 423:
-
-
                         itemNew = new Item(161, item.isLock, 10);
                         character.addItem(itemNew, "Mở rank");
                         character.msgAddItemBag(itemNew);
-
 
                         character.removeItemBag(item, "Sử dụng");
                         if(character.infoChar.rank < 6){
@@ -196,18 +193,10 @@ public class ItemHandle {
                         }
                         break;
                     case 424:
-
                         itemNew = new Item(152, item.isLock, 1);
                         character.addItem(itemNew, "Mở rank");
                         character.msgAddItemBag(itemNew);
 
-
-                        character.removeItemBag(item, "Sử dụng");
-                        if(character.infoChar.rank < 6){
-                            character.infoChar.rank = 7;
-                            character.infoChar.exp_rank = 30;
-                            character.client.session.serivce.loadRank(character);
-                        }
                         character.removeItemBag(item, "Sử dụng");
                         if(character.infoChar.rank < 7){
                             character.infoChar.rank = 8;
@@ -224,7 +213,6 @@ public class ItemHandle {
                         itemNew = new Item(155, item.isLock, 1);
                         character.addItem(itemNew, "Mở rank");
                         character.msgAddItemBag(itemNew);
-
                         character.removeItemBag(item, "Sử dụng");
                         if(character.infoChar.rank < 8){
                             character.infoChar.rank = 9;
@@ -237,19 +225,19 @@ public class ItemHandle {
                         }
                         break;
                     case 426:
-                        itemNew = new Item(467, item.isLock, 1);
-                        character.addItem(itemNew, "Mở rank");
-                        character.msgAddItemBag(itemNew);
-
-
-                        itemNew = new Item(463, item.isLock);
-                        itemNew.addItemOption(new ItemOption(0, 150));
-                        itemNew.addItemOption(new ItemOption(1, 150));
-                        itemNew.addItemOption(new ItemOption(2, 150));
-                        itemNew.addItemOption(new ItemOption(209, 100));
-                        character.addItem(itemNew, "Mở rank");
-                        character.msgAddItemBag(itemNew);
-
+                        // Item 1: Danh hiệu lục đạo
+                        Item itemRank10_1 = new Item(467, item.isLock, 1);
+                        character.addItem(itemRank10_1, "Mở rank");
+                        character.msgAddItemBag(itemRank10_1);
+                        
+                        // Item 2: Cải trang lục đạo với options
+                        Item itemRank10_2 = new Item(463, item.isLock);
+                        itemRank10_2.addItemOption(new ItemOption(0, 150));
+                        itemRank10_2.addItemOption(new ItemOption(1, 150));
+                        itemRank10_2.addItemOption(new ItemOption(2, 150));
+                        itemRank10_2.addItemOption(new ItemOption(209, 100));
+                        character.addItem(itemRank10_2, "Mở rank");
+                        character.msgAddItemBag(itemRank10_2);
 
                         character.removeItemBag(item, "Sử dụng");
                         if(character.infoChar.rank < 9){

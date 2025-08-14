@@ -18,6 +18,7 @@ public class GiftcodeTemplate {
     public int vangKhoa = 0;
 
     public long exp = 0;
-    public GiftcodeTemplate (){
+
+    public GiftcodeTemplate() {
     }
 }

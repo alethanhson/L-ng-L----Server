@@ -27,7 +27,7 @@ public class DanhHieu {
       this.detail = detail;
    }
 
-   public DanhHieu(){
+   public DanhHieu() {
 
    }
 

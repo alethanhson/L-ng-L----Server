@@ -12,7 +12,6 @@ import com.langla.real.player.Client;
 import com.langla.real.player.Player;
 import com.langla.real.task.TaskHandler;
 import com.langla.server.handler.IActionNpc;
-import com.langla.utlis.UTPKoolVN;
 
 import java.util.ArrayList;
 
@@ -35,13 +34,12 @@ public class Npc extends Entity implements Cloneable {
 
         NpcTemplate.listAction[npc.id] = initializeActionList(npc, client);
 
-
         return NpcTemplate.listAction[npc.id].toArray(new ActionNpc[0]);
     }
 
     public static ArrayList<ActionNpc> initializeActionList(Npc npc, Client clients) {
         ArrayList<ActionNpc> list = new ArrayList<>();
-        if(TaskHandler.gI().checkNPC(clients.mChar, npc.id) != null){
+        if (TaskHandler.gI().checkNPC(clients.mChar, npc.id) != null) {
             list = TaskHandler.gI().checkNPC(clients.mChar, npc.id);
         }
         switch (npc.id) {
@@ -50,49 +48,70 @@ public class Npc extends Entity implements Cloneable {
             case 6:
             case 7:
             case 8:
-                if(clients.mChar.infoChar.idClass > 0){
-                    addAction(list, "Tẩy tiềm năng", client -> client.session.serivce.OpenMenu(npc.id, 1," Bạn có chắc chắn muốn tẩy toàn bộ tiềm năng không?",
-                            "Đồng ý"));
-                    addAction(list, "Tẩy kỹ năng", client -> client.session.serivce.OpenMenu(npc.id, 2," Bạn có chắc chắn muốn tẩy toàn bộ kỹ năng không?",
-                            "Đồng ý"));
-                    addAction(list, "Luyện bí kíp",client -> client.session.serivce.openTabLuyenBiKip());
-                    addAction(list, "Đổi bí kíp", client -> client.session.serivce.OpenMenu(npc.id, 3,"",
+                if (clients.mChar.infoChar.idClass > 0) {
+                    addAction(list, "Tẩy tiềm năng",
+                            client -> client.session.serivce.OpenMenu(npc.id, 1,
+                                    " Bạn có chắc chắn muốn tẩy toàn bộ tiềm năng không?",
+                                    "Đồng ý"));
+                    addAction(list, "Tẩy kỹ năng",
+                            client -> client.session.serivce.OpenMenu(npc.id, 2,
+                                    " Bạn có chắc chắn muốn tẩy toàn bộ kỹ năng không?",
+                                    "Đồng ý"));
+                    addAction(list, "Luyện bí kíp", client -> client.session.serivce.openTabLuyenBiKip());
+                    addAction(list, "Đổi bí kíp", client -> client.session.serivce.OpenMenu(npc.id, 3, "",
                             "Sách cao cấp; Sách hiền nhân Lôi (Đã tu Luyện 16000/18000);Sách hiền nhân Mộc (Đã tu Luyện 16000/18000);Sách hiền nhân Thủy (Đã tu Luyện 16000/18000);Sách hiền nhân Hỏa (Đã tu Luyện 16000/18000);Sách hiền nhân Phong (Đã tu Luyện 16000/18000);"));
 
-                    addAction(list, "Đổi bùa nổ", client -> client.session.serivce.OpenMenu(npc.id, 4,"",
+                    addAction(list, "Đổi bùa nổ", client -> client.session.serivce.OpenMenu(npc.id, 4, "",
                             "Bùa nổ cao cấp (Trù 800 vàng); Bùa nổ siêu cấp (Trù 3.000 vàng); Hướng dẫn"));
-                    if(clients.mChar.infoChar.isKhoaCap){
-                        addAction(list, "Mở khóa cấp nhân vật", client -> client.session.serivce.OpenMenu(npc.id, 5," Bạn có chắc chắn muốn mở khóa cấp không? Phí 50 vàng",
-                                "Đồng ý"));
+                    if (clients.mChar.infoChar.isKhoaCap) {
+                        addAction(list, "Mở khóa cấp nhân vật",
+                                client -> client.session.serivce.OpenMenu(npc.id, 5,
+                                        " Bạn có chắc chắn muốn mở khóa cấp không? Phí 50 vàng",
+                                        "Đồng ý"));
                     } else {
-                        addAction(list, "Khóa cấp nhân vật", client -> client.session.serivce.OpenMenu(npc.id, 5," Bạn có chắc chắn muốn khóa cấp không? Phí 50 vàng",
-                                "Đồng ý"));
+                        addAction(list, "Khóa cấp nhân vật",
+                                client -> client.session.serivce.OpenMenu(npc.id, 5,
+                                        " Bạn có chắc chắn muốn khóa cấp không? Phí 50 vàng",
+                                        "Đồng ý"));
                     }
 
                     addAction(list, "Trang bị lục đạo", client -> client.session.serivce.openTabLucDao());
-                    addAction(list, "Đổi mật khẩu", client -> client.session.serivce.InputClient("Nhập mật khẩu hiện tại", (short) 1));
+                    addAction(list, "Đổi mật khẩu",
+                            client -> client.session.serivce.InputClient("Nhập mật khẩu hiện tại", (short) 1));
                 } else {
-                    if(clients.mChar.infoChar.idTask == 8 && clients.mChar.infoChar.idStep == 8){
+                    if (clients.mChar.infoChar.idTask == 8 && clients.mChar.infoChar.idStep == 8) {
                         clients.TypeMenu = 0;
-                        addAction(list, ":-?Xin hãy nhận em làm đệ tử", client -> NPC_Action.TypeMenu(clients, (int) getLopFormNPC(npc.id)));
+                        addAction(list, ":-?Xin hãy nhận em làm đệ tử",
+                                client -> NPC_Action.TypeMenu(clients, (int) getLopFormNPC(npc.id)));
                     }
 
                 }
                 break;
             case 21:
                 BauCuaTpl bauCuaTpl = BauCua.gI().checkPlayer(clients.mChar.id);
-                if(bauCuaTpl != null){
-                    addAction(list, "Xem kết quả Bầu Cua", client -> client.session.serivce.OpenMenu(npc.id, 1,"Bạn cược "+bauCuaTpl.cuocText+": "+Utlis.numberFormat(bauCuaTpl.vangCuoc)+" (Vàng)\\nTổng tiền đặt TÔM: "+Utlis.numberFormat(BauCua.gI().tongCuoc1)+" (Vàng)\\nTổng tiền đặt CUA: "+Utlis.numberFormat(BauCua.gI().tongCuoc2)+" (Vàng)\\nKết quả lần trước: "+ BauCua.gI().ketQuaText+"\\n  Kết quả mới sau: "+Utlis.k((int) ((BauCua.gI().time-System.currentTimeMillis()))/1000)+"",
-                            "Cập nhật; Hướng dẫn"));
+                if (bauCuaTpl != null) {
+                    addAction(list, "Xem kết quả Bầu Cua",
+                            client -> client.session.serivce.OpenMenu(npc.id, 1, "Bạn cược " + bauCuaTpl.cuocText + ": "
+                                    + Utlis.numberFormat(bauCuaTpl.vangCuoc) + " (Vàng)\\nTổng tiền đặt TÔM: "
+                                    + Utlis.numberFormat(BauCua.gI().tongCuoc1) + " (Vàng)\\nTổng tiền đặt CUA: "
+                                    + Utlis.numberFormat(BauCua.gI().tongCuoc2) + " (Vàng)\\nKết quả lần trước: "
+                                    + BauCua.gI().ketQuaText + "\\n  Kết quả mới sau: "
+                                    + Utlis.k((int) ((BauCua.gI().time - System.currentTimeMillis())) / 1000) + "",
+                                    "Cập nhật; Hướng dẫn"));
                 } else {
-                    addAction(list, "Xem kết quả Bầu Cua", client -> client.session.serivce.OpenMenu(npc.id, 0,"Tổng tiền đặt TÔM: "+Utlis.numberFormat(BauCua.gI().tongCuoc1)+" (Vàng)\\nTổng tiền đặt CUA: "+Utlis.numberFormat(BauCua.gI().tongCuoc2)+" (Vàng)\\nKết quả lần trước: "+ BauCua.gI().ketQuaText+"\\n  Kết quả mới sau: "+Utlis.k((int) ((BauCua.gI().time-System.currentTimeMillis()))/1000)+"",
-                            "Cập nhật;Đặt cược TÔM;Đặt cược CUA; Hướng dẫn"));
+                    addAction(list, "Xem kết quả Bầu Cua",
+                            client -> client.session.serivce.OpenMenu(npc.id, 0, "Tổng tiền đặt TÔM: "
+                                    + Utlis.numberFormat(BauCua.gI().tongCuoc1) + " (Vàng)\\nTổng tiền đặt CUA: "
+                                    + Utlis.numberFormat(BauCua.gI().tongCuoc2) + " (Vàng)\\nKết quả lần trước: "
+                                    + BauCua.gI().ketQuaText + "\\n  Kết quả mới sau: "
+                                    + Utlis.k((int) ((BauCua.gI().time - System.currentTimeMillis())) / 1000) + "",
+                                    "Cập nhật;Đặt cược TÔM;Đặt cược CUA; Hướng dẫn"));
                 }
                 break;
             case 93: // dược phẩm
                 addAction(list, "Dược phẩm", client -> client.session.serivce.SendShop(0));
 
-                addAction(list, "Khu luyện tập", client -> client.session.serivce.OpenMenu(npc.id, 0,"Khu luyện tập",
+                addAction(list, "Khu luyện tập", client -> client.session.serivce.OpenMenu(npc.id, 0, "Khu luyện tập",
                         "Tổ đội 3 người tăng (100%);" + "Tổ đội 6 người tăng (75%)"));
                 break;
             case 99: // quán ăn
@@ -139,7 +158,8 @@ public class Npc extends Entity implements Cloneable {
                 addAction(list, "Tách cường hóa", client -> client.session.serivce.openTabTachCuongHoa());
                 addAction(list, "Nâng cấp bùa nổ", client -> client.session.serivce.openTabBuaNo());
                 addAction(list, "Dịch chuyển trang bị", client -> client.session.serivce.openTabDichChuyen());
-                addAction(list, "Khảm ngọc", client -> client.session.serivce.openTabKhamNgoc((byte) client.mChar.infoChar.levelKhamNgoc));
+                addAction(list, "Khảm ngọc",
+                        client -> client.session.serivce.openTabKhamNgoc((byte) client.mChar.infoChar.levelKhamNgoc));
                 addAction(list, "Tách khảm ngọc", client -> client.session.serivce.openTabTachNgocKham());
                 addAction(list, "Ghép cải trang", client -> client.session.serivce.openTabGhepCaiTrang(client.mChar));
                 addAction(list, "Tách cải trang", client -> client.session.serivce.openTabTachCaiTrang());
@@ -163,57 +183,67 @@ public class Npc extends Entity implements Cloneable {
                 break;
             case 45:
             case 101:
-                addAction(list, "Trường Konoha", client ->  Map.maps[86].addChar(client));
-                addAction(list, "Làng Lá", client ->  Map.maps[75].addChar(client));
-                addAction(list, "Làng Sương Mù", client ->  Map.maps[60].addChar(client));
-                addAction(list, "Làng Mây", client ->  Map.maps[69].addChar(client));
-                addAction(list, "Làng Đá", client ->  Map.maps[85].addChar(client));
-                addAction(list, "Làng Cát", client ->  Map.maps[59].addChar(client));
-                addAction(list, "Làng Cỏ", client ->  Map.maps[68].addChar(client));
-                addAction(list, "Làng Mưa", client ->  Map.maps[102].addChar(client));
+                addAction(list, "Trường Konoha", client -> Map.maps[86].addChar(client));
+                addAction(list, "Làng Lá", client -> Map.maps[75].addChar(client));
+                addAction(list, "Làng Sương Mù", client -> Map.maps[60].addChar(client));
+                addAction(list, "Làng Mây", client -> Map.maps[69].addChar(client));
+                addAction(list, "Làng Đá", client -> Map.maps[85].addChar(client));
+                addAction(list, "Làng Cát", client -> Map.maps[59].addChar(client));
+                addAction(list, "Làng Cỏ", client -> Map.maps[68].addChar(client));
+                addAction(list, "Làng Mưa", client -> Map.maps[102].addChar(client));
                 break;
             case 97:
                 int vnd = Player.getVNDByPlayerId(clients.player);
                 addAction(list, "Đổi tinh thạch", client -> client.session.serivce.openTabTinhThach());
-                addAction(list, "Đổi tiền đã nạp", client -> client.session.serivce.OpenMenu(npc.id, 1,"Số dư đã nạp "+Utlis.numberFormat(vnd)+"đ, nạp tiền tại trang chủ: LangLaPlus.com",
-                        "Quy đổi sang vàng;" +
-                                "Bảng giá quy đổi"));
-                addAction(list, "Đổi vàng trên người", client -> client.session.serivce.OpenMenu(npc.id, 2,"Chọn số lượng cần đổi",
-                        "10 vàng đổi 50.000 bạc;" +
-                                "100 vàng đổi 600.000 bạc;" +
-                                "1.000 vàng đổi 7.000.000 bạc;" +
-                                "10 vàng đổi 300.000 bạc khóa;" +
-                                "100 vàng đổi 4.000.000 bạc khóa;" +
-                                "1.000 vàng đổi 50.000.000 bạc khóa"));
+                addAction(list, "Đổi tiền đã nạp",
+                        client -> client.session.serivce.OpenMenu(npc.id, 1,
+                                "Số dư đã nạp " + Utlis.numberFormat(vnd) + "đ, nạp tiền tại trang chủ: LangLaPlus.com",
+                                "10,000đ = 1,000 vàng;" +
+                                        "20,000đ = 2,000 vàng;" +
+                                        "50,000đ = 5,000 vàng;" +
+                                        "100,000đ = 11,000 vàng;" +
+                                        "200,000đ = 23,000 vàng;" +
+                                        "500,000đ = 59,000 vàng;" +
+                                        "1,000,000đ = 120,000 vàng"));
+                addAction(list, "Đổi vàng trên người",
+                        client -> client.session.serivce.OpenMenu(npc.id, 2, "Chọn số lượng cần đổi",
+                                "10 vàng đổi 50.000 bạc;" +
+                                        "100 vàng đổi 600.000 bạc;" +
+                                        "1.000 vàng đổi 7.000.000 bạc;" +
+                                        "10 vàng đổi 300.000 bạc khóa;" +
+                                        "100 vàng đổi 4.000.000 bạc khóa;" +
+                                        "1.000 vàng đổi 50.000.000 bạc khóa"));
                 break;
             case 98:
-                addAction(list, "Vĩ thú", client -> client.session.serivce.OpenMenu(npc.id, 0,"",
+                addAction(list, "Vĩ thú", client -> client.session.serivce.OpenMenu(npc.id, 0, "",
                         "Kích hoạt sức mạnh; Đổi nhất vĩ; Đổi thêm đuôi"));
-                addAction(list, "Tách chakara vĩ thú", client -> client.session.serivce.OpenMenu(npc.id, 1,"",
+                addAction(list, "Tách chakara vĩ thú", client -> client.session.serivce.OpenMenu(npc.id, 1, "",
                         "Vĩ thú ở trang bị chính (trừ 200 vàng)"));
                 break;
             case 32:
                 addAction(list, "Đại chiến nhẫn giả lần III", client -> client.session.serivce.nullopen());
                 addAction(list, "Đại hội nhẫn giả", client -> client.session.serivce.nullopen());
-                addAction(list, "Gia tộc", client -> client.session.serivce.OpenMenu(npc.id, 0,"Gia Tộc",
+                addAction(list, "Gia tộc", client -> client.session.serivce.OpenMenu(npc.id, 0, "Gia Tộc",
                         "Thành lập;" + "Tìm gia tộc;" +
                                 "Mở cửa ải gia tộc;" +
                                 "Vào ải gia tộc"));
-                addAction(list, "Cấm thuật Izanami", client -> client.session.serivce.OpenMenu(npc.id, 1,"Hãy tập hợp tất cả đồng đội trong nhóm tại đây",
-                        "Tham gia"));
+                addAction(list, "Cấm thuật Izanami",
+                        client -> client.session.serivce.OpenMenu(npc.id, 1,
+                                "Hãy tập hợp tất cả đồng đội trong nhóm tại đây",
+                                "Tham gia"));
                 addAction(list, "Trang bị Sharingan", client -> client.session.serivce.open122((byte) 65));
                 addAction(list, "Trang bị Byakugan", client -> client.session.serivce.open122((byte) 66));
                 addAction(list, "Trang bị Rinnegan", client -> client.session.serivce.open122((byte) 67));
                 break;
             case 105:
-                                addAction(list, "Trang bị Myobuku", client -> client.session.serivce.open122((byte) 64));
+                addAction(list, "Trang bị Myobuku", client -> client.session.serivce.open122((byte) 64));
                 break;
         }
         return list;
     }
 
-    public static int getLopFormNPC(int idnpc){
-        switch (idnpc){
+    public static int getLopFormNPC(int idnpc) {
+        switch (idnpc) {
             case 4:
                 return 1;
             case 5:
@@ -227,10 +257,10 @@ public class Npc extends Entity implements Cloneable {
         }
         return 1;
     }
+
     public static void addAction(ArrayList<ActionNpc> list, String actionName, IActionNpc action) {
         list.add(new ActionNpc(actionName, action));
     }
-
 
     public int id;
 
@@ -238,7 +268,7 @@ public class Npc extends Entity implements Cloneable {
         try {
             return (Npc) super.clone();
         } catch (Exception e) {
-            Utlis.logError(Npc.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(Npc.class, e, "Da say ra loi:\n" + e.getMessage());
             return null;
         }
     }

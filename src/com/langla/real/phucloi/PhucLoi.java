@@ -39,5 +39,4 @@ public class PhucLoi {
     public LocalDate lastNapLienTucUpdate; // Ngày cuối cùng cập nhật nạp liên tục
 
     public final List<LogPhucLoi> logData = new ArrayList<>();
-
 }
