@@ -1,8 +1,0 @@
-ADD ITEM BAG NEW Kiếm gỗ, SL: 1 lý do: New game, TIME: 17/03/2024 12:00 CH
-
-ADD BẠC KHÓA +100000000, tổng: 100000000 lý do: New game, TIME: 17/03/2024 12:00 CH
-
-ADD VÀNG KHÓA +10000, tổng: 10000 lý do: New game, TIME: 17/03/2024 12:00 CH
-
-ADD ITEM BAG NEW Rương cải trang, SL: 100 lý do: New game, TIME: 17/03/2024 12:00 CH
-

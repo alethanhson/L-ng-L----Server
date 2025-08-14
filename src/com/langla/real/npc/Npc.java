@@ -197,14 +197,14 @@ public class Npc extends Entity implements Cloneable {
                 addAction(list, "Đổi tinh thạch", client -> client.session.serivce.openTabTinhThach());
                 addAction(list, "Đổi tiền đã nạp",
                         client -> client.session.serivce.OpenMenu(npc.id, 1,
-                                "Số dư đã nạp " + Utlis.numberFormat(vnd) + "đ, nạp tiền tại trang chủ: LangLaPlus.com",
-                                "10,000đ = 1,000 vàng;" +
-                                        "20,000đ = 2,000 vàng;" +
-                                        "50,000đ = 5,000 vàng;" +
-                                        "100,000đ = 11,000 vàng;" +
-                                        "200,000đ = 23,000 vàng;" +
-                                        "500,000đ = 59,000 vàng;" +
-                                        "1,000,000đ = 120,000 vàng"));
+                                "Số dư đã nạp " + Utlis.numberFormat(vnd) + "đ, nạp tiền tại trang chủ: aa.com",
+                                "10.000 đổi 1.000 vàng;" +
+                                        "20.000 đổi 2.000 vàng;" +
+                                        "50.000 đổi 5.000 vàng;" +
+                                        "100.000 đổi 11.000 vàng;" +
+                                        "200.000 đổi 23.000 vàng;" +
+                                        "500.000 đổi 59.000 vàng;" +
+                                        "1.000.000 đổi 120.000 vàng"));
                 addAction(list, "Đổi vàng trên người",
                         client -> client.session.serivce.OpenMenu(npc.id, 2, "Chọn số lượng cần đổi",
                                 "10 vàng đổi 50.000 bạc;" +

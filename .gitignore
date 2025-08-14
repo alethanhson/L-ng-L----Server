@@ -12,3 +12,21 @@ out/*
 
 # Ignore macOS file
 .DS_Store
+
+# Ignore log files and directories completely
+data/pkoolvn/logs/
+data/pkoolvn/logs/**
+logs/
+**/logs/
+*.log
+*.txt
+
+# Ignore specific log subdirectories
+data/pkoolvn/logs/char/
+data/pkoolvn/logs/char/**
+data/pkoolvn/logs/error/
+data/pkoolvn/logs/error/**
+
+# Ignore all data subdirectories that contain logs
+data/**/logs/**
+data/**/logs/*/
