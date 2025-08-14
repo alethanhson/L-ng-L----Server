@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.langla.real.map;
+
 import com.langla.real.family.Family;
 import com.langla.real.family.FamilyTemplate;
 import com.langla.real.family.Family_Member;
@@ -24,54 +25,40 @@ import java.util.List;
  * @author PKoolVN
  **/
 public class Mob extends Entity implements Cloneable {
-
-
     public int id;
-
     public int hp;
     public int hpGoc;
-
     public int hpFull;
-
     public int he;
-
     public int exp;
-
     public int dame;
+
     public int tangDameLenLoi;
     public int tangDameLenTho;
     public int tangDameLenThuy;
     public int tangDameLenHoa;
     public int tangDameLenPhong;
+
     public int khangLoi;
     public int khangTho;
-
     public int khangThuy;
-
     public int khangHoa;
-
     public int khangPhong;
 
     public int NeTranh;
-
     public int PhanDon;
 
     public int HoiHp;
     public int expGoc;
-
     public int level;
-
     public int levelBoss;
-
     public boolean paintMiniMap;
-
     public boolean isDie;
     public boolean isReSpawn;
     public long timeDie;
     public long delayAttack;
 
     public long delayUpdate;
-
     public long delayHoiHP;
     public boolean isBoss;
     public boolean isHoiSinhMob = true;
@@ -79,26 +66,28 @@ public class Mob extends Entity implements Cloneable {
     public String nameChar;
 
     public List<Effect> listEffect;
-    /* Hiệu Ứng khống chế*/
+    /* Hiệu Ứng khống chế */
     public boolean IsBong;
-
     public boolean IsSuyYeu;
     public boolean IsChoang;
     public boolean IsTeLiet;
     public boolean IsBietThienThan;
-    public boolean CanAttack()
-    {
-        return !isDie && !IsTeLiet && !IsBietThienThan && !IsChoang && getMobTemplate().type != 10 && getMobTemplate().type != 8;
+
+    public boolean CanAttack() {
+        return !isDie && !IsTeLiet && !IsBietThienThan && !IsChoang && getMobTemplate().type != 10
+                && getMobTemplate().type != 8;
     }
+
     public Mob cloneMob() {
         try {
             return (Mob) super.clone();
         } catch (Exception e) {
-            Utlis.logError(Mob.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(Mob.class, e, "Da say ra loi:\n" + e.getMessage());
             return null;
         }
     }
-    public void  createNewEffectList() {
+
+    public void createNewEffectList() {
         this.listEffect = new ArrayList<>();
         this.nameChar = "";
     }
@@ -128,12 +117,13 @@ public class Mob extends Entity implements Cloneable {
 
         for (int i = 0; i < this.listEffect.size(); i++) {
             Effect effect = this.listEffect.get(i);
-            if(effect != null){
+            if (effect != null) {
                 effect.write(writer);
             }
         }
     }
-    public void addEff(Effect effect){
+
+    public void addEff(Effect effect) {
         this.listEffect.add(effect);
         switch (effect.id) {
             case 8:
@@ -154,7 +144,7 @@ public class Mob extends Entity implements Cloneable {
         }
     }
 
-    public void removeEff(Effect effect){
+    public void removeEff(Effect effect) {
         this.listEffect.remove(effect);
         switch (effect.id) {
             case 8:
@@ -175,27 +165,32 @@ public class Mob extends Entity implements Cloneable {
         }
     }
 
-    public void update(Zone zone){
-        if(HoiHp > 0 && !isDie && hp < hpFull){
+    public void update(Zone zone) {
+        if (HoiHp > 0 && !isDie && hp < hpFull) {
             hp += HoiHp;
-            if(hp > hpFull) hp = hpFull;
+            if (hp > hpFull)
+                hp = hpFull;
             zone.updateHpMob(this);
         }
-        if(this.listEffect.size() == 0) return;
+        if (this.listEffect.size() == 0)
+            return;
         for (int i = 0; i < this.listEffect.size(); i++) {
-            if(this.listEffect.get(i) != null) this.listEffect.get(i).updateMob(this, zone);
+            if (this.listEffect.get(i) != null)
+                this.listEffect.get(i).updateMob(this, zone);
         }
     }
-    public int getValueEff(int idEff){
+
+    public int getValueEff(int idEff) {
         int value = 0;
         for (int i = 0; i < this.listEffect.size(); i++) {
             Effect effect = this.listEffect.get(i);
-            if(effect != null && effect.id == idEff){
+            if (effect != null && effect.id == idEff) {
                 value += effect.value;
             }
         }
         return value;
     }
+
     void setHp() {
         if (hp <= 0) {
             hp = 0;
@@ -214,15 +209,15 @@ public class Mob extends Entity implements Cloneable {
     public void reSpawn() {
         hp = hpFull = hpGoc;
         he = Utlis.nextInt(1, 5);
-        if(Utlis.nextInt(100) < 60 && id == 213 && hpGoc == 99999999){
-            expGoc = Utlis.nextInt(100000000,1100000000);
+        if (Utlis.nextInt(100) < 60 && id == 213 && hpGoc == 99999999) {
+            expGoc = Utlis.nextInt(100000000, 1100000000);
         }
         exp = expGoc;
         levelBoss = 0;
-        if(isBoss){
+        if (isBoss) {
             levelBoss = 7;
         }
-        if(!isBoss){
+        if (!isBoss) {
             int num = Utlis.nextInt(10000);
             if (num < 1) {
                 hp = hpFull = hpGoc * 100;
@@ -234,23 +229,24 @@ public class Mob extends Entity implements Cloneable {
                 exp = expGoc * 10;
             }
         }
-        if(exp > 2100000000) exp = 2100000000;
+        if (exp > 2100000000)
+            exp = 2100000000;
         setHp();
 
         // 1 => Lôi,2 => thổ,3 => thủy ,4 => Hỏa , 5=> Phong
-        if(he == 1){
+        if (he == 1) {
             tangDameLenTho = getRandom(hpFull);
             khangPhong = getRandom(hpFull);
-        } else if(he == 2){
+        } else if (he == 2) {
             tangDameLenThuy = getRandom(hpFull);
             khangLoi = getRandom(hpFull);
-        }  else if(he == 3){
+        } else if (he == 3) {
             tangDameLenHoa = getRandom(hpFull);
             khangTho = getRandom(hpFull);
-        }  else if(he == 4){
+        } else if (he == 4) {
             tangDameLenPhong = getRandom(hpFull);
             khangThuy = getRandom(hpFull);
-        }  else if(he == 5){
+        } else if (he == 5) {
             tangDameLenLoi = getRandom(hpFull);
             khangHoa = getRandom(hpFull);
         }
@@ -259,49 +255,59 @@ public class Mob extends Entity implements Cloneable {
 
     public void reSpawnMobHoatDong(int xLevel, boolean isRandomHe) {
         hp = hpFull = hpGoc * xLevel;
-        if(isRandomHe) he = Utlis.nextInt(1, 5);
+        if (isRandomHe)
+            he = Utlis.nextInt(1, 5);
         exp = expGoc * xLevel;
         levelBoss = 0;
-        if(isBoss){
+        if (isBoss) {
             levelBoss = 10;
         }
         setHp();
-        if(exp > 2100000000) exp = 2100000000;
-        if(hp > 2100000000) hp = 2100000000;
-        if(hpFull > 2100000000) hpFull = 2100000000;
+        if (exp > 2100000000)
+            exp = 2100000000;
+        if (hp > 2100000000)
+            hp = 2100000000;
+        if (hpFull > 2100000000)
+            hpFull = 2100000000;
 
         // 1 => Lôi,2 => thổ,3 => thủy ,4 => Hỏa , 5=> Phong
-        if(he == 1){
+        if (he == 1) {
             tangDameLenTho = getRandom(hpFull);
             khangPhong = getRandom(hpFull);
-        } else if(he == 2){
+        } else if (he == 2) {
             tangDameLenThuy = getRandom(hpFull);
             khangLoi = getRandom(hpFull);
-        }  else if(he == 3){
+        } else if (he == 3) {
             tangDameLenHoa = getRandom(hpFull);
             khangTho = getRandom(hpFull);
-        }  else if(he == 4){
+        } else if (he == 4) {
             tangDameLenPhong = getRandom(hpFull);
             khangThuy = getRandom(hpFull);
-        }  else if(he == 5){
+        } else if (he == 5) {
             tangDameLenLoi = getRandom(hpFull);
             khangHoa = getRandom(hpFull);
         }
         dame = getRandomDame(hpFull);
     }
+
     public void setHoiHp() {
-        HoiHp = Utlis.nextInt((hpFull/1500), (hpFull/1000));
-        if(HoiHp > 5000) HoiHp = 5000;
+        HoiHp = Utlis.nextInt((hpFull / 1500), (hpFull / 1000));
+        if (HoiHp > 5000)
+            HoiHp = 5000;
     }
+
     public void setNeTranh() {
         NeTranh = Utlis.nextInt(1000, 5555);
     }
+
     public void setPhanDon() {
         PhanDon = Utlis.nextInt(1, 21);
     }
+
     public MobTemplate getMobTemplate() {
         return DataCenter.gI().MobTemplate[id];
     }
+
     public void writeView(Writer writer) throws java.io.IOException {
         writer.writeShort(idEntity);
         writer.writeShort(dame); // dame
@@ -331,12 +337,12 @@ public class Mob extends Entity implements Cloneable {
         writer.writeShort(0); // tương khắc lên hệ
         writer.writeShort(0); // giảm tương khắc
 
-
     }
+
     public int getDameTheoHe(Char _cAnDam) {
         // 1 => Lôi,2 => thổ,3 => thủy ,4 => Hỏa , 5=> Phong
         int num = dame;
-        switch (_cAnDam.infoChar.idClass){
+        switch (_cAnDam.infoChar.idClass) {
             case 1:
                 num += tangDameLenLoi;
                 break;
@@ -353,7 +359,7 @@ public class Mob extends Entity implements Cloneable {
                 num += tangDameLenPhong;
                 break;
         }
-        switch (he){
+        switch (he) {
             case 1:
                 num -= _cAnDam.getKhangLoi();
                 break;
@@ -364,37 +370,39 @@ public class Mob extends Entity implements Cloneable {
                 num -= _cAnDam.getKhangThuy();
                 break;
             case 4:
-                num -=  _cAnDam.getKhangHoa();
+                num -= _cAnDam.getKhangHoa();
                 break;
             case 5:
-                num -=  _cAnDam.getKhangPhong();
+                num -= _cAnDam.getKhangPhong();
                 break;
         }
 
-        dame -= _cAnDam.getGiamSatThuong()+_cAnDam.getKhangTatCa();
+        dame -= _cAnDam.getGiamSatThuong() + _cAnDam.getKhangTatCa();
 
-        if(this.IsSuyYeu) num /= 2;
+        if (this.IsSuyYeu)
+            num /= 2;
 
         return num;
     }
 
     public int getRandom(int hpFull) {
         int r = 0;
-        if(hpFull < 1000){
-            r =  Utlis.nextInt(1,11);
+        if (hpFull < 1000) {
+            r = Utlis.nextInt(1, 11);
         } else {
-            r = Utlis.nextInt((hpFull/300), (hpFull/200));
+            r = Utlis.nextInt((hpFull / 300), (hpFull / 200));
         }
-        if(r >= 800){
-            r = Utlis.nextInt(800,1000);
+        if (r >= 800) {
+            r = Utlis.nextInt(800, 1000);
         }
         return r;
     }
+
     public int getRandomDame(int hpFull) {
         int r = 0;
-        r = Utlis.nextInt((hpFull/150), (hpFull/100));
-        if(r >= 1500){
-            r = Utlis.nextInt(1500,2000);
+        r = Utlis.nextInt((hpFull / 150), (hpFull / 100));
+        if (r >= 1500) {
+            r = Utlis.nextInt(1500, 2000);
         }
         return r;
     }
