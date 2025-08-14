@@ -13,7 +13,6 @@ import com.langla.real.map.Mob;
 import com.langla.real.player.Char;
 import com.langla.server.lib.Writer;
 import com.langla.real.map.Map.Zone;
-import com.langla.utlis.UTPKoolVN;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,14 +55,17 @@ public class Effect {
         writer.writeInt((int) maintain);
 
     }
+
     public long getMaintain() {
         return maintain - (System.currentTimeMillis() - timeStart);
     }
+
     @JsonIgnore
     public EffectTemplate getEffectTemplate() {
         return DataCenter.gI().EffectTemplate[id];
 
     }
+
     @JsonIgnore
     public void updateMob(Mob mob, Zone zone) {
         long l = System.currentTimeMillis();
@@ -79,10 +81,10 @@ public class Effect {
         switch (eff.id) {
             case 9: // trúng độc
                 if (System.currentTimeMillis() - delay >= 350) {
-                    int hpMine = value*5;
+                    int hpMine = value * 5;
                     hpMine = Utlis.nextInt(hpMine * 90 / 100, hpMine);
 
-                    if (charAttack != null && charAttack.client != null&& mob.hp > 0) {
+                    if (charAttack != null && charAttack.client != null && mob.hp > 0) {
                         zone.setDameMob(charAttack.client, zone, mob, hpMine, false);
                     }
                     delay = System.currentTimeMillis();
@@ -91,6 +93,7 @@ public class Effect {
         }
 
     }
+
     @JsonIgnore
     public void updateChar(Char aThis) {
         long l = System.currentTimeMillis();
@@ -121,7 +124,7 @@ public class Effect {
                 break;
             case 2: // trúng độc
                 if (System.currentTimeMillis() - delay >= 350) {
-                    int hpMine = value*2;
+                    int hpMine = value * 2;
                     hpMine = Utlis.nextInt(hpMine * 90 / 100, hpMine);
                     if (charAttack != null && charAttack.client != null) {
                         charAttack.setAttackPlayer(aThis, hpMine, false);
@@ -174,6 +177,7 @@ public class Effect {
         }
 
     }
+
     @JsonIgnore
     public static void setEff(Char _myChar, Effect effect, boolean isRemove) {
         try {
@@ -182,9 +186,9 @@ public class Effect {
             int mpBack = _myChar.infoChar.mpFull;
             int speedBack = _myChar.infoChar.speedMove;
 
-            switch (effect.id){
+            switch (effect.id) {
                 case 8:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.TanCong += effect.listChiSo.get(0);
                         _myChar.TuongKhac.KhangHoa += effect.listChiSo.get(1);
                         _myChar.TuongKhac.KhangLoi += effect.listChiSo.get(2);
@@ -193,13 +197,13 @@ public class Effect {
                         _myChar.TuongKhac.KhangTho += effect.listChiSo.get(5);
                         _myChar.TuongKhac.KhangTatCa += effect.listChiSo.get(6);
                     } else {
-                        int tanCong = _myChar.TuongKhac.TanCong/2;
-                        int khangHoa = _myChar.TuongKhac.KhangHoa/2;
-                        int khangLoi = _myChar.TuongKhac.KhangLoi/2;
-                        int khangThuy = _myChar.TuongKhac.KhangThuy/2;
-                        int khangPhong = _myChar.TuongKhac.KhangPhong/2;
-                        int khangTho = _myChar.TuongKhac.KhangTho/2;
-                        int khangAll = _myChar.TuongKhac.KhangTatCa/2;
+                        int tanCong = _myChar.TuongKhac.TanCong / 2;
+                        int khangHoa = _myChar.TuongKhac.KhangHoa / 2;
+                        int khangLoi = _myChar.TuongKhac.KhangLoi / 2;
+                        int khangThuy = _myChar.TuongKhac.KhangThuy / 2;
+                        int khangPhong = _myChar.TuongKhac.KhangPhong / 2;
+                        int khangTho = _myChar.TuongKhac.KhangTho / 2;
+                        int khangAll = _myChar.TuongKhac.KhangTatCa / 2;
 
                         _myChar.TuongKhac.TanCong -= tanCong;
                         _myChar.TuongKhac.KhangHoa -= khangHoa;
@@ -219,7 +223,7 @@ public class Effect {
                     }
                     break;
                 case 11:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.info.isBiBong = false;
                     } else {
                         _myChar.info.isBiBong = true;
@@ -227,21 +231,21 @@ public class Effect {
                     break;
 
                 case 12:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.info.isBiChoang = false;
                     } else {
                         _myChar.info.isBiChoang = true;
                     }
                     break;
                 case 49:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.info.isBiDuoc = false;
                     } else {
                         _myChar.info.isBiDuoc = true;
                     }
                     break;
                 case 39:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.infoChar.hpFull -= effect.value;
                         _myChar.infoChar.mpFull -= effect.value;
                     } else {
@@ -250,7 +254,7 @@ public class Effect {
                     }
                     break;
                 case 55:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.KhangTatCa += effect.value;
 
                     } else {
@@ -258,7 +262,7 @@ public class Effect {
                     }
                     break;
                 case 56:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.NeTranh += effect.value;
                         _myChar.TuongKhac.GiamSatThuong += effect.value;
 
@@ -268,7 +272,7 @@ public class Effect {
                     }
                     break;
                 case 60:
-                    if(isRemove) {
+                    if (isRemove) {
                         _myChar.infoChar.hpFull -= effect.value;
                     } else {
                         _myChar.infoChar.hpFull += effect.value;
@@ -276,21 +280,21 @@ public class Effect {
                     break;
 
                 case 62:
-                    if(isRemove) {
+                    if (isRemove) {
                         _myChar.TuongKhac.TangTanCongChiMang -= effect.value;
                     } else {
                         _myChar.TuongKhac.TangTanCongChiMang += effect.value;
                     }
                     break;
                 case 64:
-                    if(isRemove) {
+                    if (isRemove) {
                         _myChar.TuongKhac.BoQuaKhangTinh -= effect.value;
                     } else {
                         _myChar.TuongKhac.BoQuaKhangTinh += effect.value;
                     }
                     break;
                 case 41:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.TanCongCoBan -= effect.value;
                     } else {
                         _myChar.TuongKhac.TanCongCoBan += effect.value;
@@ -298,53 +302,53 @@ public class Effect {
                     break;
                 case 61:
                 case 101:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.TanCong -= effect.value;
                     } else {
                         _myChar.TuongKhac.TanCong += effect.value;
                     }
                     break;
                 case 74:
-                    if(isRemove) {
-                        _myChar.infoChar.hpFull -= effect.value/3;
-                        _myChar.infoChar.mpFull -= effect.value/3;
-                        _myChar.TuongKhac.TanCong -= effect.value/3;
+                    if (isRemove) {
+                        _myChar.infoChar.hpFull -= effect.value / 3;
+                        _myChar.infoChar.mpFull -= effect.value / 3;
+                        _myChar.TuongKhac.TanCong -= effect.value / 3;
                     } else {
-                        _myChar.infoChar.hpFull += effect.value/3;
-                        _myChar.infoChar.mpFull += effect.value/3;
-                        _myChar.TuongKhac.TanCong += effect.value/3;
+                        _myChar.infoChar.hpFull += effect.value / 3;
+                        _myChar.infoChar.mpFull += effect.value / 3;
+                        _myChar.TuongKhac.TanCong += effect.value / 3;
                     }
                     break;
                 case 93:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.NeTranh += effect.value;
                     } else {
                         _myChar.TuongKhac.NeTranh -= effect.value;
                     }
                     break;
                 case 81:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.info.isBuaUeTho = false;
                     } else {
                         _myChar.info.isBuaUeTho = true;
                     }
                     break;
                 case 95:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.info.isThanhSatChar = false;
                     } else {
                         _myChar.info.isThanhSatChar = true;
                     }
                     break;
                 case 96:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.TuongKhac.ChinhXac += effect.value;
                     } else {
                         _myChar.TuongKhac.ChinhXac -= effect.value;
                     }
                     break;
                 case 100:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.infoChar.hpFull -= 1000;
                         _myChar.TuongKhac.TanCong -= effect.value;
                     } else {
@@ -354,14 +358,14 @@ public class Effect {
                     break;
                 case 51:
                 case 107:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.infoChar.speedMove -= effect.value;
                     } else {
                         _myChar.infoChar.speedMove += effect.value;
                     }
                     break;
                 case 99:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.infoChar.isPhanThan = false;
                     } else {
                         _myChar.infoChar.isPhanThan = true;
@@ -373,24 +377,28 @@ public class Effect {
                 case 67:
                 case 85:
                 case 103:
-                    if(isRemove){
+                    if (isRemove) {
                         _myChar.infoChar.exp_plus -= effect.value;
                     } else {
                         _myChar.infoChar.exp_plus += effect.value;
                     }
                     break;
             }
-            if(hpBack != _myChar.infoChar.hpFull) _myChar.msgUpdateHpFull();
-            if(mpBack != _myChar.infoChar.mpFull) _myChar.msgUpdateMpFull();
-            if(speedBack != _myChar.infoChar.speedMove) _myChar.msgUpdateStatusChar();
+            if (hpBack != _myChar.infoChar.hpFull)
+                _myChar.msgUpdateHpFull();
+            if (mpBack != _myChar.infoChar.mpFull)
+                _myChar.msgUpdateMpFull();
+            if (speedBack != _myChar.infoChar.speedMove)
+                _myChar.msgUpdateStatusChar();
         } catch (Exception ex) {
             Utlis.logError(Char.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
     }
+
     @JsonIgnore
     public static int getValueEffectFormIdItem(int id) {
         switch (id) {
-            /*Thức ăn*/
+            /* Thức ăn */
             case 22:
                 return 7;
             case 23:
@@ -415,7 +423,7 @@ public class Effect {
                 return 108;
             case 243:
                 return 117;
-            /*Hp*/
+            /* Hp */
             case 12:
             case 17:
                 return 50;
@@ -437,14 +445,14 @@ public class Effect {
             case 220:
             case 222:
                 return 1100;
-                // Nhân sâm
+            // Nhân sâm
             case 159:
                 return 50;
             case 281:
                 return 75;
             case 347:
                 return 100;
-                // đan dược
+            // đan dược
             case 171:
                 return 1500;
             case 172:
@@ -470,6 +478,7 @@ public class Effect {
         }
         return 0;
     }
+
     @JsonIgnore
     public static int getIDEffectFormIdItem(int id) {
         switch (id) {

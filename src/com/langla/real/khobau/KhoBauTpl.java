@@ -11,7 +11,8 @@ public class KhoBauTpl {
     public int textvp = -1;
     public int xtrunglap = -1;
     public boolean ruong;
-    public KhoBauTpl(){
+
+    public KhoBauTpl() {
 
     }
 }

@@ -11,14 +11,13 @@ public class PhucLoiTpl {
     public String nameDieuKien;
     public int dieuKien;
     public int idLoai;
-
     public int idItem;
-
     public int amount;
     public String STROP;
 
     public long expiry = -1;
-    public PhucLoiTpl(){
+
+    public PhucLoiTpl() {
 
     }
 }

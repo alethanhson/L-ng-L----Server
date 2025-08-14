@@ -1,6 +1,0 @@
-ADD ITEM BAG NEW Vô hạn Di Chuyển phù, SL: 1 lý do: Mua từ shop, TIME: 17/03/2024 20:39 CH
-
-ADD VÀNG +1000, tổng: 1000 lý do: Quy đổi từ VND, TIME: 17/03/2024 20:39 CH
-
-ADD VÀNG +113636, tổng: 113636 lý do: Quy đổi từ VND, TIME: 17/03/2024 20:41 CH
-
