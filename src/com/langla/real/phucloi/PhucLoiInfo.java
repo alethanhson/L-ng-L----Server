@@ -8,7 +8,5 @@ public class PhucLoiInfo {
     public int RankCaoNhat;
     public int TongDauTu;
     public int TongSoLanMuaTheThang;
-
     public long ThoiGianX2Online;
-
 }
