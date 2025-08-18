@@ -7,41 +7,78 @@ import com.langla.utlis.UTPKoolVN;
 import com.langla.lib.Utlis;
 import java.util.*;
 
+enum ItemId {
+    STONE_1(0),
+    STONE_2(1),
+    STONE_3(2),
+    STONE_4(3),
+    STONE_5(4),
+    STONE_6(5),
+    STONE_7(6),
+    STONE_8(7),
+    STONE_9(8),
+    STONE_10(9),
+    STONE_11(10),
+    STONE_12(11),
+
+    LOCKED_SILVER(163),
+    BOSS_CHEST(428);
+
+    private final int id;
+
+    ItemId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    private static final ItemId[] STONES = {
+            STONE_1, STONE_2, STONE_3, STONE_4, STONE_5, STONE_6,
+            STONE_7, STONE_8, STONE_9, STONE_10, STONE_11, STONE_12
+    };
+
+    public static int stoneIdFromLevel(int level) {
+        int lv = Math.max(1, Math.min(12, level));
+        return STONES[lv - 1].id;
+    }
+}
+
 public class DropManager {
 
     // Boss Drop Configuration
-    private static final List<Integer> BOSS_GEM_ITEMS = Arrays.asList(406, 407, 408, 409, 410, 411, 412, 413, 826, 827);
     private static final List<Integer> BOSS_HOKAGE_ITEMS = Arrays.asList(174, 175, 179, 216, 217, 218, 248, 278, 302,
             315);
     private static final double BOSS_HOKAGE_DROP_RATE = 30.0; // 30%
 
     // Normal Mob Drop Configuration
-    private static final double STONE_DROP_RATE = 10.0; // 10%
-    private static final double LOCKED_SILVER_DROP_RATE = 50.0; // 50%
+    private static final double STONE_DROP_RATE = 5.0; // 5%
+    private static final double LOCKED_SILVER_DROP_RATE = 25.0; // 25%
 
     // Special Map Drop Configuration
-    private static final List<Integer> CAM_THUAT_ITEMS = Arrays.asList(354, 562, 564, 566);
+    // private static final List<Integer> CAM_THUAT_ITEMS = Arrays.asList(354, 562, 564, 566);
+
     private static final List<Integer> SHARINGAN_ITEMS = Arrays.asList(1001, 1002, 1003);
     private static final double SHARINGAN_DROP_RATE = 30.0; // 30%
 
     public static void dropBossItems(Client client, Mob mob, Map.Zone zone) {
         // Drop đá khảm
         dropBossGems(client, mob, zone);
-
         // Drop lệnh bài Hokage
         dropBossHokageItems(client, mob, zone);
 
         // Drop trang bị Hokage
-        dropBossHokageEquipment(client, mob, zone);
+        if (client.mChar.zone.map.mapID != 89) {
+            dropBossHokageEquipment(client, mob, zone);
+        }
     }
 
     private static void dropBossGems(Client client, Mob mob, Map.Zone zone) {
-        int gemCount = Utlis.nextInt(1, mob.level / 2);
-        for (int i = 0; i < gemCount; i++) {
-            int x = Utlis.nextInt(50);
-            Item item = new Item(UTPKoolVN.getRandomList(BOSS_GEM_ITEMS));
-            createItemMap(item, mob, client, zone, x, i);
-        }
+        int amount = Utlis.nextInt(5, 10);
+        int x = Utlis.nextInt(50);
+        Item item = new Item(ItemId.BOSS_CHEST.getId(), false, amount);
+        createItemMap(item, mob, client, zone, x, 0);
     }
 
     private static void dropBossHokageItems(Client client, Mob mob, Map.Zone zone) {
@@ -95,7 +132,7 @@ public class DropManager {
 
         // Xử lý map đặc biệt
         if (client.mChar.zone.map.mapID == 89) {
-            dropCamThuatItems(client, mob, zone);
+            // dropCamThuatItems(client, mob, zone);
             return;
         }
 
@@ -110,38 +147,47 @@ public class DropManager {
         }
     }
 
-    private static void dropCamThuatItems(Client client, Mob mob, Map.Zone zone) {
-        int tileSharingan = Utlis.nextInt(100);
-        Item item;
+    // private static void dropCamThuatItems(Client client, Mob mob, Map.Zone zone) {
+    //     int tileSharingan = Utlis.nextInt(100);
+    //     Item item;
 
-        if (tileSharingan < SHARINGAN_DROP_RATE) {
-            // Drop đá Sharingan
-            item = new Item(UTPKoolVN.getRandomList(SHARINGAN_ITEMS));
-        } else {
-            // Drop đá chế tạo thường
-            item = new Item(UTPKoolVN.getRandomList(CAM_THUAT_ITEMS));
-        }
+    //     if (tileSharingan < SHARINGAN_DROP_RATE) {
+    //         // Drop đá Sharingan
+    //         item = new Item(UTPKoolVN.getRandomList(SHARINGAN_ITEMS));
+    //     } else {
+    //         // Drop đá chế tạo thường
+    //         item = new Item(UTPKoolVN.getRandomList(CAM_THUAT_ITEMS));
+    //     }
 
-        createItemMap(item, mob, client, zone, 0, 0);
-    }
+    //     createItemMap(item, mob, client, zone, 0, 0);
+    // }
 
     private static void dropStoneByLevel(Mob mob, Map.Zone zone, int x) {
         int stoneLevel = getStoneLevelByMobLevel(mob.level);
         if (stoneLevel > 0) {
-            Item item = new Item(stoneLevel);
+            Item item = new Item(stoneLevel, true);
             createItemMap(item, mob, null, zone, x, 0);
         }
     }
 
     private static int getStoneLevelByMobLevel(int mobLevel) {
         if (mobLevel >= 50) {
-            return Utlis.nextInt(4, 6); // Đá cấp 4, 5, 6
-        } else if (mobLevel >= 40) {
-            return Utlis.nextInt(4, 5); // Đá cấp 4, 5
-        } else if (mobLevel >= 30) {
-            return Utlis.nextInt(3, 4); // Đá cấp 3, 4
-        } else if (mobLevel >= 20) {
-            return Utlis.nextInt(2, 3); // Đá cấp 2, 3
+            return UTPKoolVN.getRandomList(Arrays.asList(
+                    ItemId.STONE_4.getId(),
+                    ItemId.STONE_5.getId(),
+                    ItemId.STONE_6.getId())); // Đá cấp 4, 5, 6
+        } else if (mobLevel >= 40 && mobLevel < 50) {
+            return UTPKoolVN.getRandomList(Arrays.asList(
+                    ItemId.STONE_4.getId(),
+                    ItemId.STONE_5.getId())); // Đá cấp 4, 5
+        } else if (mobLevel >= 30 && mobLevel < 40) {
+            return UTPKoolVN.getRandomList(Arrays.asList(
+                    ItemId.STONE_3.getId(),
+                    ItemId.STONE_4.getId())); // Đá cấp 3, 4
+        } else if (mobLevel >= 20 && mobLevel < 30) {
+            return UTPKoolVN.getRandomList(Arrays.asList(
+                    ItemId.STONE_2.getId(),
+                    ItemId.STONE_3.getId())); // Đá cấp 2, 3
         }
         return 0;
     }
@@ -157,11 +203,11 @@ public class DropManager {
     private static int getSilverAmountByMobLevel(int mobLevel) {
         if (mobLevel >= 50) {
             return Utlis.nextInt(2000, 2500);
-        } else if (mobLevel >= 40) {
+        } else if (mobLevel >= 40 && mobLevel < 50) {
             return Utlis.nextInt(1500, 2000);
-        } else if (mobLevel >= 30) {
+        } else if (mobLevel >= 30 && mobLevel < 40) {
             return Utlis.nextInt(1000, 1500);
-        } else if (mobLevel >= 20) {
+        } else if (mobLevel >= 20 && mobLevel < 30) {
             return Utlis.nextInt(500, 1000);
         }
         return 0;
@@ -172,7 +218,7 @@ public class DropManager {
         itemMap.idEntity = DataCache.getIDItemMap();
         itemMap.idChar = client != null ? client.mChar.id : -1;
         itemMap.isSystem = true;
-        
+
         // Sửa: sử dụng method có sẵn trong zone
         zone.createItemMap(itemMap, mob);
     }
