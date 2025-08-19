@@ -17,6 +17,10 @@ import com.langla.utlis.UTPKoolVN;
 import com.langla.server.lib.Message;
 import java.io.IOException;
 import java.util.*;
+import com.langla.real.map.DropManager;
+import com.langla.real.map.MapTypeManager;
+import com.langla.real.map.SpecialMapHandler;
+import com.langla.real.map.CombatManager;
 
 public class Map {
 
@@ -600,7 +604,6 @@ public class Map {
             if (client.mChar.zone != null) {
                 client.mChar.zone.removeChar(client);
                 if (client.mChar.zone.map.mapID != this.map.mapID) {
-
                     WayPoint waypoint = map.getWayPoint_WhenNextMap(this.map.mapID);
                     if (waypoint != null) {
                         XYEntity xy = getXYBlockMapNotCheck(waypoint.cx, waypoint.cy);
@@ -627,12 +630,17 @@ public class Map {
             if (map.mapID == 89) { // cấm thuật
                 client.mChar.setXY(150, 428);
             }
-            if (!vecChar.contains(client.mChar))
+            if (!vecChar.contains(client.mChar)) {
                 vecChar.add(client.mChar);
+            }
+
             client.mChar.zone = this;
             client.mChar.zone.addToAllChar(client);
             client.mChar.infoChar.mapId = map.mapID;
-            client.session.serivce.sendArrMap(map.mapID);
+            // client.session.serivce.sendArrMap(map.mapID);
+            if (map.mapID != 89) {
+                client.session.serivce.sendArrMap(map.mapID);
+            }
             client.session.serivce.sendIntoMap();
             TaskHandler.gI().checkDoneJoinMap(client.mChar);
             TaskHandler.gI().createMobJoinMap(client.mChar);
@@ -1047,301 +1055,11 @@ public class Map {
         }
 
         public void attackPlayer(Client client, int idSkill, int idplayer) {
-            try {
-                Skill skill = client.mChar.getSkillWithIdTemplate(idSkill);
-                if (skill == null || skill.level == 0 || skill.mpUse > client.mChar.infoChar.mp
-                        || skill.levelNeed > client.mChar.level()
-                        || System.currentTimeMillis() - skill.time < skill.coolDown || client.mChar.info.isBiChoang) {
-                    return;
-                }
-                skill.time = System.currentTimeMillis();
-                client.mChar.MineMp(skill.mpUse);
-                client.mChar.msgUpdateMp();
-
-                Char player = findCharInMap(idplayer);
-
-                if (client.mChar.infoChar.isDie || player == null || player.infoChar.hp <= 0 || player.infoChar.isDie
-                        || !isPk(client.mChar, player))
-                    return;
-
-                if (Utlis.getRange(player.cx, client.mChar.cx) <= skill.rangeNgang
-                        && Utlis.getRange(player.cy, client.mChar.cy) <= skill.rangeDoc) {
-
-                    int dameCoBan = client.mChar.getDame();
-
-                    int dame = HandleUseSkill.getDameTuongKhac(client.mChar, player, dameCoBan);
-
-                    dame = skill.getDamePlayer(client, player, dame);
-
-                    dame /= 10;
-
-                    dame = Utlis.nextInt(dame * 90 / 100, dame);
-
-                    //
-
-                    int chiMang = client.mChar.getChiMang() - player.getGiamTruChiMang();
-
-                    if (chiMang < 0)
-                        chiMang = 0;
-
-                    chiMang = chiMang / 100;
-
-                    //
-
-                    int giamCM = player.getGiamTanCongKhiBiCM();
-                    boolean chi_mang = Utlis.randomBoolean(100, chiMang);
-
-                    if (chi_mang) {
-                        int num = 80;
-                        num += client.mChar.getTangTanCongChiMang();
-                        if (num > giamCM) {
-                            num -= giamCM;
-                        } else {
-                            num = 0;
-                        }
-                        dame = dame + (dame * num / 100);
-                    }
-
-                    /// eff hỗ trợ
-                    for (int i = 0; i < client.mChar.listEffect.size(); i++) {
-                        Effect effect = client.mChar.listEffect.get(i);
-                        if (effect.id == 57) {
-                            int value = effect.value / 2;
-                            int dame2 = Utlis.nextInt(value * 90 / 100, value);
-                            sendEffAttackChar(client.mChar.id, (short) player.id);
-                            client.mChar.setAttackPlayer(player, dame2, false);
-                        } else if (effect.id == 58 && Utlis.nextInt(500) < effect.value) {
-                            int time = Math.min(effect.value * 100, 10000);
-                            Effect newEff = new Effect(38, effect.value, System.currentTimeMillis(), time);
-                            player.addEffect(newEff);
-                        } else if (effect.id == 68) {
-                            int dameCong = (dame * effect.value) / 150;
-                            dame += dameCong;
-                        } else if (effect.id == 63) {
-                            if (player.infoChar.hp > effect.value) {
-                                client.mChar.PlusHp(effect.value);
-                                client.mChar.msgUpdateHp();
-                                client.mChar.setAttackPlayer(player, effect.value, false);
-                            }
-                        } else if (effect.id == 72 && Utlis.nextInt(100) < 50) {
-                            client.mChar.setAttackPlayer(player, dame, chi_mang);
-                        } else if (effect.id == 53) {
-                            long timeStart = System.currentTimeMillis() - effect.timeStart;
-                            if (timeStart < (effect.maintain - 500)) {
-                                effect.maintain = 500;
-                                effect.timeStart = System.currentTimeMillis();
-                            }
-                        }
-                    }
-
-                    int maxTarget = skill.maxTarget;
-                    if (dame > 0)
-                        HandleUseSkill.attackEffChar(client, player, skill);
-                    sendAttackPlayerToAllChar(client, player, idSkill);
-
-                    client.mChar.setAttackPlayer(player, dame, chi_mang); // send attack
-                    if (client.mChar.getSatThuongChuyenHp() > 0) {
-                        int hpPlus = dame * client.mChar.getSatThuongChuyenHp() / 100;
-                        client.mChar.PlusHp(hpPlus);
-                        client.mChar.msgUpdateHp();
-                    }
-                    if (dame > 0)
-                        client.mChar.effAttackPlayer(player, skill);
-
-                    if (client.mChar.infoChar.isPhanThan) {
-                        sendPhanThanAttack(true, client.mChar.id, player.id);
-                        int xdame = DataCache.dataDamePhanThan[client.mChar.infoChar.levelPhanThan];
-                        int damePT = dame * xdame / 100;
-                        client.mChar.setAttackPlayer(player, damePT, chi_mang);
-                    }
-
-                    if (dame <= 0)
-                        sendNeSatThuong(player.id);
-                    if (client.mChar.info.isCuuSat || client.mChar.info.idCharPk != -1)
-                        return; // đang tỷ võ hoặc cừu sát bỏ qua không đánh lane
-
-                    ArrayList<Char> list = new ArrayList<Char>();
-                    for (int i = 0; i < maxTarget - 1; i++) {
-                        Char player2 = null;
-                        for (int j = 0; j < vecChar.size(); j++) {
-                            Char cplayer = vecChar.get(j);
-                            if (cplayer.id != player.id && cplayer.id != client.mChar.id && cplayer.infoChar.hp > 0
-                                    && !cplayer.infoChar.isDie) {
-                                if (Utlis.getRange(player.infoChar.cx, cplayer.infoChar.cx) <= skill.rangeNgang
-                                        && Math.abs(player.infoChar.cy - cplayer.infoChar.cy) < skill.rangeDoc
-                                        && Utlis.checkDirection(client.mChar.cx, player.cx) == Utlis
-                                                .checkDirection(client.mChar.cx, cplayer.cx)) {
-                                    if (!list.contains(cplayer)) {
-                                        player2 = cplayer;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (player2 != null) {
-                            list.add(player2);
-
-                            dameCoBan = client.mChar.getDame();
-
-                            dame = HandleUseSkill.getDameTuongKhac(client.mChar, player2, dameCoBan);
-
-                            dame = skill.getDamePlayer(client, player, dame);
-
-                            dame /= 15; // đánh lane giảm /15
-
-                            dame = Utlis.nextInt(dame * 90 / 100, dame);
-
-                            //
-
-                            chiMang = client.mChar.getChiMang() - player.getGiamTruChiMang();
-
-                            if (chiMang < 0)
-                                chiMang = 0;
-
-                            chiMang = chiMang / 100;
-
-                            //
-                            chi_mang = Utlis.randomBoolean(100, chiMang);
-                            if (chi_mang) {
-                                int num = 80;
-                                num += client.mChar.getTangTanCongChiMang();
-
-                                if (num > giamCM) {
-                                    num -= giamCM;
-                                } else {
-                                    num = 0;
-                                }
-
-                                dame = dame + (dame * num / 100);
-                            }
-
-                            //
-
-                            client.mChar.setAttackPlayer(player2, dame, chi_mang);
-                            if (dame <= 0)
-                                sendNeSatThuong(player.id);
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-                Utlis.logError(Map.class, ex, "Da say ra loi setMobDie:\n" + ex.getMessage());
-            }
-
+            CombatManager.attackPlayer(client, idSkill, idplayer, this);
         }
 
         public void attackMob(Client client, int idSkill, int idMob) {
-            try {
-                Skill skill = client.mChar.getSkillWithIdTemplate(idSkill);
-                if (client.mChar.infoChar.isDie || skill == null || skill.level == 0
-                        || skill.mpUse > client.mChar.infoChar.mp
-                        || skill.levelNeed > client.mChar.level()
-                        || System.currentTimeMillis() - skill.time < skill.coolDown || client.mChar.info.isBiChoang) {
-                    return;
-                }
-                skill.time = System.currentTimeMillis();
-                client.mChar.MineMp(skill.mpUse);
-                client.mChar.msgUpdateMp();
-                Mob mob = findMobInMap(idMob);
-                if (mob == null || mob.hp <= 0 || mob.status == 4) {
-                    return;
-                }
-
-                if (Utlis.getRange(mob.cx, client.mChar.cx) <= skill.rangeNgang + mob.getMobTemplate().speedMove
-                        && Utlis.getRange(mob.cy, client.mChar.cy) <= skill.rangeDoc + mob.getMobTemplate().speedMove) {
-
-                    int dameCoBan = client.mChar.getDame() + client.mChar.getDameMob(mob);
-
-                    int dame = (dameCoBan + skill.getDameMob(client, mob));
-
-                    UTPKoolVN.Debug("Attack Mob dame: " + dame);
-
-                    dame = Utlis.nextInt(dame * 90 / 100, dame);
-
-                    boolean chi_mang = Utlis.randomBoolean(100, client.mChar.getChiMang() / 100);
-                    if (chi_mang) {
-                        int num = 80;
-                        num += client.mChar.getTangTanCongChiMang();
-                        dame = dame + (dame * num / 100);
-                    }
-                    int maxTarget = skill.maxTarget;
-
-                    /// eff hỗ trợ
-                    for (int i = 0; i < client.mChar.listEffect.size(); i++) {
-                        Effect effect = client.mChar.listEffect.get(i);
-                        if (effect.id == 57) {
-                            sendEffAttackMob(client.mChar.id, (short) mob.idEntity);
-                            client.mChar.setAttackMob(mob, effect.value, false);
-                        } else if (effect.id == 58 && Utlis.nextInt(500) < effect.value) {
-                            int time = Math.min(effect.value * 100, 10000);
-                            Effect newEff = new Effect(38, effect.value, System.currentTimeMillis(), time);
-                            mob.addEff(newEff);
-                            addEffMob(newEff, (short) mob.idEntity);
-                        } else if (effect.id == 68) {
-                            int dameCong = (dame * effect.value) / 120;
-                            dame += dameCong;
-                        } else if (effect.id == 63) {
-                            if (mob.hp > effect.value) {
-                                client.mChar.PlusHp(effect.value);
-                                client.mChar.msgUpdateHp();
-                                client.mChar.setAttackMob(mob, effect.value, false);
-                            }
-                        } else if (effect.id == 72 && Utlis.nextInt(100) < 50) {
-                            client.mChar.setAttackMob(mob, dame, chi_mang);
-                        } else if (effect.id == 53) {
-                            long timeStart = System.currentTimeMillis() - effect.timeStart;
-                            if (timeStart < (effect.maintain - 500)) {
-                                effect.maintain = 500;
-                                effect.timeStart = System.currentTimeMillis();
-                            }
-                        }
-                    }
-                    HandleUseSkill.attackEffMob(client, mob, skill);
-                    sendAttackMobToAllChar(client, mob, idSkill);
-                    client.mChar.setAttackMob(mob, dame, chi_mang);
-
-                    client.mChar.effAttackMob(mob, skill);
-
-                    if (client.mChar.infoChar.isPhanThan) {
-                        sendPhanThanAttack(false, client.mChar.id, mob.idEntity);
-                        int xdame = DataCache.dataDamePhanThan[client.mChar.infoChar.levelPhanThan];
-                        int damePT = dame * xdame / 100;
-                        client.mChar.setAttackMob(mob, damePT, chi_mang);
-                    }
-                    ArrayList<Mob> list = new ArrayList<Mob>();
-                    for (int i = 0; i < maxTarget - 1; i++) {
-                        Mob mob2 = null;
-                        for (int j = 0; j < vecMob.size(); j++) {
-                            Mob cmob = vecMob.get(j);
-                            if (cmob.idEntity != mob.idEntity && cmob.hp > 0 && cmob.getMobTemplate().type != 10) {
-                                if (Utlis.getRange(cmob.cx, cmob.cx) <= skill.rangeNgang
-                                        && Math.abs(mob.cy - cmob.cy) < skill.rangeDoc
-                                        && Utlis.checkDirection(client.mChar.cx, mob.cx) == Utlis
-                                                .checkDirection(client.mChar.cx, cmob.cx)) {
-                                    if (!list.contains(cmob)) {
-                                        mob2 = cmob;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (mob2 != null) {
-                            list.add(mob2);
-                            dame = (dameCoBan + skill.getDameMob(client, mob));
-                            dame = Utlis.nextInt(dame * 90 / 100, dame);
-                            chi_mang = Utlis.randomBoolean(100, client.mChar.getChiMang() / 100);
-                            if (chi_mang) {
-                                int num = 80;
-                                num += client.mChar.getTangTanCongChiMang();
-                                dame = dame + (dame * num / 100);
-                            }
-                            client.mChar.setAttackMob(mob2, dame, chi_mang);
-                        }
-                    }
-                }
-            } catch (Exception ex) {
-                Utlis.logError(Map.class, ex, "Da say ra loi setMobDie:\n" + ex.getMessage());
-            }
-
+            CombatManager.attackMob(client, idSkill, idMob, this);
         }
 
         public XYEntity getXYBlockMap(int var0, int var1) {
@@ -1509,7 +1227,7 @@ public class Map {
             }
         }
 
-        private void sendAttackMobToAllChar(Client client, Mob mob, int idSkill) {
+        public void sendAttackMobToAllChar(Client client, Mob mob, int idSkill) {
             try {
                 Writer writer = new Writer();
                 writer.writeInt(client.mChar.id);
@@ -1528,7 +1246,7 @@ public class Map {
             }
         }
 
-        private void sendAttackPlayerToAllChar(Client client, Char player, int idSkill) {
+        public void sendAttackPlayerToAllChar(Client client, Char player, int idSkill) {
             try {
                 Writer writer = new Writer();
                 writer.writeInt(client.mChar.id);
@@ -1718,262 +1436,16 @@ public class Map {
         }
 
         public void handleMapCustom(Client client, Zone zone, Mob mob) {
-            // check các map hoạt động
-            if (zone.map.mapID == 89) {
-                ArrayList<Mob> aliveMobs = getAliveMobs(zone.vecMob);
-                if (aliveMobs.isEmpty()) {
-                    if (!zone.infoMap.isBossCamThuat) {
-                        // tạo boss cấm thuật
-                        Mob mob2 = new Mob();
-                        mob2.createNewEffectList();
-                        mob2.idEntity = DataCache.getIDMob();
-                        mob2.id = 238;
-                        mob2.hpGoc = mob.hpFull * 100;
-                        mob2.exp = mob.exp * 100;
-                        mob2.expGoc = mob.expGoc * 100;
-                        mob2.level = mob.level;
-                        mob2.paintMiniMap = false;
-                        mob2.isBoss = true;
-                        mob2.timeRemove = 300000 + System.currentTimeMillis();
-                        mob2.setXY((short) 1050, (short) 137);
-                        mob2.reSpawn();
-                        zone.vecMob.add(mob2);
-                        addMobToZone(mob2);
-                        zone.showMessWhiteZone("Kabuto đã xuất hiện.");
-                        zone.infoMap.isBossCamThuat = true;
-                    } else {
-                        // logic sử lý done cấm thuật
-                        if (zone.infoMap.vongLap < 15) {
-                            zone.infoMap.vongLap += 1;
-                            zone.infoMap.time = zone.infoMap.timeClose = 11000;
-                            zone.infoMap.timeStartHoatDong = System.currentTimeMillis();
-                            zone.infoMap.isNextMapCamThuat = true;
-                            updateTimeHoatDongZone(zone.infoMap.timeStartHoatDong, zone.infoMap.time, false);
-                        } else {
-                            zone.infoMap.time = zone.infoMap.timeClose = 11000;
-                            zone.infoMap.timeStartHoatDong = System.currentTimeMillis();
-                            zone.infoMap.isNextMapCamThuat = false;
-                            updateTimeHoatDongZone(zone.infoMap.timeStartHoatDong, zone.infoMap.time, false);
-                        }
-                    }
-                }
-            } else if (zone.map.mapID == 46) {
-                ArrayList<Mob> aliveMobs = getAliveMobs(zone.vecMob);
-                if (aliveMobs.isEmpty()) {
-                    for (Char c : zone.vecChar) {
-                        c.client.session.serivce
-                                .ShowMessWhite("Bạn nhận được 1 điểm chuyên cần 2 điểm cống hiến gia tộc");
-                        c.infoChar.chuyenCan += 1;
-                        c.infoChar.chuyenCanTuan += 1;
-                        FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-                        if (giaToc != null) {
-                            Family_Member getMem = Family.gI().getMe(c, giaToc);
-                            if (getMem != null) {
-                                getMem.congHien += 2;
-                                getMem.congHienTuan += 2;
-                                giaToc.info.congHienTuan += 2;
-                                giaToc.info.PlusExp(20);
-                            }
-                        }
-
-                    }
-                }
-
-            } else if (zone.map.mapID == 47) {
-                ArrayList<Mob> aliveMobs = getAliveMobs(zone.vecMob);
-                if (aliveMobs.isEmpty()) {
-                    if (!zone.infoMap.isBossAi) {
-                        zone.infoMap.isBossAi = true;
-                        int l = 60;
-                        for (int i = 0; i < 10; i++) { // bi dược
-                            Mob mob2 = new Mob();
-                            mob2.id = 130;
-                            mob2.level = zone.map.levelMap;
-                            mob2.cx = (short) (2200 + l);
-                            mob2.cy = 372;
-                            mob2.hpGoc = 1;
-                            mob2.paintMiniMap = false;
-                            mob2.isHoiSinhMob = false;
-                            mob2.createNewEffectList();
-                            mob2.idEntity = DataCache.getIDMob();
-                            mob2.reSpawnMobHoatDong(1, true);
-                            vecMob.add(mob2);
-                            addMobToZone(mob2);
-                            l += 60;
-                        }
-
-                        // boss
-                        int hpBoss = 1800000;
-                        Mob mob2 = new Mob();
-                        mob2.id = 112;
-                        mob2.level = zone.map.levelMap;
-                        mob2.cx = (short) (2500);
-                        mob2.cy = 771;
-
-                        mob2.hpGoc = mob2.hp = mob2.hpFull = zone.map.levelMap * hpBoss;
-                        mob2.expGoc = mob2.hpGoc / 8;
-                        mob2.paintMiniMap = false;
-                        mob2.isHoiSinhMob = false;
-                        mob2.isBoss = true;
-                        mob2.createNewEffectList();
-                        mob2.idEntity = DataCache.getIDMob();
-                        mob2.reSpawnMobHoatDong(1, true);
-                        mob2.setPhanDon();
-                        mob2.setNeTranh();
-                        mob2.setHoiHp();
-                        vecMob.add(mob2);
-                        addMobToZone(mob2);
-                    }
-                } else if (mob.id == 112) {
-                    for (Char c : zone.vecChar) {
-                        c.client.session.serivce
-                                .ShowMessWhite("Bạn nhận được 1 điểm chuyên cần 2 điểm cống hiến gia tộc");
-                        c.infoChar.chuyenCan += 1;
-                        c.infoChar.chuyenCanTuan += 1;
-                        FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-                        if (giaToc != null) {
-                            Family_Member getMem = Family.gI().getMe(c, giaToc);
-                            if (getMem != null) {
-                                getMem.congHien += 2;
-                                getMem.congHienTuan += 2;
-                                giaToc.info.congHienTuan += 2;
-                                giaToc.info.PlusExp(20);
-                            }
-                        }
-
-                    }
-                    // logic sử lý done ải
-                    FamilyTemplate giaToc = Family.gI().getGiaToc(FamilyId);
-                    if (giaToc != null) {
-                        Zone zone46 = Map.maps[46].FindMapCustom(giaToc.MapAi.get(46));
-                        zone46.infoMap.time = zone.infoMap.timeClose = 60000;
-                        zone46.infoMap.timeStartHoatDong = System.currentTimeMillis();
-                    }
-                    zone.infoMap.time = zone.infoMap.timeClose = 60000;
-                    zone.infoMap.timeStartHoatDong = System.currentTimeMillis();
-                    updateTimeHoatDongZone(zone.infoMap.timeStartHoatDong, zone.infoMap.time, false);
-                }
-
+            if (MapTypeManager.requiresSpecialHandling(zone.map.mapID)) {
+                SpecialMapHandler.handleMapCustom(client, zone, mob);
             }
         }
 
         public void dropItem(Client client, Mob mob) {
-            // drop item , rơi item, dớt item quái, item rớt
-
-            if (mob.isBoss) { // item boss
-                // rớt bạc
-                // for (int i = 0; i < mob.level/5; i++){
-                // int x = Utlis.nextInt(50);
-                // int bac = Utlis.nextInt(1000,10000);
-                // Item item = new Item(191, false, bac);
-                // ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + (i % 2 == 0 ? x : -x),
-                // mob.cy);
-                // itemMap.idEntity = DataCache.getIDItemMap();
-                // itemMap.idChar = client.mChar.id;
-                // createItemMap(itemMap, mob);
-                // }
-                int leg = Utlis.nextInt(1, mob.level / 2); // open phải sửa /7
-                // rớt đá Khảm
-                for (int i = 0; i < leg; i++) {
-                    int x = Utlis.nextInt(50);
-                    List<Integer> listItem = Arrays.asList(406, 407, 408, 409, 410, 411, 412, 413, 826, 827);
-                    Item item = new Item(UTPKoolVN.getRandomList(listItem));
-                    ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + (i % 2 == 0 ? x : -x), mob.cy);
-                    itemMap.idEntity = DataCache.getIDItemMap();
-                    itemMap.idChar = client.mChar.id;
-                    createItemMap(itemMap, mob);
-                }
-
-                leg = Utlis.nextInt(1, mob.level / 2); // open phải sửa /9
-                // rớt lệnh bài điểm hokage
-                for (int i = 0; i < leg; i++) {
-                    int x = Utlis.nextInt(50);
-                    List<Integer> listItem = Arrays.asList(174, 175, 179, 216, 217, 218, 248, 278, 302, 315);
-                    Item item = new Item(UTPKoolVN.getRandomList(listItem));
-                    ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + (i % 2 == 0 ? x : -x), mob.cy);
-                    itemMap.idEntity = DataCache.getIDItemMap();
-                    itemMap.idChar = client.mChar.id;
-                    createItemMap(itemMap, mob);
-                }
-
-                // rớt đồ hokage
-                if (Utlis.nextInt(100) < 30) { // open phải sửa < 3
-                    List<Integer> listItem = Arrays.asList(54, 59, 64, 69, 74, 79, 84, 89, 94, 99, 104, 109, 114, 119);
-                    if (mob.level >= 50) {
-                        listItem = Arrays.asList(58, 63, 68, 73, 78, 83, 88, 93, 98, 103, 108, 113, 118, 123);
-                    } else if (mob.level >= 40) {
-                        listItem = Arrays.asList(57, 62, 67, 72, 77, 82, 87, 92, 97, 102, 107, 112, 117, 122);
-                    } else if (mob.level >= 30) {
-                        listItem = Arrays.asList(56, 61, 66, 71, 76, 81, 86, 91, 96, 101, 106, 111, 116, 121);
-                    } else if (mob.level >= 20) {
-                        listItem = Arrays.asList(55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120);
-                    }
-                    int x = Utlis.nextInt(-50, 50);
-                    Item item = new Item(UTPKoolVN.getRandomList(listItem));
-                    if (item.isVuKhi()) {
-                        Item.setOptionsVuKhi_hokage(item, item.getItemTemplate().levelNeed);
-                        item.createItemOptions();
-                    } else {
-                        Item.setOptionsTrangBiPhuKien_hokage(item, item.getItemTemplate().levelNeed);
-                        item.createItemOptions();
-                    }
-                    ItemMap itemMap = ItemMap.createItemMap(item, mob.cx + x, mob.cy);
-                    itemMap.idEntity = DataCache.getIDItemMap();
-                    itemMap.idChar = client.mChar.id;
-                    createItemMap(itemMap, mob);
-                }
-
-            } else { // item quái
-
-                if (Math.abs(client.mChar.level() - mob.level) > 10)
-                    return;
-                int x = Utlis.nextInt(-50, 50);
-                int idItem = 0;
-
-                ItemMap itemMap;
-                Item item = null;
-                int tile = Utlis.nextInt(100);
-                if (client.mChar.zone.map.mapID == 89) { // cấm thuật, vòng lặp ảo tưởng
-                    List<Integer> listItem = Arrays.asList(354, 562, 564, 566); // đá chế tạo
-                    item = new Item(UTPKoolVN.getRandomList(listItem));
-                    itemMap = ItemMap.createItemMap(item, mob.cx, mob.cy);
-                    itemMap.idEntity = DataCache.getIDItemMap();
-                    itemMap.idChar = client.mChar.id;
-                    createItemMap(itemMap, mob);
-                } else {
-                    if (tile < 10) {
-                        if (mob.level >= 50) { // rớt đá
-                            idItem = 4;
-                        } else if (mob.level >= 40) {
-                            idItem = 3;
-                        } else if (mob.level >= 30) {
-                            idItem = 2;
-                        } else if (mob.level >= 20) {
-                            idItem = 1;
-                        }
-                        item = new Item(idItem);
-                    } else if (tile < 50) {
-                        int backhoa = Utlis.nextInt(1, 11);
-                        if (mob.level >= 50) { // rớt bạc khóa
-                            backhoa = Utlis.nextInt(15, 25);
-                        } else if (mob.level >= 40) {
-                            backhoa = Utlis.nextInt(10, 20);
-                        } else if (mob.level >= 30) {
-                            backhoa = Utlis.nextInt(5, 18);
-                        } else if (mob.level >= 20) {
-                            backhoa = Utlis.nextInt(1, 16);
-                        }
-                        item = new Item(163, true, backhoa);
-                    }
-                }
-
-                if (item == null)
-                    return;
-                itemMap = ItemMap.createItemMap(item, mob.cx + x, mob.cy);
-                itemMap.idEntity = DataCache.getIDItemMap();
-                itemMap.idChar = client.mChar.id;
-                itemMap.isSystem = true;
-                createItemMap(itemMap, mob);
+            if (mob.isBoss) {
+                DropManager.dropBossItems(client, mob, this);
+            } else {
+                DropManager.dropNormalMobItems(client, mob, this);
             }
         }
 

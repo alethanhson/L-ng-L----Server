@@ -5,5 +5,31 @@
     "java.project.outputPath": "out",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
-    ]
+    ],
+    "cSpell.words": [
+        "chênh",
+        "dụng",
+        "GIAY",
+        "HOKAGE",
+        "khảm",
+        "khóa",
+        "Kiểm",
+        "Kool",
+        "lệch",
+        "lệnh",
+        "NHAN",
+        "QUAN",
+        "Sharingan",
+        "THUAT",
+        "THUNG",
+        "thường",
+        "TIEU",
+        "trang",
+        "trong",
+        "Utlis"
+    ],
+    // ignore check file sql
+    "files.exclude": {
+        "**/*.sql": true
+    }
 }
