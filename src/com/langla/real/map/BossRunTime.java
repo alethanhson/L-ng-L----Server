@@ -17,7 +17,6 @@ import java.util.List;
 
 
 public class BossRunTime {
-
     // Võ Lâm Cao thủ
     public List<BossTpl> listBoss = new ArrayList<BossTpl>();
     private static BossRunTime instance;

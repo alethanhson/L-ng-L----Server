@@ -604,7 +604,6 @@ public class Map {
             if (client.mChar.zone != null) {
                 client.mChar.zone.removeChar(client);
                 if (client.mChar.zone.map.mapID != this.map.mapID) {
-
                     WayPoint waypoint = map.getWayPoint_WhenNextMap(this.map.mapID);
                     if (waypoint != null) {
                         XYEntity xy = getXYBlockMapNotCheck(waypoint.cx, waypoint.cy);
@@ -631,12 +630,17 @@ public class Map {
             if (map.mapID == 89) { // cấm thuật
                 client.mChar.setXY(150, 428);
             }
-            if (!vecChar.contains(client.mChar))
+            if (!vecChar.contains(client.mChar)) {
                 vecChar.add(client.mChar);
+            }
+
             client.mChar.zone = this;
             client.mChar.zone.addToAllChar(client);
             client.mChar.infoChar.mapId = map.mapID;
-            client.session.serivce.sendArrMap(map.mapID);
+            // client.session.serivce.sendArrMap(map.mapID);
+            if (map.mapID != 89) {
+                client.session.serivce.sendArrMap(map.mapID);
+            }
             client.session.serivce.sendIntoMap();
             TaskHandler.gI().checkDoneJoinMap(client.mChar);
             TaskHandler.gI().createMobJoinMap(client.mChar);
