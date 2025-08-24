@@ -21,6 +21,7 @@ import com.langla.real.map.DropManager;
 import com.langla.real.map.MapTypeManager;
 import com.langla.real.map.SpecialMapHandler;
 import com.langla.real.map.CombatManager;
+import com.langla.real.map.handle.AutoCamThuat;
 
 public class Map {
 
@@ -637,15 +638,13 @@ public class Map {
             client.mChar.zone = this;
             client.mChar.zone.addToAllChar(client);
             client.mChar.infoChar.mapId = map.mapID;
-            // client.session.serivce.sendArrMap(map.mapID);
-            if (map.mapID != 89) {
-                client.session.serivce.sendArrMap(map.mapID);
-            }
+            client.session.serivce.sendArrMap(map.mapID);
             client.session.serivce.sendIntoMap();
             TaskHandler.gI().checkDoneJoinMap(client.mChar);
             TaskHandler.gI().createMobJoinMap(client.mChar);
             client.session.serivce.sendInfoGiaTocAllChar(client.mChar);
             client.mChar.zone.writeGiaToc(client);
+            AutoCamThuat.checkAndStartAutoHunt(client, this);
             return true;
         }
 

@@ -125,6 +125,8 @@ public class Char extends Entity {
             DataCenter.gI().getSkillWithIdAndLevel(SkillTemplate.PHI_LOI_THAN_THUAT, 0),
             DataCenter.gI().getSkillWithIdAndLevel(SkillTemplate.HIEN_NHAN_THUAT, 0)};
 
+    // Thêm vào class Char, sau các biến khác
+    public boolean isAutoHunting = false;
 
     public Char(Client client) {
         this.client = client;
