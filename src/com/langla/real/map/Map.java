@@ -136,14 +136,10 @@ public class Map {
     }
 
     public WayPoint getWayPoint_WhenNextMap(int idMapNext) {
-        Map mapNext = this;
-        for (int i = 0; i < mapNext.listWayPoint.size(); i++) {
-            WayPoint waypoint = mapNext.listWayPoint.get(i);
-            if (waypoint.mapNext == idMapNext) {
-                return waypoint;
-            }
-        }
-        return null;
+        return listWayPoint.stream()
+            .filter(wp -> wp.mapNext == idMapNext)
+            .findFirst()
+            .orElse(null);
     }
 
     public WayPoint getWayPoint_WhenInMap(int idMapNext) {
@@ -601,29 +597,22 @@ public class Map {
             if (client.mChar.zone != null) {
                 client.mChar.zone.removeChar(client);
                 if (client.mChar.zone.map.mapID != this.map.mapID) {
+                    client.mChar.lastMapID = client.mChar.zone.map.mapID;
 
-                    WayPoint waypoint = map.getWayPoint_WhenNextMap(this.map.mapID);
+                    WayPoint waypoint = this.map.getWayPoint_WhenNextMap(client.mChar.lastMapID);
                     if (waypoint != null) {
                         XYEntity xy = getXYBlockMapNotCheck(waypoint.cx, waypoint.cy);
                         client.mChar.vec.clear();
-                        if (xy.cx < 500) {
-                            client.mChar.setXY(Utlis.nextInt(100, 200), xy.cy);
-                        } else {
-                            client.mChar.setXY(this.map.getMapTemplate().maxX - Utlis.nextInt(400, 500), xy.cy);
-                        }
+                        client.mChar.setXY(xy.cx, xy.cy);
+                        client.mChar.vec.clear();
+                        client.session.serivce.setXYChar();
                     } else {
-                        int cx = 200;
-                        int cy = 500;
-                        XYEntity xy = getXYBlockMapNotCheck(cx, cy);
-                        if (xy != null) {
-                            client.mChar.setXY(xy.cx, xy.cy);
-                        }
+                        XYEntity xy = getXYBlockMapNotCheck(200, 500);
+                        client.mChar.setXY(xy.cx, xy.cy);
                     }
                 }
             } else {
-                int cx = client.mChar.cx;
-                int cy = client.mChar.cy;
-                client.mChar.setXY(cx, cy);
+                client.mChar.setXY(client.mChar.cx, client.mChar.cy);
             }
             if (map.mapID == 89) { // cấm thuật
                 client.mChar.setXY(150, 428);

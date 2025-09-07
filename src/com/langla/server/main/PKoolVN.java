@@ -1,4 +1,5 @@
 package com.langla.server.main;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -27,7 +28,6 @@ public class PKoolVN {
         ds.close();
     }
 
-
     static {
         config.setDriverClassName(PKoolVNDB.DRIVER);
         config.setJdbcUrl(String.format(PKoolVNDB.URL, PKoolVNDB.DB_HOST, PKoolVNDB.DB_PORT, PKoolVNDB.DB_NAME));
@@ -50,5 +50,3 @@ public class PKoolVN {
         ds = new HikariDataSource(config);
     }
 }
-
-

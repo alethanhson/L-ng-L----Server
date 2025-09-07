@@ -44,7 +44,7 @@ public class BauCua {
     }
 
     public void update(){
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             try {
                 long now = System.currentTimeMillis();
 

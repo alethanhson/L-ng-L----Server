@@ -11,6 +11,5 @@ import com.langla.real.player.Client;
  * @author PKoolVN
  **/
 public interface IActionItem {
-    
     void action(Client client);
 }

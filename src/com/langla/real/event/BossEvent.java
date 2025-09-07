@@ -85,7 +85,7 @@ public class BossEvent {
         nextSpawnTime = System.currentTimeMillis() + Utlis.nextInt(30000, 60000);
 
         new Thread(() -> {
-            while (!Maintenance.isRuning) {
+            while (!Maintenance.isRunning) {
                 try {
                     long currentTime = System.currentTimeMillis();
 

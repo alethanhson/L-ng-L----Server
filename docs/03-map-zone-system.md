@@ -468,7 +468,7 @@ public class InfoMap {
 ```java
 public void createThread() {
     thread = new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             try {
                 // Xử lý logic zone
                 updateZone();

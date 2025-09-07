@@ -33,7 +33,7 @@ public void Start() {
 #### 1.3 Vòng Lặp Game
 ```java
 public void update() {
-    while (!Maintenance.isRuning) {
+    while (!Maintenance.isRunning) {
         try {
             long now = System.currentTimeMillis();
             

@@ -82,7 +82,7 @@ public void setBoss(BossTpl bossnew) {
 ```java
 public void StartBossRunTime() {
     new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             try {
                 // Xử lý logic boss
                 processBossSpawn();

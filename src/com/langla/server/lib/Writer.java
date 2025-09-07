@@ -11,7 +11,6 @@ public class Writer {
     public ByteArrayOutputStream baos = null;
     public DataOutputStream dos = null;
 
-
     public Writer(DataOutputStream var1) {
         this.dos = var1;
     }
@@ -28,7 +27,6 @@ public class Writer {
     public Writer(ArrayList<Integer> listTypeRead) {
         this.baos = new ByteArrayOutputStream();
         this.dos = new DataOutputStream(this.baos);
-       
     }
 
     public void writeBoolean(boolean var1) throws java.io.IOException {
@@ -55,6 +53,7 @@ public class Writer {
     public void writeLong(long var1) throws java.io.IOException {
         this.dos.writeLong(var1);
     }
+
     public static String k = " 0123456789+-*='\"\\/_?.,ˋˊ~ˀ:;|<>[]{}!@#$%^&*()aáàảãạâấầẩẫậăắằẳẵặbcdđeéèẻẽẹêếềểễệfghiíìỉĩịjklmnoóòỏõọôốồổỗộơớờởỡợpqrstuúùủũụưứừửữựvxyýỳỷỹỵzwAÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶBCDĐEÉÈẺẼẸÊẾỀỂỄỆFGHIÍÌỈĨỊJKLMNOÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢPQRSTUÚÙỦŨỤƯỨỪỬỮỰVXYÝỲỶỸỴZW";
 
     public void writeUTF(String var1) throws java.io.IOException {
@@ -87,13 +86,13 @@ public class Writer {
             }
 
         } catch (Exception var2) {
-            //  Utlis.println(var2);
+            // Utlis.println(var2);
         }
     }
 
     public void close(String var1) {
         try {
-            //   Binary.write(var1, this.baos.toByteArray());
+            // Binary.write(var1, this.baos.toByteArray());
             if (this.dos != null) {
                 this.dos.close();
                 this.dos = null;
@@ -105,10 +104,7 @@ public class Writer {
             }
 
         } catch (Exception var2) {
-            //  Utlis.println(var2);
+            // Utlis.println(var2);
         }
     }
-
-  
-    
 }

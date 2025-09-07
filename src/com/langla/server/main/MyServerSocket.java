@@ -8,7 +8,6 @@ import com.langla.utlis.UTPKoolVN;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -32,8 +31,7 @@ public class MyServerSocket {
         }
 
         RUN = true;
-        thread = new Thread(()
-                -> {
+        thread = new Thread(() -> {
             try {
                 if (PORT == -1) {
                     UTPKoolVN.Print("CHUA NHAP PORT");
@@ -45,22 +43,24 @@ public class MyServerSocket {
                     try {
                         Socket socket = server.accept();
                         if (handler != null) {
-                            handler.socketConnet(socket);
+                            handler.socketConnect(socket);
                         }
                     } catch (Exception ex) {
                         RUN = false;
                     }
                 }
-                if(PORT == PKoolVNDB.PORT_SERVER) SaveData();
+                if (PORT == PKoolVNDB.PORT_SERVER)
+                    SaveData();
             } catch (IOException ex) {
-//                UTPKoolVN.Print(ex.getMessage());
+                // UTPKoolVN.Print(ex.getMessage());
             }
         });
         thread.start();
     }
-    public void stop(){
+
+    public void stop() {
         try {
-            if(RUN) {
+            if (RUN) {
                 server.close();
                 server = null;
                 UTPKoolVN.Print("CLOSE SERVER: " + PORT);
@@ -69,10 +69,11 @@ public class MyServerSocket {
             throw new RuntimeException(e);
         }
     }
-    public void SaveData(){
+
+    public void SaveData() {
         PlayerManager.getInstance().Clear();
         Family.gI().saveData();
-        //kiểm tra xem có reboot server không
+        // kiểm tra xem có reboot server không
 
         String filePath = "restart.flag";
         File file = new File(filePath);

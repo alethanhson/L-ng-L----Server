@@ -64,6 +64,8 @@ public class Char extends Entity {
     public ExecutorService executor; // Khai báo executor
 
     public int id;
+    @JsonIgnore
+    public int lastMapID;
 
     public InfoChar infoChar;
 

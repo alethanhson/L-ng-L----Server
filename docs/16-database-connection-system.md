@@ -302,7 +302,7 @@ mysqldump -u langla_user -p langla | gzip > backup_$(date +%Y%m%d_%H%M%S).sql.gz
 public static void recoverFromBackup(String backupFile) {
     try {
         // Dừng server
-        Maintenance.isRuning = false;
+        Maintenance.isRunning = false;
         
         // Restore database
         String restoreCommand = String.format(
@@ -315,7 +315,7 @@ public static void recoverFromBackup(String backupFile) {
         Runtime.getRuntime().exec(restoreCommand);
         
         // Khởi động lại server
-        Maintenance.isRuning = true;
+        Maintenance.isRunning = true;
         
     } catch (Exception e) {
         Utlis.logError(PKoolVN.class, e, "Recovery failed");

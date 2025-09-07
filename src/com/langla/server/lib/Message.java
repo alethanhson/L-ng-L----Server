@@ -100,7 +100,7 @@ public class Message implements Cloneable {
                 if ((var11 = var2.toByteArray()).length > 32767) {
                     var3 = var11.length - 4;
                     var2.reset();
-                    var2.write(new byte[]{-128, this.cmd});
+                    var2.write(new byte[] { -128, this.cmd });
                     var2.write(var11);
                     (var11 = var2.toByteArray())[2] = (byte) (var3 >> 24 & 255);
                     var11[3] = (byte) (var3 >> 16 & 255);
@@ -108,7 +108,7 @@ public class Message implements Cloneable {
                     var11[5] = (byte) (var3 & 255);
                 } else if (var11.length >= var10.length) {
                     var2.reset();
-                    var2.write(new byte[]{this.cmd, (byte) (var3 >> 8), (byte) var3});
+                    var2.write(new byte[] { this.cmd, (byte) (var3 >> 8), (byte) var3 });
                     var2.write(var10);
                     var11 = var2.toByteArray();
                 } else {
@@ -119,7 +119,7 @@ public class Message implements Cloneable {
                     var11[3] = (byte) (var3 & 255);
                 }
             } else {
-                var2.write(new byte[]{this.cmd, (byte) (var3 >> 8), (byte) var3});
+                var2.write(new byte[] { this.cmd, (byte) (var3 >> 8), (byte) var3 });
                 var2.write(var10);
                 var11 = var2.toByteArray();
             }
@@ -208,39 +208,39 @@ public class Message implements Cloneable {
     }
 
     // public void createSession() {
-//      while(Session.gI().isConnected()) {
-//         Session.gI().close();
-//         Utlis.sleep(100L);
-//      }
-//
-//      Session.gI().vMessage.clear();
-//      this.newSession();
-//   }
-//
-//   public void send() {
-//      if (Session.gI().isConnected()) {
-//         Session.gI().sendMessage(this);
-//         this.close();
-//      }
-//   }
-//
-//   private void newSession() {
-//      try {
-//         if (!Session.gI().isConnecting) {
-//            DataCenter.gI().createSession();
-//         }
-//
-//         int var1 = 20;
-//
-//         while(var1 > 0 && !Session.gI().isConnected()) {
-//            --var1;
-//            Utlis.sleep(500L);
-//         }
-//      } catch (Exception var2) {
-//         Utlis.println(var2);
-//      }
-//
-//      Session.gI().sendMessage(this);
-//      this.close();
-//   }
+    // while(Session.gI().isConnected()) {
+    // Session.gI().close();
+    // Utlis.sleep(100L);
+    // }
+    //
+    // Session.gI().vMessage.clear();
+    // this.newSession();
+    // }
+    //
+    // public void send() {
+    // if (Session.gI().isConnected()) {
+    // Session.gI().sendMessage(this);
+    // this.close();
+    // }
+    // }
+    //
+    // private void newSession() {
+    // try {
+    // if (!Session.gI().isConnecting) {
+    // DataCenter.gI().createSession();
+    // }
+    //
+    // int var1 = 20;
+    //
+    // while(var1 > 0 && !Session.gI().isConnected()) {
+    // --var1;
+    // Utlis.sleep(500L);
+    // }
+    // } catch (Exception var2) {
+    // Utlis.println(var2);
+    // }
+    //
+    // Session.gI().sendMessage(this);
+    // this.close();
+    // }
 }

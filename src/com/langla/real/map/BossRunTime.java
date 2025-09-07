@@ -53,7 +53,7 @@ public class BossRunTime {
 
     public void StartBossRunTime() {
         new Thread(() -> {
-            while (!Maintenance.isRuning) {
+            while (!Maintenance.isRunning) {
                 try {
                     for (int i = 0; i < listBoss.size(); i++) {
                         BossTpl boss = listBoss.get(i);

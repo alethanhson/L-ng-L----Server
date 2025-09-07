@@ -1310,7 +1310,7 @@ public class Session{
                                 break;
                             case 98: // Mua
                                 if(client.mChar == null) break;
-                                if(Maintenance.isRuning){
+                                if(Maintenance.isRunning){
                                     Session.this.serivce.ShowMessRed("Không thể thực hiện do: Máy chủ sắp bảo trì.");
                                     break;
                                 }
@@ -1318,7 +1318,7 @@ public class Session{
                                 break;
                             case 99: // đăng bán
                                 if(client.mChar == null) break;
-                                if(Maintenance.isRuning){
+                                if(Maintenance.isRunning){
                                     Session.this.serivce.ShowMessRed("Không thể thực hiện do: Máy chủ sắp bảo trì.");
                                     break;
                                 }

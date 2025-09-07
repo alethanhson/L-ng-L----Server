@@ -178,7 +178,7 @@ public class Main {
         new Thread(() -> {
 
             while (true) {
-                if (UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRuning) {
+                if (UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRunning) {
                     try {
                         String flagFilePath = "restart.flag";
                         try {
@@ -224,7 +224,7 @@ public class Main {
 
     public static void returnCho() {
         new Thread(() -> {
-            while (!Maintenance.isRuning) {
+            while (!Maintenance.isRunning) {
                 Cho.AutoUpdate();
                 try {
                     Thread.sleep(60000);
@@ -237,7 +237,7 @@ public class Main {
 
     public static void BangXepHang() {
         new Thread(() -> {
-            while (!Maintenance.isRuning) {
+            while (!Maintenance.isRunning) {
                 UTPKoolVN.Print("Update Bang Xep Hang");
                 try {
                     BangXepHang.gI().update();
@@ -292,7 +292,7 @@ public class Main {
     private static void openServerSocket() {
         serverCheckOnline = new MyServerSocket(PKoolVNDB.PORT_CHECK_ONLINE, new ServerSocketHandler() {
             @Override
-            public void socketConnet(Socket socket) {
+            public void socketConnect(Socket socket) {
                 try {
                     String ip = socket.getInetAddress().getHostAddress();
                     try {
@@ -320,7 +320,7 @@ public class Main {
         });
         serverMain = new MyServerSocket(PKoolVNDB.PORT_SERVER, new ServerSocketHandler() {
             @Override
-            public void socketConnet(Socket socket) {
+            public void socketConnect(Socket socket) {
                 long startTime = System.currentTimeMillis();
                 String ip = socket.getInetAddress().getHostAddress();
                 try {

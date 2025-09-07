@@ -45,7 +45,7 @@ public class Family {
     }
 //    public void StartFamilyRunTime() {
 //        new Thread(() -> {
-//            while (!Maintenance.isRuning) {
+//            while (!Maintenance.isRunning) {
 //                try {
 //                    if (UTPKoolVN.getHour() == 0) {
 //

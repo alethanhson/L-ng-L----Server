@@ -47,7 +47,7 @@ public static void main(String[] args) {
 ```java
 serverMain = new MyServerSocket(PKoolVNDB.PORT_SERVER, new ServerSocketHandler() {
     @Override
-    public void socketConnet(Socket socket) {
+    public void socketConnect(Socket socket) {
         // Xử lý kết nối client mới
         Client client = new Client(socket);
         client.id = NUM_CLIENTS++;
@@ -64,7 +64,7 @@ serverMain = new MyServerSocket(PKoolVNDB.PORT_SERVER, new ServerSocketHandler()
 ```java
 serverCheckOnline = new MyServerSocket(PKoolVNDB.PORT_CHECK_ONLINE, new ServerSocketHandler() {
     @Override
-    public void socketConnet(Socket socket) {
+    public void socketConnect(Socket socket) {
         // Chỉ gửi byte 0 để kiểm tra online
         socket.getOutputStream().write(0);
         socket.getOutputStream().flush();
@@ -130,7 +130,7 @@ public static synchronized void removeClient(Client aThis) {
 private static void AutoBaoTri() {
     new Thread(() -> {
         while (true) {
-            if(UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRuning){
+            if(UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRunning){
                 // Tự động bảo trì lúc 4:00 sáng
                 Maintenance.gI().start(60 * 5); // 5 phút
             }

@@ -44,7 +44,7 @@ public void SaveData() {
 private static void AutoBaoTri() {
     new Thread(() -> {
         while (true) {
-            if(UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRuning){
+            if(UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRunning){
                 try {
                     String flagFilePath = "restart.flag";
                     File restartFlagFile = new File(flagFilePath);
@@ -70,14 +70,14 @@ private static void AutoBaoTri() {
 ```java
 // Trong Maintenance.java - Xử lý bảo trì
 public class Maintenance extends Thread {
-    public static boolean isRuning = false;
+    public static boolean isRunning = false;
     private int min;
     
     public void start(int min) {
         this.min = min;
-        if (!isRuning) {
+        if (!isRunning) {
             this.start();
-            isRuning = true;
+            isRunning = true;
         }
     }
     
@@ -113,7 +113,7 @@ public class Maintenance extends Thread {
 // Trong Main.java - Cập nhật bảng xếp hạng mỗi phút
 public static void BangXepHang() {
     new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             UTPKoolVN.Print("Update Bang Xep Hang");
             try {
                 BangXepHang.gI().update();
@@ -131,7 +131,7 @@ public static void BangXepHang() {
 // Trong Main.java - Cập nhật chợ mỗi phút
 public static void returnCho() {
     new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             Cho.AutoUpdate();  // Cập nhật chợ
             try {
                 Thread.sleep(60000);  // Cập nhật mỗi phút
@@ -173,7 +173,7 @@ public void Start() {
 }
 
 public void update() {
-    while (!Maintenance.isRuning) {
+    while (!Maintenance.isRunning) {
         try {
             long now = System.currentTimeMillis();
             
@@ -204,7 +204,7 @@ public void update() {
 // Trong Map.java - Cập nhật zone mỗi 100ms
 public void createThread() {
     Thread thread = new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             long l = System.currentTimeMillis();
             try {
                 // Cập nhật nhân vật

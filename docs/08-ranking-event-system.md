@@ -516,7 +516,7 @@ public class PvPEvent extends Event {
 ```java
 private void startEventManager() {
     Thread eventManager = new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             try {
                 long currentTime = System.currentTimeMillis();
                 

@@ -29,7 +29,7 @@ public class Map {
 ```java
 public void createThread() {
     Thread thread = new Thread(() -> {
-        while (!Maintenance.isRuning) {
+        while (!Maintenance.isRunning) {
             long l = System.currentTimeMillis();
             try {
                 // Cập nhật nhân vật
