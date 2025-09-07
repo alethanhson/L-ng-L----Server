@@ -3,6 +3,8 @@ package com.langla.real.player;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.langla.data.DataCache;
 import com.langla.data.DataCenter;
+import com.langla.data.center.DataShop;
+import com.langla.data.center.PhucLoi;
 import com.langla.data.ItemOption;
 import com.langla.data.SkillClan;
 import com.langla.lib.Utlis;
@@ -1601,8 +1603,8 @@ public class Session{
                                 if(client.mChar.infoChar.vang > 200){
                                     client.mChar.mineVang(200, true, true, "Mua gói hào hoa");
                                     client.mChar.phucLoi.isGoiHaoHoa = true;
-                                    DataCenter.gI().phucLoiInfo.TongDauTu++;
-                                    DataCenter.gI().updatePhucLoi(2, DataCenter.gI().phucLoiInfo.TongDauTu);
+                                    PhucLoi.getInstance().phucLoiInfo.TongDauTu++;
+                                    PhucLoi.getInstance().updatePhucLoi(2, PhucLoi.getInstance().phucLoiInfo.TongDauTu);
                                     Session.this.serivce.sendPhucLoi(client.mChar);
                                 } else {
                                     Session.this.serivce.ShowMessRed("Không đủ vàng");
@@ -1614,8 +1616,8 @@ public class Session{
                                 if(client.mChar.infoChar.vang > 300){
                                     client.mChar.mineVang(300, true, true, "Mua gói chí tôn");
                                     client.mChar.phucLoi.isGoiChiTon = true;
-                                    DataCenter.gI().phucLoiInfo.TongDauTu++;
-                                    DataCenter.gI().updatePhucLoi(2, DataCenter.gI().phucLoiInfo.TongDauTu);
+                                    PhucLoi.getInstance().phucLoiInfo.TongDauTu++;
+                                    PhucLoi.getInstance().updatePhucLoi(2, PhucLoi.getInstance().phucLoiInfo.TongDauTu);
                                     Session.this.serivce.sendPhucLoi(client.mChar);
                                 } else {
                                     Session.this.serivce.ShowMessRed("Không đủ vàng");
@@ -1628,8 +1630,8 @@ public class Session{
                                     client.mChar.mineVang(300, true, true, "Mua gói thẻ vĩnh viễn");
                                     client.mChar.addVangKhoa(300, true, true, "Mua gói thẻ tháng");
                                     client.mChar.phucLoi.timeTheVinhVinhVien = 0L;
-                                    DataCenter.gI().phucLoiInfo.TongSoLanMuaTheThang++;
-                                    DataCenter.gI().updatePhucLoi(3, DataCenter.gI().phucLoiInfo.TongSoLanMuaTheThang);
+                                    PhucLoi.getInstance().phucLoiInfo.TongSoLanMuaTheThang++;
+                                    PhucLoi.getInstance().updatePhucLoi(3, PhucLoi.getInstance().phucLoiInfo.TongSoLanMuaTheThang);
                                     Session.this.serivce.sendPhucLoi(client.mChar);
                                 } else {
                                     Session.this.serivce.ShowMessRed("Không đủ vàng");
@@ -1692,8 +1694,8 @@ public class Session{
                                     client.mChar.mineVang(100, true, true, "Mua gói thẻ tháng");
                                     client.mChar.addVangKhoa(100, true, true, "Mua gói thẻ tháng");
                                     client.mChar.phucLoi.timeTheThang = System.currentTimeMillis()+2592000000L;
-                                    DataCenter.gI().phucLoiInfo.TongSoLanMuaTheThang++;
-                                    DataCenter.gI().updatePhucLoi(3, DataCenter.gI().phucLoiInfo.TongSoLanMuaTheThang);
+                                    PhucLoi.getInstance().phucLoiInfo.TongSoLanMuaTheThang++;
+                                    PhucLoi.getInstance().updatePhucLoi(3, PhucLoi.getInstance().phucLoiInfo.TongSoLanMuaTheThang);
                                     Session.this.serivce.sendPhucLoi(client.mChar);
                                 } else {
                                     Session.this.serivce.ShowMessRed("Không đủ vàng");
@@ -1952,7 +1954,7 @@ public class Session{
                     return;
                 }
                 Message msg = new Message((byte) 122);
-                List<ItemShop> shop = DataCenter.gI().shopTemplates.get(idshop);
+                List<ItemShop> shop = DataShop.getInstance().shopTemplates.get(idshop);
                 if(shop == null) return;
                 if(DataCache.IdShop2.contains(idshop)) SendShop(idshop, (byte) 0);
 
@@ -1987,7 +1989,7 @@ public class Session{
             try {
 
                 Message msg = new Message((byte) 122);
-                List<ItemShop> shop = DataCenter.gI().shopTemplates.get(idshop);
+                List<ItemShop> shop = DataShop.getInstance().shopTemplates.get(idshop);
                 if(shop == null) return;
                 List<ItemShop> filteredShop = new ArrayList<>();
                 for (ItemShop item : shop) {
@@ -4159,7 +4161,6 @@ public class Session{
             }
 
         }
-
     }
 
 }

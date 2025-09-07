@@ -16,6 +16,7 @@ import com.langla.server.handler.ServerSocketHandler;
 import com.langla.server.tool.CreateCode;
 import com.langla.server.tool.frmCreateItem;
 import com.langla.utlis.UTPKoolVN;
+import com.langla.real.event.BossEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,51 +35,49 @@ public class Main {
     private static final java.util.Map<String, Integer> ipConnectionCounts = new HashMap<>();
     private static final java.util.Map<String, Long> ipLastResetTime = new HashMap<>();
 
-
     public static void main(String[] args) {
         printBanner();
-        System.out.println("SERVER IP => "+PKoolVNDB.getIp());
-        
+        System.out.println("SERVER IP => " + PKoolVNDB.getIp());
+
         try {
             // Bước 1: Khởi tạo DataCenter
             DataCenter dataCenter = DataCenter.gI();
             System.out.println("!-PKoolVN =>>>| DataCenter initialized successfully!");
-            
+
             // Bước 2: Load dữ liệu game
             dataCenter.readArrDataGame(true);
             System.out.println("!-PKoolVN =>>>| Game data loaded successfully!");
-            
+
             // Bước 3: Kiểm tra ItemTemplate đã được load
             if (dataCenter.ItemTemplate == null || dataCenter.ItemTemplate.length == 0) {
                 throw new RuntimeException("ItemTemplate không được load thành công!");
             }
             System.out.println("!-PKoolVN =>>>| ItemTemplate loaded: " + dataCenter.ItemTemplate.length + " items");
-            
+
             dataCenter.Load_Data();
             System.out.println("!-PKoolVN =>>>| All data loaded successfully!");
-            
+
             // Bước 4: Tạo Map sau khi có đủ dữ liệu
             Map.createMap();
-            System.out.println("!-PKoolVN =>>>| Map created successfully!");
-            
         } catch (Exception e) {
             System.err.println("!-PKoolVN =>>>| ERROR during initialization: " + e.getMessage());
             e.printStackTrace();
             return; // Dừng server nếu có lỗi
         }
-        
+
         // Tiếp tục khởi động các module khác
         openServerSocket();
         activeCommandLine();
         returnCho();
         BangXepHang();
-        BauCua.gI().Start();
-        
-        if(!PKoolVNDB.isDebug) {
+        // BauCua.gI().Start();
+        BossEvent.gI().startEvent();
+
+        if (!PKoolVNDB.isDebug) {
             SwingUtilities.invokeLater(Main::createAndShowGUI);
             AutoBaoTri();
         }
-        if(PKoolVNDB.addshop){
+        if (PKoolVNDB.addshop) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     new frmCreateItem().setVisible(true);
@@ -86,15 +85,21 @@ public class Main {
             });
         }
     }
+
     private static void printBanner() {
         System.out.println(".______    __  ___   ______     ______    __      ____    ____ .__   __. ");
         System.out.println("|   _  \\  |  |/  /  /  __  \\   /  __  \\  |  |     \\   \\  /   / |  \\ |  | ");
         System.out.println("|  |_)  | |  '  /  |  |  |  | |  |  |  | |  |      \\   \\/   /  |   \\|  | ");
         System.out.println("|   ___/  |    <   |  |  |  | |  |  |  | |  |       \\      /   |  . `  | ");
         System.out.println("|  |      |  .  \\  |  `--'  | |  `--'  | |  `----.   \\    /    |  |\\   | ");
-        System.out.println("| _|      |__|\\__\\  \\______/   \\______/  |_______|    \\__/     |__| \\__|"); // Reset the color at the end of the banner
+        System.out.println("| _|      |__|\\__\\  \\______/   \\______/  |_______|    \\__/     |__| \\__|"); // Reset
+                                                                                                              // the
+                                                                                                              // color
+                                                                                                              // at the
+                                                                                                              // end of
+                                                                                                              // the
+                                                                                                              // banner
     }
-
 
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("PKoolVN Server Panel");
@@ -159,13 +164,13 @@ public class Main {
             }
         });
         fw.addActionListener(e -> {
-             if(PKoolVNDB.isFw){
-                 PKoolVNDB.isFw = false;
-                  UTPKoolVN.Print("Đã tắt FW");
-             } else {
-                 PKoolVNDB.isFw = true;
-                 UTPKoolVN.Print("Đã bật FW (Chống DDoS)");
-             }
+            if (PKoolVNDB.isFw) {
+                PKoolVNDB.isFw = false;
+                UTPKoolVN.Print("Đã tắt FW");
+            } else {
+                PKoolVNDB.isFw = true;
+                UTPKoolVN.Print("Đã bật FW (Chống DDoS)");
+            }
         });
     }
 
@@ -173,7 +178,7 @@ public class Main {
         new Thread(() -> {
 
             while (true) {
-                if(UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRuning){
+                if (UTPKoolVN.getHour() == 4 && UTPKoolVN.getMinute() == 0 && !Maintenance.isRuning) {
                     try {
                         String flagFilePath = "restart.flag";
                         try {
@@ -183,13 +188,13 @@ public class Main {
                             if (created) {
                                 Maintenance.gI().start(60 * 5);
                             } else {
-                                UTPKoolVN.Print("Reboot Server Faid!!");
+                                UTPKoolVN.Print("Reboot Server Failed!!");
                             }
                         } catch (IOException ex) {
-                            Utlis.logError(PlayerManager.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                            Utlis.logError(PlayerManager.class, ex, "Da say ra loi:\n" + ex.getMessage());
                         }
                     } catch (Exception ex) {
-                        Utlis.logError(PlayerManager.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                        Utlis.logError(PlayerManager.class, ex, "Da say ra loi:\n" + ex.getMessage());
                     }
                 }
                 try {
@@ -200,7 +205,6 @@ public class Main {
             }
         }, "Bảo trì tự động").start();
     }
-
 
     public static void activeCommandLine() {
         new Thread(() -> {
@@ -239,11 +243,12 @@ public class Main {
                     BangXepHang.gI().update();
                     Thread.sleep(60000);
                 } catch (Exception ex) {
-                Utlis.logError(Main.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                    Utlis.logError(Main.class, ex, "Da say ra loi:\n" + ex.getMessage());
                 }
             }
         }, "Bang Xep Hang").start();
     }
+
     public static String getIp(Socket soc) {
         return split(soc.getRemoteSocketAddress().toString(), ":", 0)[0].replaceAll("/", "");
     }
@@ -265,7 +270,6 @@ public class Main {
         var4[var2] = var0.substring(0, var3);
         return var4;
     }
-
 
     private static void checkAndResetRateLimit(String ip) {
         Long lastResetTime = ipLastResetTime.getOrDefault(ip, 0L);
@@ -297,14 +301,14 @@ public class Main {
                             socket.close();
                             return;
                         }
-                    } catch (Exception e){
+                    } catch (Exception e) {
                     }
                     socket.getOutputStream().write(0);
                     socket.getOutputStream().flush();
                     UTPKoolVN.Print("IP: " + ip +
                             " >> Check Online");
                 } catch (Exception ex) {
-                    Utlis.logError(Player.class, ex , "Da say ra loi:\n" + ex.getMessage());
+                    Utlis.logError(Player.class, ex, "Da say ra loi:\n" + ex.getMessage());
                 } finally {
                     try {
                         socket.close();
@@ -325,7 +329,7 @@ public class Main {
                         socket.close();
                         return;
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                 }
                 Client client = new Client(socket);
                 client.id = NUM_CLIENTS++;
@@ -352,13 +356,13 @@ public class Main {
             return;
         }
         vecClient.add(aThis);
-//        try {
-//            aThis.create();
-//        } catch (Exception ex) {
-//            Utlis.logError(Player.class, ex , "Da say ra loi:\n" + ex.getMessage());
-//            aThis.session.clean();
-//            return;
-//        }
+        // try {
+        // aThis.create();
+        // } catch (Exception ex) {
+        // Utlis.logError(Player.class, ex , "Da say ra loi:\n" + ex.getMessage());
+        // aThis.session.clean();
+        // return;
+        // }
 
     }
 
@@ -366,9 +370,10 @@ public class Main {
         try {
             vecClient.remove(aThis);
         } catch (Exception ex) {
-            Utlis.logError(Player.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(Player.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
     }
+
     public static void Stop() {
         serverCheckOnline.stop();
         serverMain.stop();

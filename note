@@ -1,0 +1,5 @@
+# Compile tất cả file Java vào thư mục classes
+javac -cp "lib/*" -d classes -sourcepath src src/com/langla/server/main/Main.java
+
+# Chạy từ thư mục classes
+java -cp "classes;lib/*" com.langla.server.main.Main

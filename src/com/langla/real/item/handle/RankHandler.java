@@ -1,6 +1,6 @@
 package com.langla.real.item.handle;
 
-import com.langla.data.DataCenter;
+import com.langla.data.center.PhucLoi;
 import com.langla.real.item.Item;
 import com.langla.data.ItemOption;
 import com.langla.real.player.Char;
@@ -314,11 +314,11 @@ public class RankHandler {
      * Cập nhật DataCenter rank
      */
     private static void updateDataCenterRank(int rank) {
-        if (DataCenter.gI().phucLoiInfo.RankCaoNhat < rank) {
-            DataCenter.gI().phucLoiInfo.RankCaoNhat = rank;
-            DataCenter.gI().updatePhucLoi(1, DataCenter.gI().phucLoiInfo.RankCaoNhat);
+        if (PhucLoi.getInstance().phucLoiInfo.RankCaoNhat < rank) {
+            PhucLoi.getInstance().phucLoiInfo.RankCaoNhat = rank;
+            PhucLoi.getInstance().updatePhucLoi(1, PhucLoi.getInstance().phucLoiInfo.RankCaoNhat);
         }
-        DataCenter.gI().phucLoiInfo.TongRank++;
-        DataCenter.gI().updatePhucLoi(0, DataCenter.gI().phucLoiInfo.TongRank);
+        PhucLoi.getInstance().phucLoiInfo.TongRank++;
+        PhucLoi.getInstance().updatePhucLoi(0, PhucLoi.getInstance().phucLoiInfo.TongRank);
     }
 }

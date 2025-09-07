@@ -24,6 +24,7 @@ public class BangXepHang {
             Instance = new BangXepHang();
         return Instance;
     }
+
     public int MaxPlayer = 200;
     public int MaxValue = 50;
     public ArrayList<Bxh_Tpl> listCaoThu = new ArrayList<Bxh_Tpl>();
@@ -37,6 +38,8 @@ public class BangXepHang {
     public ArrayList<Bxh_Tpl> listCuongHoa = new ArrayList<Bxh_Tpl>();
 
     public ArrayList<Bxh_Tpl> listGiaToc = new ArrayList<Bxh_Tpl>();
+
+    public ArrayList<BossKillerRanking> listBossKiller = new ArrayList<BossKillerRanking>();
 
     private final Comparator<Bxh_Tpl> levelComparator = new Comparator<Bxh_Tpl>() {
         @Override
@@ -127,9 +130,20 @@ public class BangXepHang {
             return Integer.compare(c2.info.exp, c1.info.exp);
         }
     };
+
+    private final Comparator<BossKillerRanking> bossKillerComparator = new Comparator<BossKillerRanking>() {
+        @Override
+        public int compare(BossKillerRanking r1, BossKillerRanking r2) {
+            // Ưu tiên số boss tiêu diệt, sau đó là level
+            int bossCompare = Integer.compare(r2.bossKills, r1.bossKills);
+            if (bossCompare != 0)
+                return bossCompare;
+            return Integer.compare(r2.level, r1.level);
+        }
+    };
+
     public BangXepHang() {
     }
-
 
     public void addCaoThu(Bxh_Tpl news) {
         try {
@@ -144,7 +158,7 @@ public class BangXepHang {
 
             if (!found) { // Nếu character chưa tồn tại trong listCaoThu, thêm mới hoặc ghi đè lên
 
-                if (listCaoThu.size() < MaxPlayer) { // Nếu danh sách chưa đầy  phần tử, thêm mới
+                if (listCaoThu.size() < MaxPlayer) { // Nếu danh sách chưa đầy phần tử, thêm mới
                     listCaoThu.add(news);
                 } else { // Nếu danh sách đã đầy, thực hiện ghi đè
                     int minIndex = 0;
@@ -158,8 +172,7 @@ public class BangXepHang {
                         }
                     }
 
-                    // Nếu level của character mới lớn hơn level nhỏ nhất trong danh sách, thực hiện ghi đè
-                    if (news.infoChar.level> minLevel) {
+                    if (news.infoChar.level > minLevel) {
                         listCaoThu.remove(minIndex);
                         listCaoThu.add(news);
                     }
@@ -167,7 +180,7 @@ public class BangXepHang {
             }
             listCaoThu.sort(levelComparator); // Sắp xếp lại danh sách sau khi thay đổi
         } catch (Exception ex) {
-            Utlis.logError(BangXepHang.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(BangXepHang.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
@@ -196,7 +209,7 @@ public class BangXepHang {
                             minIndex = i;
                         }
                     }
-                    if (news.infoChar.tongVangNap> minLevel) {
+                    if (news.infoChar.tongVangNap > minLevel) {
                         listNapNhieu.remove(minIndex);
                         listNapNhieu.add(news);
                     }
@@ -204,10 +217,11 @@ public class BangXepHang {
             }
             listNapNhieu.sort(napComparator); // Sắp xếp lại danh sách sau khi thay đổi
         } catch (Exception ex) {
-            Utlis.logError(BangXepHang.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(BangXepHang.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
+
     public void addCuaCai(Bxh_Tpl news) {
         try {
             boolean founds = false;
@@ -232,7 +246,7 @@ public class BangXepHang {
                             minIndex = i;
                         }
                     }
-                    if (news.infoChar.cuaCai> minLevel) {
+                    if (news.infoChar.cuaCai > minLevel) {
                         listCuaCai.remove(minIndex);
                         listCuaCai.add(news);
                     }
@@ -240,7 +254,7 @@ public class BangXepHang {
             }
             listCuaCai.sort(cuaCaiComparator); // Sắp xếp lại danh sách sau khi thay đổi
         } catch (Exception ex) {
-            Utlis.logError(BangXepHang.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(BangXepHang.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
@@ -269,7 +283,7 @@ public class BangXepHang {
                             minIndex = i;
                         }
                     }
-                    if (news.infoChar.taiPhu> minLevel) {
+                    if (news.infoChar.taiPhu > minLevel) {
                         listTaiPhu.remove(minIndex);
                         listTaiPhu.add(news);
                     }
@@ -277,7 +291,7 @@ public class BangXepHang {
             }
             listTaiPhu.sort(taiPhuComparator); // Sắp xếp lại danh sách sau khi thay đổi
         } catch (Exception ex) {
-            Utlis.logError(BangXepHang.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(BangXepHang.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
@@ -295,7 +309,7 @@ public class BangXepHang {
 
             if (!found) { // Nếu character chưa tồn tại trong listCaoThu, thêm mới hoặc ghi đè lên
 
-                if (listCuongHoa.size() < MaxPlayer) { // Nếu danh sách chưa đầy  phần tử, thêm mới
+                if (listCuongHoa.size() < MaxPlayer) { // Nếu danh sách chưa đầy phần tử, thêm mới
                     listCuongHoa.add(news);
                 } else { // Nếu danh sách đã đầy, thực hiện ghi đè
                     int minIndex = 0;
@@ -309,8 +323,7 @@ public class BangXepHang {
                         }
                     }
 
-                    // Nếu level của character mới lớn hơn level nhỏ nhất trong danh sách, thực hiện ghi đè
-                    if (news.infoChar.tongCuongHoa> minLevel) {
+                    if (news.infoChar.tongCuongHoa > minLevel) {
                         listCuongHoa.remove(minIndex);
                         listCuongHoa.add(news);
                     }
@@ -318,7 +331,7 @@ public class BangXepHang {
             }
             listCuongHoa.sort(cuongHoaComparator); // Sắp xếp lại danh sách sau khi thay đổi
         } catch (Exception ex) {
-            Utlis.logError(BangXepHang.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(BangXepHang.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
@@ -336,7 +349,7 @@ public class BangXepHang {
 
             if (!found) { // Nếu character chưa tồn tại trong listCaoThu, thêm mới hoặc ghi đè lên
 
-                if (listGiaToc.size() < MaxPlayer) { // Nếu danh sách chưa đầy  phần tử, thêm mới
+                if (listGiaToc.size() < MaxPlayer) { // Nếu danh sách chưa đầy phần tử, thêm mới
                     listGiaToc.add(news);
                 } else { // Nếu danh sách đã đầy, thực hiện ghi đè
                     int minIndex = 0;
@@ -350,8 +363,9 @@ public class BangXepHang {
                         }
                     }
 
-                    // Nếu level của character mới lớn hơn level nhỏ nhất trong danh sách, thực hiện ghi đè
-                    if (news.GiaTocInfo.exp> minLevel) {
+                    // Nếu level của character mới lớn hơn level nhỏ nhất trong danh sách, thực hiện
+                    // ghi đè
+                    if (news.GiaTocInfo.exp > minLevel) {
                         listGiaToc.remove(minIndex);
                         listGiaToc.add(news);
                     }
@@ -359,7 +373,7 @@ public class BangXepHang {
             }
             listGiaToc.sort(giaTocComparator); // Sắp xếp lại danh sách sau khi thay đổi
         } catch (Exception ex) {
-            Utlis.logError(BangXepHang.class, ex , "Da say ra loi:\n" + ex.getMessage());
+            Utlis.logError(BangXepHang.class, ex, "Da say ra loi:\n" + ex.getMessage());
         }
 
     }
@@ -368,6 +382,7 @@ public class BangXepHang {
 
         return new ArrayList<>(listGiaToc.subList(0, Math.min(MaxValue, listGiaToc.size())));
     }
+
     public ArrayList<Bxh_Tpl> getListCuongHoa(int idClass) {
         ArrayList<Bxh_Tpl> resultList = new ArrayList<>();
 
@@ -387,6 +402,7 @@ public class BangXepHang {
         }
         return resultList;
     }
+
     public ArrayList<Bxh_Tpl> getListCuaCai(int idClass) {
         ArrayList<Bxh_Tpl> resultList = new ArrayList<>();
 
@@ -406,6 +422,7 @@ public class BangXepHang {
         }
         return resultList;
     }
+
     public ArrayList<Bxh_Tpl> getListTaiPhu(int idClass) {
         ArrayList<Bxh_Tpl> resultList = new ArrayList<>();
 
@@ -425,6 +442,7 @@ public class BangXepHang {
         }
         return resultList;
     }
+
     public ArrayList<Bxh_Tpl> getListCaoThu(int idClass) {
         ArrayList<Bxh_Tpl> resultList = new ArrayList<>();
 
@@ -444,6 +462,7 @@ public class BangXepHang {
         }
         return resultList;
     }
+
     public ArrayList<Bxh_Tpl> getListNapNhieu(int idClass) {
         ArrayList<Bxh_Tpl> resultList = new ArrayList<>();
 
@@ -466,7 +485,7 @@ public class BangXepHang {
 
     public void update() {
         try {
-            Map<Integer, Char> listAllChar =  PlayerManager.getInstance().getlistChar();
+            Map<Integer, Char> listAllChar = PlayerManager.getInstance().getlistChar();
 
             List<Char> allChars = new ArrayList<>(listAllChar.values());
 
@@ -579,7 +598,7 @@ public class BangXepHang {
         }
     }
 
-    public void updateSQL(String itemListJson, int id){
+    public void updateSQL(String itemListJson, int id) {
         // Kết nối đến cơ sở dữ liệu
 
         try (Connection con = PKoolVN.getConnection()) {
@@ -590,12 +609,67 @@ public class BangXepHang {
                 pstmt.setInt(2, id);
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+                Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
             }
         } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e , "Da say ra loi:\n" + e.getMessage());
+            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
     }
 
+    public void addBossKillPoint(Char player) {
+        try {
+            // Tìm hoặc tạo ranking cho player
+            BossKillerRanking ranking = getBossKillerRanking(player.id);
+            if (ranking == null) {
+                ranking = new BossKillerRanking(player);
+                listBossKiller.add(ranking);
+            }
 
+            // Cập nhật thống kê
+            ranking.bossKills++;
+            ranking.lastBossKillTime = System.currentTimeMillis();
+            ranking.lastBossName = "Nhẫn Giả Huyền Thoại";
+
+            // Cập nhật xếp hạng
+            updateBossKillerRanking();
+
+            // Lưu vào database
+            ObjectMapper mapper = DataCenter.gI().mapper;
+            String itemListJson = mapper.writeValueAsString(listBossKiller);
+            updateSQL(itemListJson, 10);
+
+        } catch (Exception ex) {
+            Utlis.logError(BangXepHang.class, ex, "Lỗi ghi nhận tiêu diệt boss: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Lấy ranking Boss Killer của player
+     */
+    public BossKillerRanking getBossKillerRanking(int playerId) {
+        for (BossKillerRanking ranking : listBossKiller) {
+            if (ranking.playerId == playerId) {
+                return ranking;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Cập nhật xếp hạng Boss Killer
+     */
+    public void updateBossKillerRanking() {
+        try {
+            // Sắp xếp theo số boss tiêu diệt
+            listBossKiller.sort(bossKillerComparator);
+
+            // Cập nhật thứ hạng
+            for (int i = 0; i < listBossKiller.size(); i++) {
+                listBossKiller.get(i).rank = i + 1;
+            }
+
+        } catch (Exception ex) {
+            Utlis.logError(BangXepHang.class, ex, "Lỗi cập nhật xếp hạng Boss Killer: " + ex.getMessage());
+        }
+    }
 }

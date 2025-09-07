@@ -30,3 +30,4 @@ data/pkoolvn/logs/error/**
 # Ignore all data subdirectories that contain logs
 data/**/logs/**
 data/**/logs/*/
+classes/

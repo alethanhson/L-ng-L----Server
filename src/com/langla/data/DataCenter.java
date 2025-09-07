@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.langla.lib.Utlis;
 import com.langla.lib.Binary;
 import com.langla.real.bangxephang.BangXepHang;
+import com.langla.real.bangxephang.BossKillerRanking;
 import com.langla.real.bangxephang.Bxh_Tpl;
 import com.langla.real.cho.ChoTemplate;
 import com.langla.real.family.*;
@@ -17,7 +18,6 @@ import com.langla.real.item.ItemShop;
 import com.langla.real.lucky.LuckyTpl;
 import com.langla.real.map.BossRunTime;
 import com.langla.real.map.BossTpl;
-import com.langla.real.phucloi.PhucLoiInfo;
 import com.langla.real.phucloi.PhucLoiTpl;
 import com.langla.real.player.Player;
 import com.langla.server.main.PKoolVN;
@@ -26,6 +26,9 @@ import com.langla.server.lib.Reader;
 import com.langla.server.lib.Writer;
 import com.langla.utlis.UTPKoolVN;
 import com.tgame.model.Caption;
+import com.langla.real.event.BossEvent;
+import com.langla.data.center.DataShop;
+import com.langla.data.center.PhucLoi;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -36,8 +39,6 @@ import java.util.*;
 
 import org.json.JSONArray;
 
-import static com.langla.lib.Binary.x;
-
 public class DataCenter {
 
     static {
@@ -46,7 +47,6 @@ public class DataCenter {
         DataCenter.be = new Vector();
 
         PKoolVNDB.loadProperties();
-        // Xóa 2 dòng này khỏi static block
         // DataCenter.gI().readArrDataGame(true);
         // DataCenter.gI().Load_Data();
     }
@@ -100,17 +100,12 @@ public class DataCenter {
     public DataNameClass[] DataNameClass;
 
     public ItemTemplate[] ItemTemplate;
-    public java.util.Map<Integer, List<ItemShop>> shopTemplates = new java.util.HashMap<>();
-    public java.util.Map<Integer, String> shopNames = new java.util.HashMap<>();
     public java.util.Map<Integer, Integer> lockMap = new java.util.HashMap<>();
     public Vector<ChoTemplate> DataCho = new Vector<ChoTemplate>();
     public int[] arrVongQuayNap = new int[] { 0, 80, 480, 880, 1880, 3280 };
-    public List<PhucLoiTpl> DataPhucLoi = new ArrayList<>();
     public List<LuckyTpl> DataLucky = new ArrayList<>();
 
     public List<Item> dataCaiTrang = new ArrayList<>();
-
-    public PhucLoiInfo phucLoiInfo = new PhucLoiInfo();
     public ItemOptionTemplate[] ItemOptionTemplate;
     public SkillTemplate[] SkillTemplate;
     public SkillClan[] SkillClan;
@@ -467,7 +462,6 @@ public class DataCenter {
     }
 
     public void readArrDataGame2(Message msg) {
-
         Reader readerArrDataGame2 = msg.reader;
         try {
             Vector vec = new Vector();
@@ -1159,28 +1153,9 @@ public class DataCenter {
 
     public void Load_Data() {
         // Load Shop
-        String query = "SELECT * FROM `shop`";
-        try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
-            ResultSet red = pstmt.executeQuery();
-            while (red.next()) {
-                int id_shop = red.getInt("id_shop");
-                String shopName = red.getString("Tên_Shop"); // Giả sử cột tên cửa hàng là "shop_name"
-                shopNames.put(id_shop, shopName);
-                ObjectMapper mapper = DataCenter.gI().mapper;
-                List<ItemShop> itemList = mapper.readValue(red.getString("list_item"),
-                        TypeFactory.defaultInstance().constructCollectionType(List.class, ItemShop.class));
-
-                for (ItemShop item : itemList) {
-                    item.id_buy = DataCache.idbuyshop++; // Thiết lập id_buy
-                }
-                shopTemplates.computeIfAbsent(id_shop, k -> new ArrayList<>()).addAll(itemList);
-            }
-        } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-        }
+        DataShop.getInstance().loadShopData();
         // Load Lock Map
-        query = "SELECT * FROM `map_lock`";
+        String query = "SELECT * FROM `map_lock`";
         try (Connection con = PKoolVN.getConnection();
                 PreparedStatement pstmt = con.prepareStatement(query)) {
             ResultSet red = pstmt.executeQuery();
@@ -1193,9 +1168,9 @@ public class DataCenter {
             Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
         // load market
-        query = "SELECT * FROM `market`";
+        String marketQuery = "SELECT * FROM `market`";
         try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(marketQuery)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 ObjectMapper mapper = DataCenter.gI().mapper;
@@ -1213,10 +1188,11 @@ public class DataCenter {
             Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
         // Load Boss
-        query = "SELECT * FROM `boss`";
+        String bossQuery = "SELECT * FROM `boss`";
         try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(bossQuery)) {
             ResultSet red = pstmt.executeQuery();
+            int bossCount = 0;
             while (red.next()) {
                 BossTpl newboss = new BossTpl();
                 newboss.id = red.getInt("id");
@@ -1231,29 +1207,32 @@ public class DataCenter {
                 newboss.min_spam = red.getInt("minute_respam");
                 newboss.hou_spam = red.getInt("hour_respam");
                 newboss.timeDelay = System.currentTimeMillis() + Utlis.nextInt(10000, 60000);
+                newboss.isDie = true;
+
+                // Thêm vào BossRunTime (cho boss thường)
                 BossRunTime.gI().listBoss.add(newboss);
+
+                // Thêm vào NinjaEvent (cho event boss)
+                BossEvent.gI().addBoss(newboss);
+
+                bossCount++;
+
+                // Debug log cho boss ID 204
+                if (newboss.id == 204) {
+                    UTPKoolVN.Print("DEBUG: Loaded Boss ID 204 - " + newboss.name +
+                            " Map: " + newboss.map + " Spawn time: " + newboss.min_spam + " minutes");
+                }
             }
+            UTPKoolVN.Print("DEBUG: Loaded " + bossCount + " bosses from database");
         } catch (SQLException e) {
             Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        // load phúc lợi
-        query = "SELECT * FROM `phuc_loi`";
-        try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
-            ResultSet red = pstmt.executeQuery();
-            while (red.next()) {
-                ObjectMapper mapper = DataCenter.gI().mapper;
-
-                this.DataPhucLoi = mapper.readValue(red.getString("str"),
-                        TypeFactory.defaultInstance().constructCollectionType(List.class, PhucLoiTpl.class));
-            }
-        } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-        }
+        // Load phúc lợi
+        PhucLoi.getInstance().loadPhucLoiData();
         // load lucky
-        query = "SELECT * FROM `lucky`";
+        String luckyQuery = "SELECT * FROM `lucky`";
         try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(luckyQuery)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 ObjectMapper mapper = DataCenter.gI().mapper;
@@ -1265,9 +1244,9 @@ public class DataCenter {
             Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
         // load gia tộc
-        query = "SELECT * FROM `giatoc`";
+        String giatocQuery = "SELECT * FROM `giatoc`";
         try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(giatocQuery)) {
             ResultSet red = pstmt.executeQuery();
             Family.gI().listFamily.clear();
             while (red.next()) {
@@ -1297,37 +1276,13 @@ public class DataCenter {
         } catch (SQLException | IOException e) {
             Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
         }
-        // Gson gsons = new Gson();
-        // String itemListJsons = gsons.toJson(this.DataPhucLoi);
-        // // Phân tách các JSON bằng dấu xuống dòng
-        // itemListJsons = itemListJsons.replace("},", "},\n\n\n");
-        // System.out.println(itemListJsons);
-        query = "SELECT * FROM `phucloi_info`";
-        try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
-            ResultSet red = pstmt.executeQuery();
-            while (red.next()) {
-                int id = red.getInt("id");
-                long value = red.getLong("value");
-                if (id == 0) {
-                    phucLoiInfo.TongRank = (int) value;
-                } else if (id == 1) {
-                    phucLoiInfo.RankCaoNhat = (int) value;
-                } else if (id == 2) {
-                    phucLoiInfo.TongDauTu = (int) value;
-                } else if (id == 3) {
-                    phucLoiInfo.TongSoLanMuaTheThang = (int) value;
-                } else if (id == 4) {
-                    phucLoiInfo.ThoiGianX2Online = value;
-                }
-            }
-        } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-        }
 
-        query = "SELECT * FROM `bangxephang`";
+        // Load phúc lợi info
+        PhucLoi.getInstance().loadPhucLoiInfoData();
+
+        String bangxephangQuery = "SELECT * FROM `bangxephang`";
         try (Connection con = PKoolVN.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(bangxephangQuery)) {
             ResultSet red = pstmt.executeQuery();
             while (red.next()) {
                 int id = red.getInt("id");
@@ -1348,6 +1303,10 @@ public class DataCenter {
                 } else if (id == 8) {
                     BangXepHang.gI().listNapNhieu = mapper.readValue(red.getString("list"),
                             TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Bxh_Tpl.class));
+                } else if (id == 10) {
+                    BangXepHang.gI().listBossKiller = mapper.readValue(red.getString("list"),
+                            TypeFactory.defaultInstance().constructCollectionType(ArrayList.class,
+                                    BossKillerRanking.class));
                 }
             }
         } catch (SQLException | IOException e) {
@@ -1358,42 +1317,12 @@ public class DataCenter {
     }
 
     public void updateShopToData(int idshop) {
-        // Kết nối đến cơ sở dữ liệu
-        try (Connection con = PKoolVN.getConnection()) {
-            // Lấy danh sách List<ItemShop> tương ứng với idshop
-            List<ItemShop> itemList = shopTemplates.get(idshop);
-
-            if (itemList != null) {
-                ObjectMapper mapper = DataCenter.gI().mapper;
-                String itemListJson = mapper.writeValueAsString(itemList);
-                String updateQuery = "UPDATE shop SET list_item = ? WHERE id_shop = ?";
-                try (PreparedStatement pstmt = con.prepareStatement(updateQuery)) {
-                    pstmt.setString(1, itemListJson);
-                    pstmt.setInt(2, idshop);
-                    pstmt.executeUpdate();
-                } catch (SQLException e) {
-                    Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-                }
-            }
-        } catch (SQLException | IOException e) {
-            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-        }
+        List<ItemShop> itemList = DataShop.getInstance().shopTemplates.get(idshop);
+        DataShop.getInstance().updateShopToData(idshop, itemList);
     }
 
     public void updatePhucLoi(int id, int value) {
-        // Kết nối đến cơ sở dữ liệu
-        try (Connection con = PKoolVN.getConnection()) {
-            String updateQuery = "UPDATE phucloi_info SET value = ? WHERE id = ?";
-            try (PreparedStatement pstmt = con.prepareStatement(updateQuery)) {
-                pstmt.setInt(1, value);
-                pstmt.setInt(2, id);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-            }
-        } catch (SQLException e) {
-            Utlis.logError(DataCenter.class, e, "Da say ra loi:\n" + e.getMessage());
-        }
+        PhucLoi.getInstance().updatePhucLoi(id, value);
     }
 
     public int getVongQuayNap(int diem, int tile) {
@@ -1427,13 +1356,7 @@ public class DataCenter {
     }
 
     public PhucLoiTpl getPhucLoi_Tpl(short idRequest) {
-        for (int i = 0; i < DataCenter.gI().DataPhucLoi.size(); i++) {
-            PhucLoiTpl phucLoi = DataCenter.gI().DataPhucLoi.get(i);
-            if (phucLoi.idRequest == idRequest) {
-                return phucLoi;
-            }
-        }
-        return null;
+        return PhucLoi.getInstance().getPhucLoi_Tpl(idRequest);
     }
 
     public SkillClan getSkillClan(byte id) {
@@ -1529,7 +1452,6 @@ public class DataCenter {
     }
 
     public static class DataImgEntity {
-
         private short s2;
         private short s3;
         private byte[][] array;

@@ -7,6 +7,7 @@ package com.langla.server.tool;
 
 import com.PKoolVNDB;
 import com.langla.data.DataCenter;
+import com.langla.data.center.DataShop;
 import com.langla.data.ItemOption;
 import com.langla.real.item.Item;
 import com.langla.real.item.Item.LangLa_gp;
@@ -55,7 +56,7 @@ public class frmCreateItem extends javax.swing.JFrame {
             jComboBox3.addItem("" + DataCenter.gI().DataNameClass[i].name);
         }
         jComboBox4.removeAllItems(); // Xóa tất cả mục hiện tại
-        for (Map.Entry<Integer, String> entry : DataCenter.gI().shopNames.entrySet()) {
+        for (Map.Entry<Integer, String> entry : DataShop.getInstance().shopNames.entrySet()) {
             jComboBox4.addItem("(SHOP: " + entry.getKey() + ") "+ entry.getValue());
             shopMap.put(jComboBox4.getItemCount() - 1, entry.getKey());
         }
@@ -649,7 +650,7 @@ public class frmCreateItem extends javax.swing.JFrame {
         newItem.gia_ban_bac_khoa = gia_ban_bac_khoa;
         newItem.gia_ban_bac = gia_ban_bac;
         newItem.moneyNew = moneyNew;
-        DataCenter.gI().shopTemplates.computeIfAbsent(idshop, k -> new ArrayList<>()).add(newItem);
+        DataShop.getInstance().shopTemplates.computeIfAbsent(idshop, k -> new ArrayList<>()).add(newItem);
         DataCenter.gI().updateShopToData(idshop);
         infoBox("Thêm thành công item: "+item.getItemTemplate().name);
     }

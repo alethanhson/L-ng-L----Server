@@ -6,6 +6,7 @@
 package com.langla.server.tool;
 
 import com.langla.data.DataCenter;
+import com.langla.data.center.DataShop;
 import com.langla.data.ItemOption;
 import com.langla.real.item.Item;
 import com.langla.real.item.Item.LangLa_gp;
@@ -46,7 +47,7 @@ public class Test extends javax.swing.JFrame {
         }
 
         TypeShop.removeAllItems(); // Xóa tất cả mục hiện tại
-        for (Map.Entry<Integer, String> entry : DataCenter.gI().shopNames.entrySet()) {
+        for (Map.Entry<Integer, String> entry : DataShop.getInstance().shopNames.entrySet()) {
             TypeShop.addItem("(SHOP: " + entry.getKey() + ") "+ entry.getValue());
             shopMap.put(TypeShop.getItemCount() - 1, entry.getKey());
         }

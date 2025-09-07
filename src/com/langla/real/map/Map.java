@@ -2,6 +2,7 @@ package com.langla.real.map;
 
 import com.langla.data.*;
 import com.langla.lib.Utlis;
+import com.langla.real.bangxephang.BangXepHang;
 import com.langla.real.family.Family;
 import com.langla.real.family.FamilyTemplate;
 import com.langla.real.family.Family_Member;
@@ -1673,6 +1674,10 @@ public class Map {
                 }
                 // removeMobToAllChar((short) mob.idEntity);
                 zone.vecMob.remove(mob);
+
+                if (mob.id == 204) {
+                    BangXepHang.gI().addBossKillPoint(client.mChar);
+                }
             }
         }
 

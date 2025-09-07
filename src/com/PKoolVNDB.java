@@ -26,7 +26,7 @@ public class PKoolVNDB {
     public static String HOST = "127.0.0.1";
     public static int PORT_SERVER = 2907;
     public static int PORT_CHECK_ONLINE = 2908;
-    public static String URL_WEB = "http://127.0.0.1";
+    public static String URL_WEB = "http://127.0.0.1:8888";
     public static int version = 131;
     
     // Security settings
@@ -65,7 +65,8 @@ public class PKoolVNDB {
             HOST = properties.getProperty("pkoolvn.host", HOST).trim();
             PORT_SERVER = Integer.parseInt(properties.getProperty("pkoolvn.port-server", String.valueOf(PORT_SERVER)));
             PORT_CHECK_ONLINE = Integer.parseInt(properties.getProperty("pkoolvn.port-check-online", String.valueOf(PORT_CHECK_ONLINE)));
-            URL_WEB = properties.getProperty("pkoolvn.url-web", URL_WEB);
+            // URL_WEB = properties.getProperty("pkoolvn.url-web", URL_WEB);
+            URL_WEB = "http://" + HOST + ":8080";
             version = Integer.parseInt(properties.getProperty("pkoolvn.version", String.valueOf(version)));
             
             // Load security settings

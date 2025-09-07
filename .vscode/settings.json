@@ -5,5 +5,8 @@
     "java.project.outputPath": "out",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
+    ],
+    "cSpell.words": [
+        "Kool"
     ]
 }
